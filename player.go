@@ -17,12 +17,13 @@ type Player struct {
 }
 
 type Projectile struct {
-	pos     Vec2
-	vel     Vec2
-	damage  int
-	speed   float64
-	destroy float64
-	img     *ebiten.Image
+	pos      Vec2
+	vel      Vec2
+	damage   int
+	speed    float64
+	pierce   float64
+	lifetime float64
+	img      *ebiten.Image
 }
 
 type Attack struct {
@@ -36,13 +37,13 @@ var attack_keys = map[int]ebiten.Key{
 	2: ebiten.KeyF,
 }
 
-func (p *Player) newProjectile(pos, vel Vec2, damage int, speed float64, destroy float64, img_path string) {
+func (p *Player) newProjectile(pos, vel Vec2, damage int, speed float64, pierce float64, lifetime float64, img_path string) {
 	temp_img, _, err := ebitenutil.NewImageFromFile(img_path)
 	if err != nil {
 		panic(err)
 	}
 
-	projectile := Projectile{pos, vel, damage, speed, destroy, temp_img}
+	projectile := Projectile{pos, vel, damage, speed, pierce, lifetime, temp_img}
 
 	p.projectiles = append(p.projectiles, projectile)
 }
@@ -167,28 +168,25 @@ func (p *Player) Update() {
 		projectile.pos.x -= math.Cos(projectile_move_dir) * projectile.speed
 		projectile.pos.y -= math.Sin(projectile_move_dir) * projectile.speed
 
-		if projectile.destroy != -1 {
-			projectile.destroy -= 0.1
-			if projectile.destroy < 0 {
-				projectile.pos = Vec2{10000000, 100000}
-				projectile.vel = Vec2{0, 0}
-			}
-		}
-
 		for ei := 0; ei < len(current_level.enemies); ei++ {
 			e := &current_level.enemies[ei]
 			if collide(projectile.pos, Vec2{float64(projectile.img.Bounds().Dx()), float64(projectile.img.Bounds().Dy())}, e.pos, Vec2{float64(e.img.Bounds().Dx()), float64(e.img.Bounds().Dy())}) {
 				e.health -= projectile.damage
-				if projectile.destroy == -1 {
-					player.projectiles = removeProjectile(projectile_index, p.projectiles)
-					projectile_index = len(p.projectiles) + 1
+				if projectile.pierce == -1 {
+					p.projectiles = removeProjectile(projectile_index, p.projectiles)
+					break
 				} else {
-					projectile.destroy -= 1
-					if projectile.destroy <= 0 {
-						player.projectiles = removeProjectile(projectile_index, p.projectiles)
-						projectile_index = len(p.projectiles) + 1
+					projectile.pierce -= 1.1
+					if projectile.pierce <= 0 {
+						projectile.damage = 0
 					}
 				}
+			}
+		}
+		if projectile.lifetime != -1 {
+			projectile.lifetime -= 0.1
+			if projectile.lifetime < 0 {
+				p.projectiles = removeProjectile(projectile_index, p.projectiles)
 			}
 		}
 	}
