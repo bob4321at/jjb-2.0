@@ -10,14 +10,14 @@ import (
 
 var temp_tile_img, _, _ = ebitenutil.NewImageFromFile("./art/temp_tile.png")
 
-type TileF struct {
+type Tile struct {
 	pos  Vec2
 	tile int
 }
 
 type Level struct {
 	tile_map     [][]uint8
-	tiles        []TileF
+	tiles        []Tile
 	player_spawn Vec2
 	spawn_points []Vec2
 	enemies      []Enemy

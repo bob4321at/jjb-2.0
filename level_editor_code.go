@@ -330,7 +330,7 @@ func makeLevel(path string) (l Level) {
 	for y := 0; y < len(l.tile_map); y++ {
 		for x := 0; x < len(l.tile_map); x++ {
 			if l.tile_map[y][x] != 0 {
-				l.tiles = append(l.tiles, TileF{Vec2{float64(x) * 32, float64(y) * 32}, int(l.tile_map[y][x])})
+				l.tiles = append(l.tiles, Tile{Vec2{float64(x) * 32, float64(y) * 32}, int(l.tile_map[y][x])})
 			}
 		}
 	}
