@@ -14,6 +14,7 @@ type Player struct {
 	dir         bool
 	attacks     []Attack
 	projectiles []Projectile
+	entities    []PlayerEntity
 }
 
 type Projectile struct {
@@ -24,6 +25,13 @@ type Projectile struct {
 	pierce   float64
 	lifetime float64
 	img      *ebiten.Image
+}
+
+type PlayerEntity struct {
+	pos    Vec2
+	vel    Vec2
+	img    *ebiten.Image
+	Update func(e *PlayerEntity)
 }
 
 type Attack struct {
@@ -46,6 +54,22 @@ func (p *Player) newProjectile(pos, vel Vec2, damage int, speed float64, pierce 
 	projectile := Projectile{pos, vel, damage, speed, pierce, lifetime, temp_img}
 
 	p.projectiles = append(p.projectiles, projectile)
+}
+
+func (p *Player) newEntity(pos Vec2, path string, Update func(e *PlayerEntity)) {
+	entity := PlayerEntity{}
+
+	timg, _, err := ebitenutil.NewImageFromFile(path)
+	if err != nil {
+		panic(err)
+	}
+	entity.img = timg
+
+	entity.pos = pos
+	entity.vel = Vec2{0, 0}
+	entity.Update = Update
+
+	p.entities = append(p.entities, entity)
 }
 
 func newPlayer(pos Vec2, img_path string, attacks []Attack) (p Player) {
@@ -89,6 +113,13 @@ func (p *Player) Draw(s *ebiten.Image) {
 		op.GeoM.Reset()
 		op.GeoM.Translate(p.projectiles[projectile_index].pos.x-camera.offset.x+650, p.projectiles[projectile_index].pos.y-camera.offset.y+380)
 		s.DrawImage(p.projectiles[projectile_index].img, &op)
+	}
+
+	for entity_index := 0; entity_index < len(p.entities); entity_index++ {
+		e := &p.entities[entity_index]
+		op := ebiten.DrawImageOptions{}
+		op.GeoM.Translate(e.pos.x, e.pos.y)
+		s.DrawImage(e.img, &op)
 	}
 }
 
@@ -189,6 +220,11 @@ func (p *Player) Update() {
 				p.projectiles = removeProjectile(projectile_index, p.projectiles)
 			}
 		}
+	}
+
+	for entity_index := 0; entity_index < len(p.entities); entity_index++ {
+		e := &p.entities[entity_index]
+		e.Update(e)
 	}
 
 	p.pos.y += p.vel.y
