@@ -5,8 +5,9 @@ import (
 	"image/color"
 )
 
-func makeLevel(path string) (l Level) {
+func makeLevel(path string, background_path string) (l Level) {
 	l.enemies = []Enemy{}
+	l.background = newBackground(Vec2{0, 1024 * 1.8}, 100, background_path)
 
 	map_img, _, err := ebitenutil.NewImageFromFile(path)
 	if err != nil {

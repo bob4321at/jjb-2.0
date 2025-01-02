@@ -21,6 +21,7 @@ type Level struct {
 	player_spawn Vec2
 	spawn_points []Vec2
 	enemies      []Enemy
+	background   Background
 	generated    bool
 }
 
@@ -71,6 +72,7 @@ func init() {
 
 func (l *Level) Draw(s *ebiten.Image, cam *Camera) {
 	op := ebiten.DrawImageOptions{}
+	l.background.Draw(s, cam)
 
 	for ti := 0; ti < len(l.tiles); ti++ {
 		t := &l.tiles[ti]

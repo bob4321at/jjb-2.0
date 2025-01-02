@@ -19,7 +19,7 @@ var empty_key ebiten.Key
 var set_upped_yet bool = false
 
 func (g *Game) Setup() {
-	test_place = makeLevel("./maps/test_area.png")
+	test_place = makeLevel("./maps/test_area.png", "./art/background.png")
 	player = players["temp"]
 
 	set_upped_yet = true
@@ -35,7 +35,7 @@ func (g *Game) Update() error {
 	current_level = &test_place
 
 	if !test_place.generated {
-		test_place = makeLevel("./maps/test_area.png")
+		test_place = makeLevel("./maps/test_area.png", "./art/background.png")
 	}
 	player.Update()
 	if ebiten.IsKeyPressed(ebiten.KeyX) && !enemy_spawned {

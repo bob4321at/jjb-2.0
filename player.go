@@ -56,7 +56,7 @@ func (p *Player) newProjectile(pos, vel Vec2, damage int, speed float64, pierce 
 	p.projectiles = append(p.projectiles, projectile)
 }
 
-func (p *Player) newEntity(pos Vec2, path string, Update func(e *PlayerEntity)) {
+func (p *Player) newEntity(pos Vec2, starting_vel Vec2, path string, Update func(e *PlayerEntity)) {
 	entity := PlayerEntity{}
 
 	timg, _, err := ebitenutil.NewImageFromFile(path)
@@ -66,7 +66,7 @@ func (p *Player) newEntity(pos Vec2, path string, Update func(e *PlayerEntity)) 
 	entity.img = timg
 
 	entity.pos = pos
-	entity.vel = Vec2{0, 0}
+	entity.vel = starting_vel
 	entity.Update = Update
 
 	p.entities = append(p.entities, entity)
@@ -109,17 +109,17 @@ func (p *Player) Draw(s *ebiten.Image) {
 		s.DrawImage(p.img, &op)
 	}
 
+	for entity_index := 0; entity_index < len(p.entities); entity_index++ {
+		e := &p.entities[entity_index]
+		op := ebiten.DrawImageOptions{}
+		op.GeoM.Translate(e.pos.x-camera.offset.x+640, e.pos.y-camera.offset.y+360)
+		s.DrawImage(e.img, &op)
+	}
+
 	for projectile_index := 0; projectile_index < len(p.projectiles); projectile_index++ {
 		op.GeoM.Reset()
 		op.GeoM.Translate(p.projectiles[projectile_index].pos.x-camera.offset.x+650, p.projectiles[projectile_index].pos.y-camera.offset.y+380)
 		s.DrawImage(p.projectiles[projectile_index].img, &op)
-	}
-
-	for entity_index := 0; entity_index < len(p.entities); entity_index++ {
-		e := &p.entities[entity_index]
-		op := ebiten.DrawImageOptions{}
-		op.GeoM.Translate(e.pos.x, e.pos.y)
-		s.DrawImage(e.img, &op)
 	}
 }
 
