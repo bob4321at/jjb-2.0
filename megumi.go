@@ -1,8 +1,8 @@
 package main
 
 func (p *Player) megumiTp() {
-	p.pos.x = (mouse_x - 640) + (p.pos.x - 16)
-	p.pos.y = (mouse_y - 480) + (p.pos.y + 64)
+	p.pos.x += (mouse_x - 640) - (p.pos.x-camera.offset.x)/2
+	p.pos.y += (mouse_y - 480) - (p.pos.y-camera.offset.y)/2
 }
 
 func (p *Player) megumiBird() {
