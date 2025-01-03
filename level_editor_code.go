@@ -49,8 +49,10 @@ func makeLevel(path string, background_path string) (l Level) {
 						if y-1 > 0 {
 							if l.tile_map[y-1][x] == 0 {
 								if l.tile_map[y+1][x] != 0 {
-									if l.tile_map[y][x+1] != 0 {
-										*t = 1
+									if x+1 < len(l.tile_map[y]) {
+										if l.tile_map[y][x+1] != 0 {
+											*t = 1
+										}
 									}
 								}
 							}
@@ -203,8 +205,10 @@ func makeLevel(path string, background_path string) (l Level) {
 								if y+1 < len(l.tile_map) {
 									if l.tile_map[y+1][x] != 0 {
 										if x-1 > 0 {
-											if l.tile_map[y][x+1] == 0 {
-												*t = 10
+											if x+1 < len(l.tile_map[y]) {
+												if l.tile_map[y][x+1] == 0 {
+													*t = 10
+												}
 											}
 										}
 									}

@@ -31,6 +31,7 @@ type PlayerEntity struct {
 	pos    Vec2
 	vel    Vec2
 	img    *ebiten.Image
+	dir    bool
 	Update func(e *PlayerEntity)
 }
 
@@ -112,7 +113,12 @@ func (p *Player) Draw(s *ebiten.Image) {
 	for entity_index := 0; entity_index < len(p.entities); entity_index++ {
 		e := &p.entities[entity_index]
 		op := ebiten.DrawImageOptions{}
-		op.GeoM.Translate(e.pos.x-camera.offset.x+640, e.pos.y-camera.offset.y+360)
+		if !e.dir {
+			op.GeoM.Translate(e.pos.x-camera.offset.x+640, e.pos.y-camera.offset.y+360)
+		} else {
+			op.GeoM.Scale(-1, 1)
+			op.GeoM.Translate(e.pos.x-camera.offset.x+640+float64(e.img.Bounds().Dx()), e.pos.y-camera.offset.y+360)
+		}
 		s.DrawImage(e.img, &op)
 	}
 

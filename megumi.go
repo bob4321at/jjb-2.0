@@ -1,8 +1,8 @@
 package main
 
 func (p *Player) megumiTp() {
-	p.pos.x = ((mouse_x - 640) / 2) + (p.pos.x - 16)
-	p.pos.y = ((mouse_y - 480) / 2) + (p.pos.y + 32)
+	p.pos.x = (mouse_x - 640) + (p.pos.x - 16)
+	p.pos.y = (mouse_y - 480) + (p.pos.y + 64)
 }
 
 func (p *Player) megumiBird() {
@@ -14,7 +14,7 @@ func (p *Player) megumiBird() {
 }
 
 func (p *Player) megumiMahoraga() {
-	p.newEntity(Vec2{p.pos.x, p.pos.y}, Vec2{1, 0}, "./art/entities/megumi/mahoraga.png", mahoragaUpdate)
+	p.newEntity(Vec2{p.pos.x - 16, p.pos.y - 32}, Vec2{1, 0}, "./art/entities/megumi/mahoraga.png", mahoragaUpdate)
 }
 
 func mahoragaUpdate(e *PlayerEntity) {
@@ -32,6 +32,12 @@ func mahoragaUpdate(e *PlayerEntity) {
 		if collide(Vec2{e.pos.x + e.vel.x, e.pos.y}, Vec2{float64(e.img.Bounds().Dx()), float64(e.img.Bounds().Dy())}, t.pos, Vec2{32, 32}) {
 			e.vel.x = -e.vel.x
 		}
+	}
+
+	if e.vel.x > 0 {
+		e.dir = false
+	} else {
+		e.dir = true
 	}
 
 	e.pos.x += e.vel.x
