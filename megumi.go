@@ -1,15 +1,15 @@
 package main
 
 func (p *Player) megumiTp() {
-	p.pos.x += (mouse_x - 640) - (p.pos.x-camera.offset.x)/2
-	p.pos.y += (mouse_y - 480) - (p.pos.y-camera.offset.y)/2
+	p.pos.x += mouse_x - (1280 / 2)
+	p.pos.y += mouse_y - (720 / 2)
 }
 
 func (p *Player) megumiBird() {
 	if p.pos.x-camera.offset.x+640 < mouse_x {
-		p.newProjectile(Vec2{p.pos.x, p.pos.y}, Vec2{-1, 0}, 1, 3, 5, 100, "./art/projectiles/megumi/birdright.png")
+		p.newProjectile(Vec2{p.pos.x, p.pos.y}, Vec2{-1, 0.5}, 1, 3, 5, 100, "./art/projectiles/megumi/birdright.png")
 	} else {
-		p.newProjectile(Vec2{p.pos.x, p.pos.y}, Vec2{1, 0}, 1, 3, 5, 100, "./art/projectiles/megumi/birdleft.png")
+		p.newProjectile(Vec2{p.pos.x, p.pos.y}, Vec2{1, 0.5}, 1, 3, 5, 100, "./art/projectiles/megumi/birdleft.png")
 	}
 }
 
