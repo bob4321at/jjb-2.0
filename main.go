@@ -16,34 +16,33 @@ var mouse_x, mouse_y float64
 
 var empty_key ebiten.Key
 
-var set_upped_yet bool = false
+var started = false
 
 func (g *Game) Setup() {
-	test_place = makeLevel("./maps/test_area.png", "./art/temp_tileset.png", "./art/background.png")
-	player = players["temp"]
-
-	set_upped_yet = true
+	if !started {
+		levels = append(levels, makeLevel("./maps/level1.png", "./art/temp_tileset.png", "./art/background.png"))
+		current_level = &levels[0]
+		player = players["temp"]
+	}
+	started = true
 }
 
 func (g *Game) Update() error {
-	if !set_upped_yet {
-		g.Setup()
-	}
+	g.Setup()
 	if !ebiten.IsMouseButtonPressed(ebiten.MouseButton0) {
 		clicked = false
 	}
-	current_level = &test_place
 
 	rmx, rmy := ebiten.CursorPosition()
 	mouse_x, mouse_y = float64(rmx), float64(rmy)
 
 	player.Update()
 	if ebiten.IsKeyPressed(ebiten.KeyX) && !enemy_spawned {
-		test_place.Spawn(newEnemy(1, 5, Vec2{}, "./art/enemies/fliehead.png"))
+		current_level.Spawn(newEnemy(1, 5, Vec2{}, "./art/enemies/fliehead.png"))
 		enemy_spawned = true
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyC) && !enemy_spawned {
-		test_place.Spawn(newEnemy(2, 10, Vec2{}, "./art/enemies/crooked.png"))
+		current_level.Spawn(newEnemy(2, 10, Vec2{}, "./art/enemies/crooked.png"))
 		enemy_spawned = true
 	}
 	if !ebiten.IsKeyPressed(ebiten.KeyX) && !ebiten.IsKeyPressed(ebiten.KeyC) {
@@ -60,7 +59,7 @@ func (g *Game) Update() error {
 
 	camera.offset.x = player.pos.x
 	camera.offset.y = player.pos.y
-	test_place.Update(&player)
+	current_level.Update(&player)
 
 	return nil
 }
@@ -69,7 +68,7 @@ var display_img = ebiten.NewImage(1280, 720)
 
 func (g *Game) Draw(s *ebiten.Image) {
 	display_img.Fill(color.RGBA{0, 115, 255, 255})
-	test_place.Draw(display_img, &camera)
+	current_level.Draw(display_img, &camera)
 	player.Draw(display_img)
 	op := ebiten.DrawImageOptions{}
 	op.GeoM.Scale(1.5, 1.5)
@@ -86,6 +85,9 @@ func main() {
 	ebiten.SetWindowResizingMode(ebiten.WindowResizingModeEnabled)
 
 	if err := ebiten.RunGame(&Game{}); err != nil {
+		levels = append(levels, makeLevel("./maps/test_area.png", "./art/temp_tileset.png", "./art/background.png"))
+		current_level = &levels[0]
+		player = players["temp"]
 		panic(err)
 	}
 }

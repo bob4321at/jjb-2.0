@@ -25,6 +25,8 @@ type Level struct {
 	tileset      map[int]*ebiten.Image
 }
 
+var levels = []Level{}
+
 var current_level *Level
 
 func (l *Level) Draw(s *ebiten.Image, cam *Camera) {
@@ -62,5 +64,3 @@ func (l *Level) Spawn(e Enemy) {
 		l.enemies = append(l.enemies, e)
 	}
 }
-
-var test_place Level
