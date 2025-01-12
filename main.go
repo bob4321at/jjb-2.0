@@ -19,7 +19,7 @@ var empty_key ebiten.Key
 var set_upped_yet bool = false
 
 func (g *Game) Setup() {
-	test_place = makeLevel("./maps/test_area.png", "./art/background.png")
+	test_place = makeLevel("./maps/test_area.png", "./art/temp_tileset.png", "./art/background.png")
 	player = players["temp"]
 
 	set_upped_yet = true
@@ -29,14 +29,14 @@ func (g *Game) Update() error {
 	if !set_upped_yet {
 		g.Setup()
 	}
+	if !ebiten.IsMouseButtonPressed(ebiten.MouseButton0) {
+		clicked = false
+	}
+	current_level = &test_place
+
 	rmx, rmy := ebiten.CursorPosition()
 	mouse_x, mouse_y = float64(rmx), float64(rmy)
 
-	current_level = &test_place
-
-	if !test_place.generated {
-		test_place = makeLevel("./maps/test_area.png", "./art/background.png")
-	}
 	player.Update()
 	if ebiten.IsKeyPressed(ebiten.KeyX) && !enemy_spawned {
 		test_place.Spawn(newEnemy(1, 5, Vec2{}, "./art/enemies/fliehead.png"))
@@ -56,10 +56,6 @@ func (g *Game) Update() error {
 		player = players["gojo"]
 	} else if ebiten.IsKeyPressed(ebiten.KeyM) {
 		player = players["megumi"]
-	}
-
-	if !ebiten.IsMouseButtonPressed(ebiten.MouseButton0) {
-		clicked = false
 	}
 
 	camera.offset.x = player.pos.x

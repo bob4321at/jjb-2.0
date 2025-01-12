@@ -28,11 +28,13 @@ type Projectile struct {
 }
 
 type PlayerEntity struct {
-	pos    Vec2
-	vel    Vec2
-	img    *ebiten.Image
-	dir    bool
-	Update func(e *PlayerEntity)
+	pos          Vec2
+	vel          Vec2
+	cooldown     float64
+	max_cooldown float64
+	img          *ebiten.Image
+	dir          bool
+	Update       func(e *PlayerEntity)
 }
 
 type Attack struct {
@@ -57,7 +59,7 @@ func (p *Player) newProjectile(pos, vel Vec2, damage int, speed float64, pierce 
 	p.projectiles = append(p.projectiles, projectile)
 }
 
-func (p *Player) newEntity(pos Vec2, starting_vel Vec2, path string, Update func(e *PlayerEntity)) {
+func (p *Player) newEntity(pos Vec2, starting_vel Vec2, cooldown float64, path string, Update func(e *PlayerEntity)) {
 	entity := PlayerEntity{}
 
 	timg, _, err := ebitenutil.NewImageFromFile(path)
@@ -68,6 +70,10 @@ func (p *Player) newEntity(pos Vec2, starting_vel Vec2, path string, Update func
 
 	entity.pos = pos
 	entity.vel = starting_vel
+
+	entity.cooldown = cooldown
+	entity.max_cooldown = cooldown
+
 	entity.Update = Update
 
 	p.entities = append(p.entities, entity)

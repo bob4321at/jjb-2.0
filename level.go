@@ -1,7 +1,6 @@
 package main
 
 import (
-	"image"
 	"math/rand"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -23,52 +22,10 @@ type Level struct {
 	enemies      []Enemy
 	background   Background
 	generated    bool
-}
-
-var temp_tileset = map[int]*ebiten.Image{
-	0:  ebiten.NewImage(32, 32),
-	1:  ebiten.NewImage(32, 32),
-	2:  ebiten.NewImage(32, 32),
-	3:  ebiten.NewImage(32, 32),
-	4:  ebiten.NewImage(32, 32),
-	5:  ebiten.NewImage(32, 32),
-	6:  ebiten.NewImage(32, 32),
-	7:  ebiten.NewImage(32, 32),
-	8:  ebiten.NewImage(32, 32),
-	9:  ebiten.NewImage(32, 32),
-	10: ebiten.NewImage(32, 32),
-	11: ebiten.NewImage(32, 32),
-	12: ebiten.NewImage(32, 32),
-	13: ebiten.NewImage(32, 32),
-	14: ebiten.NewImage(32, 32),
-	15: ebiten.NewImage(32, 32),
-	16: ebiten.NewImage(32, 32),
+	tileset      map[int]*ebiten.Image
 }
 
 var current_level *Level
-
-func init() {
-	temp_tileset_img, _, err := ebitenutil.NewImageFromFile("./art/temp_tileset.png")
-	if err != nil {
-		panic(err)
-	}
-	temp_tileset[1] = ebiten.NewImageFromImage(temp_tileset_img.SubImage(image.Rect(0, 0, 32, 32)))
-	temp_tileset[2] = ebiten.NewImageFromImage(temp_tileset_img.SubImage(image.Rect(32, 0, 64, 32)))
-	temp_tileset[3] = ebiten.NewImageFromImage(temp_tileset_img.SubImage(image.Rect(64, 0, 96, 32)))
-	temp_tileset[4] = ebiten.NewImageFromImage(temp_tileset_img.SubImage(image.Rect(0, 32, 32, 64)))
-	temp_tileset[5] = ebiten.NewImageFromImage(temp_tileset_img.SubImage(image.Rect(32, 32, 64, 64)))
-	temp_tileset[6] = ebiten.NewImageFromImage(temp_tileset_img.SubImage(image.Rect(64, 32, 96, 64)))
-	temp_tileset[7] = ebiten.NewImageFromImage(temp_tileset_img.SubImage(image.Rect(0, 64, 32, 96)))
-	temp_tileset[8] = ebiten.NewImageFromImage(temp_tileset_img.SubImage(image.Rect(32, 64, 64, 96)))
-	temp_tileset[9] = ebiten.NewImageFromImage(temp_tileset_img.SubImage(image.Rect(64, 64, 96, 96)))
-	temp_tileset[10] = ebiten.NewImageFromImage(temp_tileset_img.SubImage(image.Rect(96, 0, 128, 32)))
-	temp_tileset[11] = ebiten.NewImageFromImage(temp_tileset_img.SubImage(image.Rect(96, 32, 128, 64)))
-	temp_tileset[12] = ebiten.NewImageFromImage(temp_tileset_img.SubImage(image.Rect(96, 64, 128, 96)))
-	temp_tileset[13] = ebiten.NewImageFromImage(temp_tileset_img.SubImage(image.Rect(0, 96, 32, 128)))
-	temp_tileset[14] = ebiten.NewImageFromImage(temp_tileset_img.SubImage(image.Rect(32, 96, 64, 128)))
-	temp_tileset[15] = ebiten.NewImageFromImage(temp_tileset_img.SubImage(image.Rect(64, 96, 96, 128)))
-	temp_tileset[16] = ebiten.NewImageFromImage(temp_tileset_img.SubImage(image.Rect(96, 96, 128, 128)))
-}
 
 func (l *Level) Draw(s *ebiten.Image, cam *Camera) {
 	op := ebiten.DrawImageOptions{}
@@ -78,7 +35,7 @@ func (l *Level) Draw(s *ebiten.Image, cam *Camera) {
 		t := &l.tiles[ti]
 		op.GeoM.Reset()
 		op.GeoM.Translate(t.pos.x-cam.offset.x+640, t.pos.y-cam.offset.y+360)
-		s.DrawImage(temp_tileset[t.tile], &op)
+		s.DrawImage(l.tileset[t.tile], &op)
 	}
 
 	for e := 0; e < len(l.enemies); e++ {

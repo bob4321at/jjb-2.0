@@ -1,13 +1,58 @@
 package main
 
 import (
-	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
+	"image"
 	"image/color"
+
+	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
-func makeLevel(path string, background_path string) (l Level) {
+func makeLevel(path string, tileset_path string, background_path string) (l Level) {
 	l.enemies = []Enemy{}
 	l.background = newBackground(Vec2{0, 1024 * 1.8}, 100, background_path)
+
+	timg, _, err := ebitenutil.NewImageFromFile(tileset_path)
+	if err != nil {
+		panic(err)
+	}
+
+	l.tileset = map[int]*ebiten.Image{
+		0:  ebiten.NewImage(32, 32),
+		1:  ebiten.NewImage(32, 32),
+		2:  ebiten.NewImage(32, 32),
+		3:  ebiten.NewImage(32, 32),
+		4:  ebiten.NewImage(32, 32),
+		5:  ebiten.NewImage(32, 32),
+		6:  ebiten.NewImage(32, 32),
+		7:  ebiten.NewImage(32, 32),
+		8:  ebiten.NewImage(32, 32),
+		9:  ebiten.NewImage(32, 32),
+		10: ebiten.NewImage(32, 32),
+		11: ebiten.NewImage(32, 32),
+		12: ebiten.NewImage(32, 32),
+		13: ebiten.NewImage(32, 32),
+		14: ebiten.NewImage(32, 32),
+		15: ebiten.NewImage(32, 32),
+		16: ebiten.NewImage(32, 32),
+	}
+
+	l.tileset[1] = ebiten.NewImageFromImage(timg.SubImage(image.Rect(0, 0, 32, 32)))
+	l.tileset[2] = ebiten.NewImageFromImage(timg.SubImage(image.Rect(32, 0, 64, 32)))
+	l.tileset[3] = ebiten.NewImageFromImage(timg.SubImage(image.Rect(64, 0, 96, 32)))
+	l.tileset[4] = ebiten.NewImageFromImage(timg.SubImage(image.Rect(0, 32, 32, 64)))
+	l.tileset[5] = ebiten.NewImageFromImage(timg.SubImage(image.Rect(32, 32, 64, 64)))
+	l.tileset[6] = ebiten.NewImageFromImage(timg.SubImage(image.Rect(64, 32, 96, 64)))
+	l.tileset[7] = ebiten.NewImageFromImage(timg.SubImage(image.Rect(0, 64, 32, 96)))
+	l.tileset[8] = ebiten.NewImageFromImage(timg.SubImage(image.Rect(32, 64, 64, 96)))
+	l.tileset[9] = ebiten.NewImageFromImage(timg.SubImage(image.Rect(64, 64, 96, 96)))
+	l.tileset[10] = ebiten.NewImageFromImage(timg.SubImage(image.Rect(96, 0, 128, 32)))
+	l.tileset[11] = ebiten.NewImageFromImage(timg.SubImage(image.Rect(96, 32, 128, 64)))
+	l.tileset[12] = ebiten.NewImageFromImage(timg.SubImage(image.Rect(96, 64, 128, 96)))
+	l.tileset[13] = ebiten.NewImageFromImage(timg.SubImage(image.Rect(0, 96, 32, 128)))
+	l.tileset[14] = ebiten.NewImageFromImage(timg.SubImage(image.Rect(32, 96, 64, 128)))
+	l.tileset[15] = ebiten.NewImageFromImage(timg.SubImage(image.Rect(64, 96, 96, 128)))
+	l.tileset[16] = ebiten.NewImageFromImage(timg.SubImage(image.Rect(96, 96, 128, 128)))
 
 	map_img, _, err := ebitenutil.NewImageFromFile(path)
 	if err != nil {

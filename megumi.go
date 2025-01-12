@@ -14,7 +14,7 @@ func (p *Player) megumiBird() {
 }
 
 func (p *Player) megumiMahoraga() {
-	p.newEntity(Vec2{p.pos.x - 16, p.pos.y - 32}, Vec2{1, 0}, "./art/entities/megumi/mahoraga.png", mahoragaUpdate)
+	p.newEntity(Vec2{p.pos.x - 16, p.pos.y - 32}, Vec2{1, 0}, 1, "./art/entities/megumi/mahoraga.png", mahoragaUpdate)
 }
 
 func mahoragaUpdate(e *PlayerEntity) {
@@ -38,6 +38,18 @@ func mahoragaUpdate(e *PlayerEntity) {
 		e.dir = false
 	} else {
 		e.dir = true
+	}
+
+	if e.cooldown < 0 {
+		for enemy_index := 0; enemy_index < len(current_level.enemies); enemy_index++ {
+			le := &current_level.enemies[enemy_index]
+			if collide(e.pos, Vec2{float64(e.img.Bounds().Dx()), float64(e.img.Bounds().Dy())}, le.pos, Vec2{float64(le.img.Bounds().Dx()), float64(le.img.Bounds().Dy())}) {
+				le.health -= 1
+				e.cooldown = 1
+			}
+		}
+	} else {
+		e.cooldown -= 0.1
 	}
 
 	e.pos.x += e.vel.x
