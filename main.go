@@ -20,7 +20,7 @@ var started = false
 
 func (g *Game) Setup() {
 	if !started {
-		levels = append(levels, loadLevel("./maps/level1/"))
+		levels = append(levels, loadLevel("./maps/test_area/"))
 		current_level = &levels[0]
 		player = players["temp"]
 	}
@@ -85,9 +85,6 @@ func main() {
 	ebiten.SetWindowResizingMode(ebiten.WindowResizingModeEnabled)
 
 	if err := ebiten.RunGame(&Game{}); err != nil {
-		levels = append(levels, loadLevel("./maps/test_area/"))
-		current_level = &levels[0]
-		player = players["temp"]
 		panic(err)
 	}
 }

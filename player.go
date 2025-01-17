@@ -190,16 +190,16 @@ func (p *Player) Update() {
 			if collide(Vec2{p.pos.x, p.pos.y + p.vel.y + 2}, Vec2{32, 62}, Vec2{t.pos.x, t.pos.y}, Vec2{32, 32}) {
 				p.vel.y = 0
 				if ebiten.IsKeyPressed(ebiten.KeyW) || ebiten.IsKeyPressed(ebiten.KeySpace) {
-					p.vel.y = -5.1
-					if collide(Vec2{p.pos.x, p.pos.y + p.vel.y + 2}, Vec2{32, 62}, Vec2{t.pos.x, t.pos.y}, Vec2{32, 32}) {
+					if collide(Vec2{p.pos.x, p.pos.y + p.vel.y - 2}, Vec2{32, 64}, Vec2{t.pos.x, t.pos.y}, Vec2{32, 32}) {
 						p.vel.y = 0
+					} else {
+						p.vel.y = -5.1
 					}
 				}
 			}
 			if collide(Vec2{p.pos.x + p.vel.x, p.pos.y + 2}, Vec2{32, 62}, Vec2{t.pos.x, t.pos.y}, Vec2{32, 32}) {
 				p.vel.x = 0
 			}
-
 		}
 	}
 
