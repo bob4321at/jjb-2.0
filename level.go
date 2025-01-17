@@ -14,6 +14,10 @@ type Tile struct {
 	tile int
 }
 
+type Waves struct {
+	waves [][]int
+}
+
 type Level struct {
 	tile_map     [][]uint8
 	tiles        []Tile
@@ -23,6 +27,7 @@ type Level struct {
 	background   Background
 	generated    bool
 	tileset      map[int]*ebiten.Image
+	waves        Waves
 }
 
 var levels = []Level{}

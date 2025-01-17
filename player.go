@@ -59,7 +59,7 @@ func (p *Player) newProjectile(pos, vel Vec2, damage int, speed float64, pierce 
 	p.projectiles = append(p.projectiles, projectile)
 }
 
-func (p *Player) newEntity(pos Vec2, starting_vel Vec2, cooldown float64, path string, Update func(e *PlayerEntity)) {
+func (p *Player) newEntity(pos Vec2, starting_vel Vec2, cooldown float64, path string, Update func(e *PlayerEntity)) (e *PlayerEntity) {
 	entity := PlayerEntity{}
 
 	timg, _, err := ebitenutil.NewImageFromFile(path)
@@ -77,6 +77,9 @@ func (p *Player) newEntity(pos Vec2, starting_vel Vec2, cooldown float64, path s
 	entity.Update = Update
 
 	p.entities = append(p.entities, entity)
+
+	e = &entity
+	return e
 }
 
 func newPlayer(pos Vec2, img_path string, attacks []Attack) (p Player) {

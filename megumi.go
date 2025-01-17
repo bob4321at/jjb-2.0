@@ -14,7 +14,11 @@ func (p *Player) megumiBird() {
 }
 
 func (p *Player) megumiMahoraga() {
-	p.newEntity(Vec2{p.pos.x - 16, p.pos.y - 32}, Vec2{1, 0}, 1, "./art/entities/megumi/mahoraga.png", mahoragaUpdate)
+	if !p.dir {
+		p.newEntity(Vec2{p.pos.x - 16, p.pos.y - 32}, Vec2{1, 0}, 1, "./art/entities/megumi/mahoraga.png", mahoragaUpdate)
+	} else {
+		p.newEntity(Vec2{p.pos.x - 16, p.pos.y - 32}, Vec2{-1, 0}, 1, "./art/entities/megumi/mahoraga.png", mahoragaUpdate)
+	}
 }
 
 func mahoragaUpdate(e *PlayerEntity) {
