@@ -15,14 +15,16 @@ func (p *Player) megumiBird() {
 
 func (p *Player) megumiMahoraga() {
 	if !p.dir {
-		p.newEntity(Vec2{p.pos.x - 16, p.pos.y - 32}, Vec2{1, 0}, 1, "./art/entities/megumi/mahoraga.png", mahoragaUpdate)
+		p.newEntity(Vec2{p.pos.x - 16, p.pos.y - 32}, Vec2{1, 0}, 1, 100, "./art/entities/megumi/mahoraga.png", mahoragaUpdate)
 	} else {
-		p.newEntity(Vec2{p.pos.x - 16, p.pos.y - 32}, Vec2{-1, 0}, 1, "./art/entities/megumi/mahoraga.png", mahoragaUpdate)
+		p.newEntity(Vec2{p.pos.x - 16, p.pos.y - 32}, Vec2{-1, 0}, 1, 100, "./art/entities/megumi/mahoraga.png", mahoragaUpdate)
 	}
 }
 
 func mahoragaUpdate(e *PlayerEntity) {
 	e.vel.y += 0.1
+
+	e.lifespan -= 0.1
 
 	for tile_index := 0; tile_index < len(current_level.tiles); tile_index++ {
 		t := &current_level.tiles[tile_index]

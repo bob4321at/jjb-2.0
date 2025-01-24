@@ -143,3 +143,8 @@ func (e *Enemy) crookedUpdate(p *Player, l *Level) {
 	e.pos.x += e.vel.x
 	e.pos.y += e.vel.y
 }
+
+var enemy_table = map[int]Enemy{
+	1: newEnemy(1, 5, Vec2{}, "./art/enemies/fliehead.png"),
+	2: newEnemy(2, 10, Vec2{}, "./art/enemies/crooked.png"),
+}

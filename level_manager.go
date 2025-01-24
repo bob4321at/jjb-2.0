@@ -15,9 +15,14 @@ func loadLevel(path string) Level {
 
 	temp_data := Waves{}
 
-	json.Unmarshal(f, &temp_data)
+	if err := json.Unmarshal(f, &temp_data); err != nil {
+		panic(err)
+	}
 
 	l.waves = temp_data
+	l.current_wave = 0
+	l.spawn_timer = 50
+	l.origonal_spawn_timer = 50
 
 	return l
 }

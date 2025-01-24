@@ -20,7 +20,7 @@ var started = false
 
 func (g *Game) Setup() {
 	if !started {
-		levels = append(levels, loadLevel("./maps/test_area/"))
+		levels = append(levels, loadLevel("./maps/level1/"))
 		current_level = &levels[0]
 		player = players["temp"]
 	}

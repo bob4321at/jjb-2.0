@@ -32,6 +32,7 @@ type PlayerEntity struct {
 	vel          Vec2
 	cooldown     float64
 	max_cooldown float64
+	lifespan     float64
 	img          *ebiten.Image
 	dir          bool
 	Update       func(e *PlayerEntity)
@@ -59,7 +60,7 @@ func (p *Player) newProjectile(pos, vel Vec2, damage int, speed float64, pierce 
 	p.projectiles = append(p.projectiles, projectile)
 }
 
-func (p *Player) newEntity(pos Vec2, starting_vel Vec2, cooldown float64, path string, Update func(e *PlayerEntity)) (e *PlayerEntity) {
+func (p *Player) newEntity(pos Vec2, starting_vel Vec2, cooldown float64, lifespan float64, path string, Update func(e *PlayerEntity)) (e *PlayerEntity) {
 	entity := PlayerEntity{}
 
 	timg, _, err := ebitenutil.NewImageFromFile(path)
@@ -73,6 +74,8 @@ func (p *Player) newEntity(pos Vec2, starting_vel Vec2, cooldown float64, path s
 
 	entity.cooldown = cooldown
 	entity.max_cooldown = cooldown
+
+	entity.lifespan = lifespan
 
 	entity.Update = Update
 
@@ -240,6 +243,10 @@ func (p *Player) Update() {
 	for entity_index := 0; entity_index < len(p.entities); entity_index++ {
 		e := &p.entities[entity_index]
 		e.Update(e)
+
+		if e.lifespan < 0 {
+			p.entities = removePlayerEntity(entity_index, p.entities)
+		}
 	}
 
 	p.pos.y += p.vel.y

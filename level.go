@@ -15,19 +15,23 @@ type Tile struct {
 }
 
 type Waves struct {
-	waves [][]int
+	Waves [][]int
 }
 
 type Level struct {
-	tile_map     [][]uint8
-	tiles        []Tile
-	player_spawn Vec2
-	spawn_points []Vec2
-	enemies      []Enemy
-	background   Background
-	generated    bool
-	tileset      map[int]*ebiten.Image
-	waves        Waves
+	tile_map             [][]uint8
+	tiles                []Tile
+	player_spawn         Vec2
+	spawn_points         []Vec2
+	enemies              []Enemy
+	background           Background
+	generated            bool
+	tileset              map[int]*ebiten.Image
+	waves                Waves
+	current_wave         int
+	spawn_timer          float64
+	origonal_spawn_timer float64
+	spawned              bool
 }
 
 var levels = []Level{}
@@ -59,6 +63,29 @@ func (l *Level) Update(p *Player) {
 		}
 		l.enemies[e].checkRemove()
 	}
+
+	if !l.spawned {
+		for enemy_index := 0; enemy_index < len(l.waves.Waves[l.current_wave]); enemy_index += 1 - 1 {
+			if l.spawn_timer < 0 {
+				l.spawn_timer = l.origonal_spawn_timer
+				l.Spawn(enemy_table[l.waves.Waves[l.current_wave][l.waves.Waves[l.current_wave][enemy_index]]])
+				enemy_index += 1
+			} else {
+				l.spawn_timer -= 0.1
+			}
+		}
+		l.spawned = true
+	}
+
+	if len(l.enemies) == 0 {
+		l.spawned = false
+		if l.current_wave+1 < len(l.waves.Waves) {
+			l.current_wave += 1
+		} else {
+			l.spawned = true
+		}
+	}
+
 }
 
 func (l *Level) Spawn(e Enemy) {
