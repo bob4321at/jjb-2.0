@@ -57,10 +57,10 @@ func (l *Level) Draw(s *ebiten.Image, cam *Camera) {
 
 func (l *Level) SpawnWave() {
 	for enemy_index := 0; enemy_index < len(l.waves.Waves[l.current_wave]); enemy_index += 1 - 1 {
-		time.Sleep(10000)
+		time.Sleep(20000)
 		if l.spawn_timer < 0 {
 			l.spawn_timer = l.origonal_spawn_timer
-			l.Spawn(enemy_table[l.waves.Waves[l.current_wave][l.waves.Waves[l.current_wave][enemy_index]]])
+			l.Spawn(enemy_table[l.waves.Waves[l.current_wave][enemy_index]])
 			enemy_index += 1
 		} else {
 			l.spawn_timer -= 0.01
@@ -70,11 +70,7 @@ func (l *Level) SpawnWave() {
 	for l.spawned {
 		if len(l.enemies) == 0 {
 			l.spawned = false
-			if l.current_wave+1 < len(l.waves.Waves) {
-				l.current_wave += 1
-			} else {
-				l.spawned = true
-			}
+			l.current_wave += 1
 		}
 	}
 }
@@ -89,7 +85,7 @@ func (l *Level) Update(p *Player) {
 		l.enemies[e].checkRemove()
 	}
 
-	if !l.spawned {
+	if !l.spawned && l.current_wave < len(l.waves.Waves) {
 		go l.SpawnWave()
 		l.spawned = true
 	}
