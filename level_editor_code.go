@@ -70,6 +70,7 @@ func makeLevel(path string, tileset_path string, background_path string) (l Leve
 			} else if map_img.At(x, y) == yellow {
 				l.player_spawn.x = float64(x * 32)
 				l.player_spawn.y = float64(y * 32)
+				l.background.start.y = float64(y*32 - 550)
 				row = append(row, 0)
 			} else if map_img.At(x, y) == blue {
 				l.spawn_points = append(l.spawn_points, Vec2{float64(x)*32 - 16, float64(y)*32 - 16})

@@ -24,3 +24,7 @@ func removePlayerEntity(index_to_remove int, slice []PlayerEntity) []PlayerEntit
 func removeProjectile(index_to_remove int, slice []Projectile) []Projectile {
 	return append(slice[:index_to_remove], slice[index_to_remove+1:]...)
 }
+
+func deg2rad(num float64) float64 {
+	return num * (180 / 3.14159)
+}

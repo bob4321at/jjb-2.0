@@ -76,11 +76,14 @@ func (l *Level) SpawnWave() {
 }
 
 func (l *Level) Update(p *Player) {
+
 	for e := 0; e < len(l.enemies); e++ {
 		if l.enemies[e].id == 1 {
 			l.enemies[e].flieHeadUpdate(p, l)
 		} else if l.enemies[e].id == 2 {
 			l.enemies[e].crookedUpdate(p, l)
+		} else if l.enemies[e].id == 3 {
+			l.enemies[e].shrimpUpdate(p, l)
 		}
 		l.enemies[e].checkRemove()
 	}

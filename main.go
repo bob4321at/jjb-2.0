@@ -18,9 +18,11 @@ var empty_key ebiten.Key
 
 var started = false
 
+var game_time float64 = 0
+
 func (g *Game) Setup() {
 	if !started {
-		levels = append(levels, loadLevel("./maps/level1/"))
+		levels = append(levels, loadLevel("./maps/leveltwo/"))
 		current_level = &levels[0]
 		player = players["temp"]
 	}
@@ -29,6 +31,9 @@ func (g *Game) Setup() {
 
 func (g *Game) Update() error {
 	g.Setup()
+
+	game_time += 0.1
+
 	if !ebiten.IsMouseButtonPressed(ebiten.MouseButton0) {
 		clicked = false
 	}
@@ -45,7 +50,11 @@ func (g *Game) Update() error {
 		current_level.Spawn(newEnemy(2, 10, Vec2{}, "./art/enemies/crooked.png"))
 		enemy_spawned = true
 	}
-	if !ebiten.IsKeyPressed(ebiten.KeyX) && !ebiten.IsKeyPressed(ebiten.KeyC) {
+	if ebiten.IsKeyPressed(ebiten.KeyZ) && !enemy_spawned {
+		current_level.Spawn(newEnemy(3, 5, Vec2{}, "./art/enemies/shrimp.png"))
+		enemy_spawned = true
+	}
+	if !ebiten.IsKeyPressed(ebiten.KeyX) && !ebiten.IsKeyPressed(ebiten.KeyC) && !ebiten.IsKeyPressed(ebiten.KeyZ) {
 		enemy_spawned = false
 	}
 
