@@ -26,3 +26,17 @@ func loadLevel(path string) Level {
 
 	return l
 }
+
+func loadAllLevels(path string) (levels []Level) {
+	dir, err := os.ReadDir(path)
+	if err != nil {
+		panic(err)
+	}
+
+	for folder_index := 0; folder_index < len(dir); folder_index++ {
+		folder := dir[folder_index]
+		levels = append(levels, loadLevel(path+folder.Name()+"/"))
+	}
+
+	return levels
+}

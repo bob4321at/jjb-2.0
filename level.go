@@ -38,6 +38,7 @@ type Level struct {
 var levels = []Level{}
 
 var current_level *Level
+var current_level_index int
 
 func (l *Level) Draw(s *ebiten.Image, cam *Camera) {
 	op := ebiten.DrawImageOptions{}
@@ -92,7 +93,9 @@ func (l *Level) Update(p *Player) {
 		go l.SpawnWave()
 		l.spawned = true
 	}
-
+	if l.current_wave >= len(l.waves.Waves) && current_level_index+1 < len(levels) {
+		current_level_index += 1
+	}
 }
 
 func (l *Level) Spawn(e Enemy) {

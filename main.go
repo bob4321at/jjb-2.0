@@ -22,8 +22,10 @@ var game_time float64 = 0
 
 func (g *Game) Setup() {
 	if !started {
-		levels = append(levels, loadLevel("./maps/leveltwo/"))
-		current_level = &levels[0]
+		levels = loadAllLevels("./maps/")
+		current_level_index = 0
+		current_level = &levels[current_level_index]
+		initPlayer()
 		player = players["temp"]
 	}
 	started = true
@@ -31,6 +33,12 @@ func (g *Game) Setup() {
 
 func (g *Game) Update() error {
 	g.Setup()
+
+	if &levels[current_level_index] != current_level {
+		current_level = &levels[current_level_index]
+		initPlayer()
+		player = players["temp"]
+	}
 
 	game_time += 0.1
 
@@ -45,6 +53,7 @@ func (g *Game) Update() error {
 	if ebiten.IsKeyPressed(ebiten.KeyX) && !enemy_spawned {
 		current_level.Spawn(newEnemy(1, 5, Vec2{}, "./art/enemies/fliehead.png"))
 		enemy_spawned = true
+		current_level_index += 1
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyC) && !enemy_spawned {
 		current_level.Spawn(newEnemy(2, 10, Vec2{}, "./art/enemies/crooked.png"))
