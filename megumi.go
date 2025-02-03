@@ -49,8 +49,8 @@ func mahoragaUpdate(e *PlayerEntity) {
 	if e.cooldown < 0 {
 		for enemy_index := 0; enemy_index < len(current_level.enemies); enemy_index++ {
 			le := &current_level.enemies[enemy_index]
-			if collide(e.pos, Vec2{float64(e.img.Bounds().Dx()), float64(e.img.Bounds().Dy())}, le.pos, Vec2{float64(le.img.Bounds().Dx()), float64(le.img.Bounds().Dy())}) {
-				le.health -= 1
+			if collide(e.pos, Vec2{float64(e.img.Bounds().Dx()), float64(e.img.Bounds().Dy())}, le.pos, Vec2{float64(le.tex.getTexture().Bounds().Dx()), float64(le.tex.getTexture().Bounds().Dy())}) {
+				le.health -= 2
 				e.cooldown = 1
 			}
 		}
@@ -65,5 +65,5 @@ func mahoragaUpdate(e *PlayerEntity) {
 var megumi_attacks = []Attack{
 	{player.megumiTp, 0, 4},
 	{player.megumiBird, 0, 4},
-	{player.megumiMahoraga, 0, 4},
+	{player.megumiMahoraga, 0, 33},
 }

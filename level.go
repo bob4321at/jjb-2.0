@@ -86,6 +86,9 @@ func (l *Level) Update(p *Player) {
 		} else if l.enemies[e].id == 3 {
 			l.enemies[e].shrimpUpdate(p, l)
 		}
+
+		l.enemies[e].tex.update()
+
 		l.enemies[e].checkRemove()
 	}
 

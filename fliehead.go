@@ -18,11 +18,11 @@ func (e *Enemy) flieHeadUpdate(p *Player, l *Level) {
 	for le := 0; le < len(l.enemies); le++ {
 		oe := &l.enemies[le]
 		if e != oe {
-			if collide(Vec2{e.pos.x, e.pos.y + e.vel.y}, Vec2{32, 32}, Vec2{float64(oe.pos.x), float64(oe.pos.y)}, Vec2{float64(oe.img.Bounds().Dx()), float64(oe.img.Bounds().Dy())}) {
+			if collide(Vec2{e.pos.x, e.pos.y + e.vel.y}, Vec2{32, 32}, Vec2{float64(oe.pos.x), float64(oe.pos.y)}, Vec2{float64(oe.tex.getTexture().Bounds().Dx()), float64(oe.tex.getTexture().Bounds().Dy())}) {
 				e.vel.y = -e.vel.y / 1.2
 				oe.vel.y = e.vel.y / 1.2
 			}
-			if collide(Vec2{e.pos.x + e.vel.x, e.pos.y}, Vec2{32, 32}, Vec2{float64(oe.pos.x), float64(oe.pos.y)}, Vec2{float64(oe.img.Bounds().Dx()), float64(oe.img.Bounds().Dy())}) {
+			if collide(Vec2{e.pos.x + e.vel.x, e.pos.y}, Vec2{32, 32}, Vec2{float64(oe.pos.x), float64(oe.pos.y)}, Vec2{float64(oe.tex.getTexture().Bounds().Dx()), float64(oe.tex.getTexture().Bounds().Dy())}) {
 				e.vel.x = -e.vel.x / 1.2
 				oe.vel.x = e.vel.x / 1.2
 			}

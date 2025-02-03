@@ -1,9 +1,5 @@
 package main
 
-import (
-	"github.com/hajimehoshi/ebiten/v2"
-)
-
 func (e *Enemy) crookedUpdate(p *Player, l *Level) {
 	e.vel.y += 0.1
 
@@ -16,10 +12,10 @@ func (e *Enemy) crookedUpdate(p *Player, l *Level) {
 	for ei := 0; ei < len(l.enemies); ei++ {
 		oe := &l.enemies[ei]
 		if oe != e {
-			if collide(Vec2{e.pos.x, e.pos.y + e.vel.y}, Vec2{64, 64}, Vec2{oe.pos.x, oe.pos.y}, Vec2{float64(oe.img.Bounds().Dx()), float64(oe.img.Bounds().Dy())}) {
+			if collide(Vec2{e.pos.x, e.pos.y + e.vel.y}, Vec2{64, 64}, Vec2{oe.pos.x, oe.pos.y}, Vec2{float64(oe.tex.getTexture().Bounds().Dx()), float64(oe.tex.getTexture().Bounds().Dy())}) {
 				e.vel.y = 0
 			}
-			if collide(Vec2{e.pos.x + e.vel.x, e.pos.y}, Vec2{64, 64}, Vec2{oe.pos.x, oe.pos.y}, Vec2{float64(oe.img.Bounds().Dx()), float64(oe.img.Bounds().Dy())}) {
+			if collide(Vec2{e.pos.x + e.vel.x, e.pos.y}, Vec2{64, 64}, Vec2{oe.pos.x, oe.pos.y}, Vec2{float64(oe.tex.getTexture().Bounds().Dx()), float64(oe.tex.getTexture().Bounds().Dy())}) {
 				e.vel.x = 0
 			}
 		}
@@ -37,9 +33,9 @@ func (e *Enemy) crookedUpdate(p *Player, l *Level) {
 		}
 	}
 
-	if e.health <= 0 {
-		e.img = ebiten.NewImage(16, 16)
-	}
+	// if e.health <= 0 {
+	// 	e.tex.getTexture() = ebiten.NewImage(16, 16)
+	// }
 
 	e.pos.x += e.vel.x
 	e.pos.y += e.vel.y

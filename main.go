@@ -51,16 +51,15 @@ func (g *Game) Update() error {
 
 	player.Update()
 	if ebiten.IsKeyPressed(ebiten.KeyX) && !enemy_spawned {
-		current_level.Spawn(newEnemy(1, 5, Vec2{}, "./art/enemies/fliehead.png"))
+		current_level.Spawn(newEnemy(1, 5, Vec2{}, newAnimatedTexture("./art/enemies/fliehead.png")))
 		enemy_spawned = true
-		current_level_index += 1
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyC) && !enemy_spawned {
-		current_level.Spawn(newEnemy(2, 10, Vec2{}, "./art/enemies/crooked.png"))
+		current_level.Spawn(newEnemy(2, 10, Vec2{}, newTexture("./art/enemies/crooked.png")))
 		enemy_spawned = true
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyZ) && !enemy_spawned {
-		current_level.Spawn(newEnemy(3, 5, Vec2{}, "./art/enemies/shrimp.png"))
+		current_level.Spawn(newEnemy(3, 5, Vec2{}, newTexture("./art/enemies/shrimp.png")))
 		enemy_spawned = true
 	}
 	if !ebiten.IsKeyPressed(ebiten.KeyX) && !ebiten.IsKeyPressed(ebiten.KeyC) && !ebiten.IsKeyPressed(ebiten.KeyZ) {

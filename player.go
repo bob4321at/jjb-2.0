@@ -104,7 +104,7 @@ func newPlayer(pos Vec2, img_path string, attacks []Attack) (p Player) {
 func (p *Player) Punch() {
 	for ie := 0; ie < len(current_level.enemies); ie++ {
 		e := &current_level.enemies[ie]
-		if collide(Vec2{p.pos.x - 32, p.pos.y}, Vec2{96, 64}, e.pos, Vec2{float64(e.img.Bounds().Dx()), float64(e.img.Bounds().Dy())}) {
+		if collide(Vec2{p.pos.x - 32, p.pos.y}, Vec2{96, 64}, e.pos, Vec2{float64(e.tex.getTexture().Bounds().Dx()), float64(e.tex.getTexture().Bounds().Dy())}) {
 			e.health -= 1
 		}
 	}
@@ -219,7 +219,7 @@ func (p *Player) Update() {
 
 		for ei := 0; ei < len(current_level.enemies); ei++ {
 			e := &current_level.enemies[ei]
-			if collide(projectile.pos, Vec2{float64(projectile.img.Bounds().Dx()), float64(projectile.img.Bounds().Dy())}, e.pos, Vec2{float64(e.img.Bounds().Dx()), float64(e.img.Bounds().Dy())}) {
+			if collide(projectile.pos, Vec2{float64(projectile.img.Bounds().Dx()), float64(projectile.img.Bounds().Dy())}, e.pos, Vec2{float64(e.tex.getTexture().Bounds().Dx()), float64(e.tex.getTexture().Bounds().Dy())}) {
 				e.health -= projectile.damage
 				if projectile.pierce == -1 {
 					p.projectiles = removeProjectile(projectile_index, p.projectiles)
