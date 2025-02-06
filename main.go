@@ -26,7 +26,7 @@ func (g *Game) Setup() {
 		current_level_index = 0
 		current_level = &levels[current_level_index]
 		initPlayer()
-		player = players["temp"]
+		player = players["greg"]
 	}
 	started = true
 }
@@ -37,7 +37,7 @@ func (g *Game) Update() error {
 	if &levels[current_level_index] != current_level {
 		current_level = &levels[current_level_index]
 		initPlayer()
-		player = players["temp"]
+		player = players["greg"]
 	}
 
 	game_time += 0.1

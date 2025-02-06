@@ -10,7 +10,7 @@ import (
 type Player struct {
 	pos         Vec2
 	vel         Vec2
-	img         *ebiten.Image
+	img         RenderableTexture
 	dir         bool
 	attacks     []Attack
 	projectiles []Projectile
@@ -85,14 +85,10 @@ func (p *Player) newEntity(pos Vec2, starting_vel Vec2, cooldown float64, lifesp
 	return e
 }
 
-func newPlayer(pos Vec2, img_path string, attacks []Attack) (p Player) {
+func newPlayer(pos Vec2, img RenderableTexture, attacks []Attack) (p Player) {
 	p.pos = pos
 	p.vel = Vec2{0, 0}
 
-	img, _, err := ebitenutil.NewImageFromFile(img_path)
-	if err != nil {
-		panic(err)
-	}
 	p.img = img
 
 	p.attacks = attacks
@@ -115,11 +111,11 @@ func (p *Player) Draw(s *ebiten.Image) {
 
 	if !p.dir {
 		op.GeoM.Translate(640, 360)
-		s.DrawImage(p.img, &op)
+		s.DrawImage(p.img.getTexture(), &op)
 	} else {
 		op.GeoM.Scale(-1, 1)
 		op.GeoM.Translate(640+32, 360)
-		s.DrawImage(p.img, &op)
+		s.DrawImage(p.img.getTexture(), &op)
 	}
 
 	for entity_index := 0; entity_index < len(p.entities); entity_index++ {
@@ -142,6 +138,8 @@ func (p *Player) Draw(s *ebiten.Image) {
 }
 
 func (p *Player) Update() {
+	p.img.update()
+
 	p.vel.y += 0.1
 
 	if p.vel.x > 5 {
@@ -256,5 +254,5 @@ func (p *Player) Update() {
 var player Player
 
 func init() {
-	player = newPlayer(Vec2{0, 0}, "./art/temp_player.png", []Attack{})
+	player = newPlayer(Vec2{0, 0}, newAnimatedTexture("./art/players/gojo.png"), []Attack{})
 }

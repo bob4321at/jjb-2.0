@@ -51,7 +51,7 @@ func mahoragaUpdate(e *PlayerEntity) {
 			le := &current_level.enemies[enemy_index]
 			if collide(e.pos, Vec2{float64(e.img.Bounds().Dx()), float64(e.img.Bounds().Dy())}, le.pos, Vec2{float64(le.tex.getTexture().Bounds().Dx()), float64(le.tex.getTexture().Bounds().Dy())}) {
 				le.health -= 2
-				e.cooldown = 1
+				e.cooldown = 0.5
 			}
 		}
 	} else {

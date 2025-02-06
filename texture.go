@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"image"
+	"log"
 	"os"
 	"strings"
 
@@ -82,6 +83,8 @@ func newAnimatedTexture(path string) *AnimatedTexture {
 	json.Unmarshal(temp_data, &temp)
 
 	animations := []Animation{{}}
+
+	log.Fatal(string(temp_data))
 
 	for anim := 0; anim < len(temp.Frames); anim++ {
 		for fram := 0; fram < len(temp.Frames[anim]); fram++ {
