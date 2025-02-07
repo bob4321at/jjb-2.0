@@ -8,13 +8,14 @@ import (
 )
 
 type Player struct {
-	pos         Vec2
-	vel         Vec2
-	img         RenderableTexture
-	dir         bool
-	attacks     []Attack
-	projectiles []Projectile
-	entities    []PlayerEntity
+	pos               Vec2
+	vel               Vec2
+	img               AnimatedTexture
+	dir               bool
+	attacks           []Attack
+	damage_multiplier float64
+	projectiles       []Projectile
+	entities          []PlayerEntity
 }
 
 type Projectile struct {
@@ -85,7 +86,7 @@ func (p *Player) newEntity(pos Vec2, starting_vel Vec2, cooldown float64, lifesp
 	return e
 }
 
-func newPlayer(pos Vec2, img RenderableTexture, attacks []Attack) (p Player) {
+func newPlayer(pos Vec2, img AnimatedTexture, attacks []Attack) (p Player) {
 	p.pos = pos
 	p.vel = Vec2{0, 0}
 
@@ -93,6 +94,7 @@ func newPlayer(pos Vec2, img RenderableTexture, attacks []Attack) (p Player) {
 
 	p.attacks = attacks
 	p.dir = false
+	p.damage_multiplier = 1
 
 	return p
 }
@@ -115,7 +117,7 @@ func (p *Player) Draw(s *ebiten.Image) {
 	} else {
 		op.GeoM.Scale(-1, 1)
 		op.GeoM.Translate(640+32, 360)
-		s.DrawImage(p.img.getTexture(), &op)
+		p.img.draw(s, &op)
 	}
 
 	for entity_index := 0; entity_index < len(p.entities); entity_index++ {
@@ -141,6 +143,12 @@ func (p *Player) Update() {
 	p.img.update()
 
 	p.vel.y += 0.1
+
+	if p.vel.x != 0 {
+		p.img.current_animation = 1
+	} else {
+		p.img.current_animation = 0
+	}
 
 	if p.vel.x > 5 {
 		p.vel.x -= 0.1
@@ -254,5 +262,5 @@ func (p *Player) Update() {
 var player Player
 
 func init() {
-	player = newPlayer(Vec2{0, 0}, newAnimatedTexture("./art/players/gojo.png"), []Attack{})
+	player = newPlayer(Vec2{0, 0}, *newAnimatedTexture("./art/players/gojo.png"), []Attack{})
 }

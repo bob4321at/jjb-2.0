@@ -2,8 +2,8 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"image"
-	"log"
 	"os"
 	"strings"
 
@@ -47,16 +47,16 @@ func (t *Texture) getTexture() *ebiten.Image {
 func (t *Texture) update() {}
 
 type Animation struct {
-	frames []*ebiten.Image
-	speed  float64
-	timer  float64
+	frames             []*ebiten.Image
+	animation_progress int
+	speed              float64
+	timer              float64
 }
 
 type AnimatedTexture struct {
-	path               string
-	animations         []Animation
-	current_animation  int
-	animation_progress int
+	path              string
+	animations        []Animation
+	current_animation int
 }
 
 type SpriteSheetData struct {
@@ -82,16 +82,18 @@ func newAnimatedTexture(path string) *AnimatedTexture {
 
 	json.Unmarshal(temp_data, &temp)
 
-	animations := []Animation{{}}
+	animations := []Animation{}
 
-	log.Fatal(string(temp_data))
-
+	fmt.Println(path)
 	for anim := 0; anim < len(temp.Frames); anim++ {
+		animations = append(animations, Animation{})
+		animations[anim].speed = float64(temp.Speed)
+		animations[anim].timer = 0
 		for fram := 0; fram < len(temp.Frames[anim]); fram++ {
+			fmt.Println(fram)
 			frame := []float64{float64(int(temp.Frames[anim][fram][0])), float64(int(temp.Frames[anim][fram][1])), float64(int(temp.Frames[anim][fram][2])), float64(int(temp.Frames[anim][fram][3]))}
 			animations[anim].frames = append(animations[anim].frames, ebiten.NewImageFromImage(sprite_sheet.SubImage(image.Rect(int(frame[0]), int(frame[1]), int(frame[2]), int(frame[3])))))
-			animations[anim].speed = float64(temp.Speed)
-			animations[anim].timer = 10
+			fmt.Println(animations)
 		}
 	}
 	at.animations = animations
@@ -104,21 +106,21 @@ func newFunction(animations []Animation, anim int, frame []float64) {
 }
 
 func (t *AnimatedTexture) draw(s *ebiten.Image, op *ebiten.DrawImageOptions) {
-	s.DrawImage(t.animations[t.current_animation].frames[t.animation_progress], op)
+	s.DrawImage(t.animations[t.current_animation].frames[t.animations[t.current_animation].animation_progress], op)
 }
 
 func (t *AnimatedTexture) update() {
 	t.animations[t.current_animation].timer -= t.animations[t.current_animation].speed
 
 	if t.animations[t.current_animation].timer < 0 {
-		t.animation_progress += 1
-		if t.animation_progress >= len(t.animations[t.current_animation].frames) {
-			t.animation_progress = 0
+		t.animations[t.current_animation].animation_progress += 1
+		if t.animations[t.current_animation].animation_progress >= len(t.animations[t.current_animation].frames) {
+			t.animations[t.current_animation].animation_progress = 0
 		}
 		t.animations[t.current_animation].timer = 1
 	}
 }
 
 func (t *AnimatedTexture) getTexture() *ebiten.Image {
-	return t.animations[t.current_animation].frames[t.animation_progress]
+	return t.animations[t.current_animation].frames[t.animations[t.current_animation].animation_progress]
 }

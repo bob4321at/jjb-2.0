@@ -72,6 +72,8 @@ func (g *Game) Update() error {
 		player = players["gojo"]
 	} else if ebiten.IsKeyPressed(ebiten.KeyM) {
 		player = players["megumi"]
+	} else if ebiten.IsKeyPressed(ebiten.KeyB) {
+		player = players["boberto"]
 	}
 
 	camera.offset.x = player.pos.x
