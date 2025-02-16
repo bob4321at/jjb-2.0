@@ -137,6 +137,12 @@ func (p *Player) Punch() {
 func (p *Player) Draw(s *ebiten.Image) {
 	op := ebiten.DrawImageOptions{}
 
+	op.GeoM.Scale(2-camera.offset.x, 2-camera.offset.y)
+	op.GeoM.Translate(2000, -2000)
+	s.DrawImage(domain_background, &op)
+
+	op.GeoM.Reset()
+
 	op.GeoM.Scale(2, 2)
 	op.GeoM.Translate(2000-camera.offset.x, -2000-camera.offset.y)
 	s.DrawImage(p.domain.img.getTexture(), &op)
@@ -227,6 +233,21 @@ func (p *Player) Update() {
 
 	if ebiten.IsKeyPressed(ebiten.KeyR) {
 		p.domain.effect(*&current_level)
+	}
+
+	if collide(Vec2{p.pos.x, p.pos.y + p.vel.y + 2}, Vec2{32, 62}, Vec2{2000 - (1280 / 2), -2000 - (720 / 2) + (449 * 2)}, Vec2{2048, (126 * 2)}) {
+		p.vel.y = 0
+		if ebiten.IsKeyPressed(ebiten.KeyW) || ebiten.IsKeyPressed(ebiten.KeySpace) {
+			if collide(Vec2{p.pos.x, p.pos.y + p.vel.y - 2}, Vec2{32, 62}, Vec2{2000, -2000 + (449 * 2)}, Vec2{2048, (126 * 2)}) {
+				p.vel.y = 0
+			} else {
+				p.vel.y = -5.1
+			}
+		}
+	}
+
+	if collide(Vec2{p.pos.x + p.vel.x, p.pos.y + 2}, Vec2{32, 62}, Vec2{2000 - (1280 / 2), -2000 - (720 / 2) + (449 * 2)}, Vec2{2048, (126 * 2)}) {
+		p.vel.x = 0
 	}
 
 	for ti := 0; ti < len(current_level.tiles); ti++ {

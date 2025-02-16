@@ -4,6 +4,7 @@ import (
 	"image/color"
 
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
 type Game struct{}
@@ -20,6 +21,8 @@ var started = false
 
 var game_time float64 = 0
 
+var domain_background, _, _ = ebitenutil.NewImageFromFile("./art/domains/domain_backdrop.png")
+
 func (g *Game) Setup() {
 	if !started {
 		levels = loadAllLevels("./maps/")
@@ -28,6 +31,7 @@ func (g *Game) Setup() {
 		initPlayer()
 		player = players["greg"]
 	}
+
 	started = true
 }
 
