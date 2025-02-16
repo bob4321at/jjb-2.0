@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"image"
 	"os"
 	"strings"
@@ -84,16 +83,13 @@ func newAnimatedTexture(path string) *AnimatedTexture {
 
 	animations := []Animation{}
 
-	fmt.Println(path)
 	for anim := 0; anim < len(temp.Frames); anim++ {
 		animations = append(animations, Animation{})
 		animations[anim].speed = float64(temp.Speed)
 		animations[anim].timer = 0
 		for fram := 0; fram < len(temp.Frames[anim]); fram++ {
-			fmt.Println(fram)
 			frame := []float64{float64(int(temp.Frames[anim][fram][0])), float64(int(temp.Frames[anim][fram][1])), float64(int(temp.Frames[anim][fram][2])), float64(int(temp.Frames[anim][fram][3]))}
 			animations[anim].frames = append(animations[anim].frames, ebiten.NewImageFromImage(sprite_sheet.SubImage(image.Rect(int(frame[0]), int(frame[1]), int(frame[2]), int(frame[3])))))
-			fmt.Println(animations)
 		}
 	}
 	at.animations = animations

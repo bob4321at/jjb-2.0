@@ -1,6 +1,8 @@
 package main
 
-import "time"
+import (
+	"time"
+)
 
 func (p *Player) bobertoDamageBuff() {
 	p.damage_multiplier = 1.3
@@ -22,6 +24,16 @@ func (p *Player) bobertoFireball() {
 
 func (p *Player) bobertoFirePiller() {
 	p.newProjectile(Vec2{p.pos.x - 64, p.pos.y - 512 + 64}, Vec2{0, 0}, 20, 0, 100, 20, "./art/projectiles/boberto/fire_pillar.png")
+}
+
+func (p *Player) bobertoDomain(l *Level) {
+	for enemy_index := 0; enemy_index < len(l.enemies); enemy_index++ {
+		e := &l.enemies[enemy_index]
+		e.pos.x = 2000
+		e.pos.y = -2000
+	}
+	p.pos.x = 2000
+	p.pos.y = -1600
 }
 
 var boberto_attacks = []Attack{

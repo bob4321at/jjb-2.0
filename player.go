@@ -16,6 +16,7 @@ type Player struct {
 	damage_multiplier float64
 	projectiles       []Projectile
 	entities          []PlayerEntity
+	domain            Domain
 }
 
 type Projectile struct {
@@ -37,6 +38,11 @@ type PlayerEntity struct {
 	img          *ebiten.Image
 	dir          bool
 	Update       func(e *PlayerEntity)
+}
+
+type Domain struct {
+	img    RenderableTexture
+	effect func(l *Level)
 }
 
 type Attack struct {
@@ -86,7 +92,24 @@ func (p *Player) newEntity(pos Vec2, starting_vel Vec2, cooldown float64, lifesp
 	return e
 }
 
-func newPlayer(pos Vec2, img AnimatedTexture, attacks []Attack) (p Player) {
+func (p *Player) newDomain(img RenderableTexture, effect func(l *Level)) (d Domain) {
+	d.img = img
+	d.effect = effect
+
+	return d
+}
+
+func (p *Player) simpleDomain(l *Level) {
+	for enemy_index := 0; enemy_index < len(l.enemies); enemy_index++ {
+		e := &l.enemies[enemy_index]
+		e.pos.x = 2000
+		e.pos.y = -2000
+	}
+	p.pos.x = 2000
+	p.pos.y = -1600
+}
+
+func newPlayer(pos Vec2, img AnimatedTexture, domain_img RenderableTexture, domain_effect func(l *Level), attacks []Attack) (p Player) {
 	p.pos = pos
 	p.vel = Vec2{0, 0}
 
@@ -95,6 +118,9 @@ func newPlayer(pos Vec2, img AnimatedTexture, attacks []Attack) (p Player) {
 	p.attacks = attacks
 	p.dir = false
 	p.damage_multiplier = 1
+
+	domain := p.newDomain(domain_img, domain_effect)
+	p.domain = domain
 
 	return p
 }
@@ -110,6 +136,12 @@ func (p *Player) Punch() {
 
 func (p *Player) Draw(s *ebiten.Image) {
 	op := ebiten.DrawImageOptions{}
+
+	op.GeoM.Scale(2, 2)
+	op.GeoM.Translate(2000-camera.offset.x, -2000-camera.offset.y)
+	s.DrawImage(p.domain.img.getTexture(), &op)
+
+	op.GeoM.Reset()
 
 	if !p.dir {
 		op.GeoM.Translate(640, 360)
@@ -193,6 +225,10 @@ func (p *Player) Update() {
 		}
 	}
 
+	if ebiten.IsKeyPressed(ebiten.KeyR) {
+		p.domain.effect(*&current_level)
+	}
+
 	for ti := 0; ti < len(current_level.tiles); ti++ {
 		t := &current_level.tiles[ti]
 		if t.tile != 0 {
@@ -262,5 +298,5 @@ func (p *Player) Update() {
 var player Player
 
 func init() {
-	player = newPlayer(Vec2{0, 0}, *newAnimatedTexture("./art/players/gojo.png"), []Attack{})
+	player = newPlayer(Vec2{0, 0}, *newAnimatedTexture("./art/players/greg.png"), newTexture("./art/domains/simple_domain.png"), func(l *Level) { player.simpleDomain(current_level) }, greg_attacks)
 }
