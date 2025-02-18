@@ -42,6 +42,22 @@ func (e *Enemy) flieHeadUpdate(p *Player, l *Level) {
 		}
 	}
 
+	if collide(Vec2{e.pos.x, e.pos.y + e.vel.y + 2}, Vec2{32, 64}, Vec2{2000 - (1280 / 2), -2000 - (720 / 2) + (449 * 2)}, Vec2{2048, (126 * 2)}) {
+		e.vel.y = 0
+	}
+
+	if collide(Vec2{e.pos.x + e.vel.x, e.pos.y}, Vec2{32, 32}, Vec2{2000 - (1280 / 2), -2000 - (720 / 2) + (449 * 2)}, Vec2{2048, (126 * 2)}) {
+		e.vel.x = 0
+	}
+
+	if collide(Vec2{e.pos.x + e.vel.x, e.pos.y}, Vec2{32, 64}, Vec2{2000 - (1280 / 2), -3000 - (720 / 2) + (449 * 2)}, Vec2{1, 1000}) {
+		e.vel.x = 0
+	}
+
+	if collide(Vec2{e.pos.x + e.vel.x, e.pos.y}, Vec2{32, 64}, Vec2{2000 + 2048 - (1280 / 2), -3000 - (720 / 2) + (449 * 2)}, Vec2{1, 1000}) {
+		e.vel.x = 0
+	}
+
 	e.pos.x += e.vel.x
 	e.pos.y += e.vel.y
 }

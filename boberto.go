@@ -1,6 +1,7 @@
 package main
 
 import (
+	"math/rand"
 	"time"
 )
 
@@ -29,8 +30,8 @@ func (p *Player) bobertoFirePiller() {
 func (p *Player) bobertoDomain(l *Level) {
 	for enemy_index := 0; enemy_index < len(l.enemies); enemy_index++ {
 		e := &l.enemies[enemy_index]
-		e.pos.x = 2000
-		e.pos.y = -2000
+		e.pos.x = 1800 + (rand.Float64() * 1000)
+		e.pos.y = -1800 - (rand.Float64() * 300)
 	}
 	p.pos.x = 2000
 	p.pos.y = -1600

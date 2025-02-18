@@ -2,6 +2,7 @@ package main
 
 import (
 	"math"
+	"math/rand"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
@@ -102,8 +103,8 @@ func (p *Player) newDomain(img RenderableTexture, effect func(l *Level)) (d Doma
 func (p *Player) simpleDomain(l *Level) {
 	for enemy_index := 0; enemy_index < len(l.enemies); enemy_index++ {
 		e := &l.enemies[enemy_index]
-		e.pos.x = 2000
-		e.pos.y = -2000
+		e.pos.x = 1800 + (rand.Float64() * 1000)
+		e.pos.y = -1800 - (rand.Float64() * 300)
 	}
 	p.pos.x = 2000
 	p.pos.y = -1600
@@ -136,16 +137,6 @@ func (p *Player) Punch() {
 
 func (p *Player) Draw(s *ebiten.Image) {
 	op := ebiten.DrawImageOptions{}
-
-	op.GeoM.Scale(2-camera.offset.x, 2-camera.offset.y)
-	op.GeoM.Translate(2000, -2000)
-	s.DrawImage(domain_background, &op)
-
-	op.GeoM.Reset()
-
-	op.GeoM.Scale(2, 2)
-	op.GeoM.Translate(2000-camera.offset.x, -2000-camera.offset.y)
-	s.DrawImage(p.domain.img.getTexture(), &op)
 
 	op.GeoM.Reset()
 
@@ -247,6 +238,14 @@ func (p *Player) Update() {
 	}
 
 	if collide(Vec2{p.pos.x + p.vel.x, p.pos.y + 2}, Vec2{32, 62}, Vec2{2000 - (1280 / 2), -2000 - (720 / 2) + (449 * 2)}, Vec2{2048, (126 * 2)}) {
+		p.vel.x = 0
+	}
+
+	if collide(Vec2{p.pos.x + p.vel.x, p.pos.y + 2}, Vec2{32, 62}, Vec2{2000 - (1280 / 2), -3000 - (720 / 2) + (449 * 2)}, Vec2{1, 1000}) {
+		p.vel.x = 0
+	}
+
+	if collide(Vec2{p.pos.x + p.vel.x, p.pos.y + 2}, Vec2{32, 62}, Vec2{2000 + 2048 - (1280 / 2), -3000 - (720 / 2) + (449 * 2)}, Vec2{1, 1000}) {
 		p.vel.x = 0
 	}
 

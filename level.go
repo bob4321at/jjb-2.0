@@ -51,6 +51,18 @@ func (l *Level) Draw(s *ebiten.Image, cam *Camera) {
 		s.DrawImage(l.tileset[t.tile], &op)
 	}
 
+	op.GeoM.Reset()
+
+	op.GeoM.Scale(2, 2)
+	op.GeoM.Translate(1000-camera.offset.x, -2500-camera.offset.y)
+	s.DrawImage(domain_background, &op)
+
+	op.GeoM.Reset()
+
+	op.GeoM.Scale(2, 2)
+	op.GeoM.Translate(2000-camera.offset.x, -2000-camera.offset.y)
+	s.DrawImage(player.domain.img.getTexture(), &op)
+
 	for e := 0; e < len(l.enemies); e++ {
 		l.enemies[e].Draw(s, cam)
 	}
