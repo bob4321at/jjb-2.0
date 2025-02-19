@@ -1,7 +1,9 @@
 package main
 
+import "math"
+
 func (e *Enemy) flieHeadUpdate(p *Player, l *Level) {
-	e.vel.x += -0.015 * (e.pos.x - p.pos.x) * (e.pos.y / 100) / 20
+	e.vel.x += -0.015 * (e.pos.x - p.pos.x) * (math.Abs(e.pos.y / 100)) / 20
 
 	if e.pos.y > p.pos.y-128 {
 		e.vel.y -= 1
