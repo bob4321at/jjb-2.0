@@ -3,6 +3,7 @@ package main
 import (
 	"math"
 	"math/rand"
+	"time"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
@@ -12,6 +13,7 @@ type Player struct {
 	pos               Vec2
 	vel               Vec2
 	img               AnimatedTexture
+	health            int
 	dir               bool
 	attacks           []Attack
 	damage_multiplier float64
@@ -108,6 +110,10 @@ func (p *Player) simpleDomain(l *Level) {
 	}
 	p.pos.x = 2000
 	p.pos.y = -1600
+
+	time.Sleep(30 * time.Second)
+
+	p.pos = l.player_spawn
 }
 
 func newPlayer(pos Vec2, img AnimatedTexture, domain_img RenderableTexture, domain_effect func(l *Level), attacks []Attack) (p Player) {
@@ -115,6 +121,8 @@ func newPlayer(pos Vec2, img AnimatedTexture, domain_img RenderableTexture, doma
 	p.vel = Vec2{0, 0}
 
 	p.img = img
+
+	p.health = 100
 
 	p.attacks = attacks
 	p.dir = false
@@ -223,7 +231,7 @@ func (p *Player) Update() {
 	}
 
 	if ebiten.IsKeyPressed(ebiten.KeyR) {
-		p.domain.effect(*&current_level)
+		go p.domain.effect(*&current_level)
 	}
 
 	if collide(Vec2{p.pos.x, p.pos.y + p.vel.y + 2}, Vec2{32, 62}, Vec2{2000 - (1280 / 2), -2000 - (720 / 2) + (449 * 2)}, Vec2{2048, (126 * 2)}) {

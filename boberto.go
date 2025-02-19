@@ -6,12 +6,12 @@ import (
 )
 
 func (p *Player) bobertoDamageBuff() {
-	p.damage_multiplier = 1.3
+	p.damage_multiplier *= 1.3
 	p.img = *newAnimatedTexture("./art/players/strong_boberto.png")
 
 	time.Sleep(time.Second * 5)
 
-	p.damage_multiplier = 1
+	p.damage_multiplier /= 1.3
 	p.img = *newAnimatedTexture("./art/players/boberto.png")
 }
 
@@ -35,6 +35,18 @@ func (p *Player) bobertoDomain(l *Level) {
 	}
 	p.pos.x = 2000
 	p.pos.y = -1600
+
+	p.health /= 2
+
+	p.damage_multiplier *= 2
+	p.img = *newAnimatedTexture("./art/players/strong_boberto.png")
+
+	time.Sleep(30 * time.Second)
+
+	p.damage_multiplier /= 2
+	p.img = *newAnimatedTexture("./art/players/boberto.png")
+
+	p.pos = l.player_spawn
 }
 
 var boberto_attacks = []Attack{
