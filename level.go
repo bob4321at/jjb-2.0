@@ -97,6 +97,8 @@ func (l *Level) Update(p *Player) {
 			l.enemies[e].crookedUpdate(p, l)
 		} else if l.enemies[e].id == 3 {
 			l.enemies[e].shrimpUpdate(p, l)
+		} else if l.enemies[e].id == 4 {
+			l.enemies[e].bossHeadUpdate(p, l)
 		}
 
 		l.enemies[e].tex.update()

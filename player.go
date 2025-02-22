@@ -20,6 +20,7 @@ type Player struct {
 	projectiles       []Projectile
 	entities          []PlayerEntity
 	domain            Domain
+	domain_timer      float64
 }
 
 type Projectile struct {
@@ -105,8 +106,10 @@ func (p *Player) newDomain(img RenderableTexture, effect func(l *Level)) (d Doma
 func (p *Player) simpleDomain(l *Level) {
 	for enemy_index := 0; enemy_index < len(l.enemies); enemy_index++ {
 		e := &l.enemies[enemy_index]
-		e.pos.x = 1800 + (rand.Float64() * 1000)
-		e.pos.y = -1800 - (rand.Float64() * 300)
+		if collide(Vec2{p.pos.x - 1024, p.pos.y - 1024}, Vec2{2048, 2048}, e.pos, Vec2{float64(e.tex.getTexture().Bounds().Dx()), float64(e.tex.getTexture().Bounds().Dy())}) {
+			e.pos.x = 1800 + (rand.Float64() * 1000)
+			e.pos.y = -1800 - (rand.Float64() * 300)
+		}
 	}
 	p.pos.x = 2000
 	p.pos.y = -1600
@@ -130,6 +133,7 @@ func newPlayer(pos Vec2, img AnimatedTexture, domain_img RenderableTexture, doma
 
 	domain := p.newDomain(domain_img, domain_effect)
 	p.domain = domain
+	p.domain_timer = 0
 
 	return p
 }
@@ -221,17 +225,25 @@ func (p *Player) Update() {
 
 	for b := 0; b < len(p.attacks); b++ {
 		p.attacks[b].cooldown -= 0.1
-		if ebiten.IsKeyPressed(attack_keys[b]) && p.attacks[b].cooldown < 0 && attack_keys[b] != empty_key {
+		if p.attacks[b].cooldown < 0 {
+			p.attacks[b].cooldown = 0
+		}
+		if ebiten.IsKeyPressed(attack_keys[b]) && p.attacks[b].cooldown <= 0 && attack_keys[b] != empty_key {
 			p.attacks[b].attack()
 			p.attacks[b].cooldown = p.attacks[b].max_cooldown
-		} else if ebiten.IsMouseButtonPressed(ebiten.MouseButton2) && p.attacks[1].cooldown < 0 {
+		} else if ebiten.IsMouseButtonPressed(ebiten.MouseButton2) && p.attacks[1].cooldown <= 0 {
 			p.attacks[1].attack()
 			p.attacks[1].cooldown = p.attacks[1].max_cooldown
 		}
 	}
 
-	if ebiten.IsKeyPressed(ebiten.KeyR) {
-		go p.domain.effect(*&current_level)
+	if p.domain_timer < 0 {
+		if ebiten.IsKeyPressed(ebiten.KeyR) {
+			go p.domain.effect(*&current_level)
+			p.domain_timer = 240
+		}
+	} else {
+		p.domain_timer -= 0.1
 	}
 
 	if collide(Vec2{p.pos.x, p.pos.y + p.vel.y + 2}, Vec2{32, 62}, Vec2{2000 - (1280 / 2), -2000 - (720 / 2) + (449 * 2)}, Vec2{2048, (126 * 2)}) {

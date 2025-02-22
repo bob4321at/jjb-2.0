@@ -23,6 +23,12 @@ var game_time float64 = 0
 
 var domain_background, _, _ = ebitenutil.NewImageFromFile("./art/domains/domain_backdrop.png")
 
+var healthbar_img, _, _ = ebitenutil.NewImageFromFile("./art/ui/healthbar.png")
+
+var keybinds, _, _ = ebitenutil.NewImageFromFile("./art/ui/keybinds.png")
+
+var keybind_cover, _, _ = ebitenutil.NewImageFromFile("./art/ui/keybing_cover.png")
+
 func (g *Game) Setup() {
 	if !started {
 		levels = loadAllLevels("./maps/")
@@ -60,6 +66,7 @@ func (g *Game) Update() error {
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyC) && !enemy_spawned {
 		current_level.Spawn(newEnemy(2, 10, Vec2{}, newTexture("./art/enemies/crooked.png")))
+		player.health -= 1
 		enemy_spawned = true
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyZ) && !enemy_spawned {
@@ -97,6 +104,7 @@ func (g *Game) Draw(s *ebiten.Image) {
 	op.GeoM.Scale(1.5, 1.5)
 	op.GeoM.Translate(-float64(s.Bounds().Dx()/4), -float64(s.Bounds().Dy()/4))
 	s.DrawImage(display_img, &op)
+	drawUi(s)
 }
 
 func (g *Game) Layout(ow, oh int) (sw, sh int) {

@@ -8,6 +8,7 @@ type Enemy struct {
 	id         int
 	health     int
 	max_health int
+	damage     int
 	alive      bool
 	pos        Vec2
 	vel        Vec2
@@ -55,7 +56,8 @@ func (e *Enemy) checkRemove() {
 }
 
 var enemy_table = map[int]Enemy{
-	1: newEnemy(1, 5, Vec2{}, newAnimatedTexture("./art/enemies/fliehead.png")),
-	2: newEnemy(2, 10, Vec2{}, newTexture("./art/enemies/crooked.png")),
-	3: newEnemy(3, 5, Vec2{}, newTexture("./art/enemies/shrimp.png")),
+	1: newEnemy(1, 10, Vec2{}, newAnimatedTexture("./art/enemies/fliehead.png")),
+	2: newEnemy(2, 20, Vec2{}, newTexture("./art/enemies/crooked.png")),
+	3: newEnemy(3, 10, Vec2{}, newTexture("./art/enemies/shrimp.png")),
+	4: newEnemy(4, 100, Vec2{}, newAnimatedTexture("./art/enemies/bosshead.png")),
 }

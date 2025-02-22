@@ -30,8 +30,10 @@ func (p *Player) bobertoFirePiller() {
 func (p *Player) bobertoDomain(l *Level) {
 	for enemy_index := 0; enemy_index < len(l.enemies); enemy_index++ {
 		e := &l.enemies[enemy_index]
-		e.pos.x = 1800 + (rand.Float64() * 1000)
-		e.pos.y = -1800 - (rand.Float64() * 300)
+		if collide(Vec2{p.pos.x - 1024, p.pos.y - 1024}, Vec2{2048, 2048}, e.pos, Vec2{float64(e.tex.getTexture().Bounds().Dx()), float64(e.tex.getTexture().Bounds().Dy())}) {
+			e.pos.x = 1800 + (rand.Float64() * 1000)
+			e.pos.y = -1800 - (rand.Float64() * 300)
+		}
 	}
 	p.pos.x = 2000
 	p.pos.y = -1600
@@ -39,12 +41,18 @@ func (p *Player) bobertoDomain(l *Level) {
 	p.health /= 2
 
 	p.damage_multiplier *= 2
-	p.img = *newAnimatedTexture("./art/players/strong_boberto.png")
+	for enemy_index := 0; enemy_index < len(l.enemies); enemy_index++ {
+		e := &l.enemies[enemy_index]
+		e.damage *= 2
+	}
 
 	time.Sleep(30 * time.Second)
 
 	p.damage_multiplier /= 2
-	p.img = *newAnimatedTexture("./art/players/boberto.png")
+	for enemy_index := 0; enemy_index < len(l.enemies); enemy_index++ {
+		e := &l.enemies[enemy_index]
+		e.damage *= 2
+	}
 
 	p.pos = l.player_spawn
 }
