@@ -21,6 +21,7 @@ type Player struct {
 	entities          []PlayerEntity
 	domain            Domain
 	domain_timer      float64
+	i_frames          float64
 }
 
 type Projectile struct {
@@ -138,7 +139,7 @@ func newPlayer(pos Vec2, img AnimatedTexture, domain_img RenderableTexture, doma
 	return p
 }
 
-func (p *Player) Punch() {
+func (p *Player) punch() {
 	for ie := 0; ie < len(current_level.enemies); ie++ {
 		e := &current_level.enemies[ie]
 		if collide(Vec2{p.pos.x - 32, p.pos.y}, Vec2{96, 64}, e.pos, Vec2{float64(e.tex.getTexture().Bounds().Dx()), float64(e.tex.getTexture().Bounds().Dy())}) {
@@ -147,6 +148,19 @@ func (p *Player) Punch() {
 	}
 }
 
+func (p *Player) damageCheck(l *Level) {
+	if p.i_frames <= 0 {
+		for enemy_index := 0; enemy_index < len(l.enemies); enemy_index++ {
+			e := &l.enemies[enemy_index]
+			if collide(p.pos, Vec2{32, 64}, e.pos, Vec2{float64(e.tex.getTexture().Bounds().Dx()), float64(e.tex.getTexture().Bounds().Dy())}) {
+				p.i_frames = 2
+				p.health -= e.damage
+			}
+		}
+	} else {
+		p.i_frames -= 0.1
+	}
+}
 func (p *Player) Draw(s *ebiten.Image) {
 	op := ebiten.DrawImageOptions{}
 
@@ -289,7 +303,7 @@ func (p *Player) Update() {
 	}
 
 	if ebiten.IsMouseButtonPressed(ebiten.MouseButton0) && !clicked {
-		p.Punch()
+		p.punch()
 		clicked = true
 	}
 

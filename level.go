@@ -89,6 +89,7 @@ func (l *Level) SpawnWave() {
 }
 
 func (l *Level) Update(p *Player) {
+	p.damageCheck(l)
 
 	for e := 0; e < len(l.enemies); e++ {
 		if l.enemies[e].id == 1 {

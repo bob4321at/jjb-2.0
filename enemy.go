@@ -16,7 +16,7 @@ type Enemy struct {
 	dir        bool
 }
 
-func newEnemy(id int, health int, pos Vec2, img RenderableTexture) (e Enemy) {
+func newEnemy(id int, health int, damage int, pos Vec2, img RenderableTexture) (e Enemy) {
 	e.id = id
 	e.pos = pos
 	e.vel = Vec2{0, 0}
@@ -25,6 +25,8 @@ func newEnemy(id int, health int, pos Vec2, img RenderableTexture) (e Enemy) {
 	e.alive = true
 
 	e.tex = img
+
+	e.damage = damage
 
 	return e
 }
@@ -56,8 +58,8 @@ func (e *Enemy) checkRemove() {
 }
 
 var enemy_table = map[int]Enemy{
-	1: newEnemy(1, 10, Vec2{}, newAnimatedTexture("./art/enemies/fliehead.png")),
-	2: newEnemy(2, 20, Vec2{}, newTexture("./art/enemies/crooked.png")),
-	3: newEnemy(3, 10, Vec2{}, newTexture("./art/enemies/shrimp.png")),
-	4: newEnemy(4, 100, Vec2{}, newAnimatedTexture("./art/enemies/bosshead.png")),
+	1: newEnemy(1, 10, 1, Vec2{}, newAnimatedTexture("./art/enemies/fliehead.png")),
+	2: newEnemy(2, 20, 2, Vec2{}, newTexture("./art/enemies/crooked.png")),
+	3: newEnemy(3, 10, 2, Vec2{}, newTexture("./art/enemies/shrimp.png")),
+	4: newEnemy(4, 100, 5, Vec2{}, newAnimatedTexture("./art/enemies/bosshead.png")),
 }
