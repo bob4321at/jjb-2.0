@@ -3,7 +3,6 @@ package main
 import (
 	"math"
 	"math/rand"
-	"time"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
@@ -104,20 +103,50 @@ func (p *Player) newDomain(img RenderableTexture, effect func(l *Level)) (d Doma
 	return d
 }
 
+type DomainedEnemy struct {
+	enemy     *Enemy
+	alive     bool
+	start_pos Vec2
+}
+
 func (p *Player) simpleDomain(l *Level) {
+	affected := []DomainedEnemy{}
+	player_start_pos := p.pos
+
 	for enemy_index := 0; enemy_index < len(l.enemies); enemy_index++ {
 		e := &l.enemies[enemy_index]
+		affected = append(affected, DomainedEnemy{e, true, e.pos})
 		if collide(Vec2{p.pos.x - 1024, p.pos.y - 1024}, Vec2{2048, 2048}, e.pos, Vec2{float64(e.tex.getTexture().Bounds().Dx()), float64(e.tex.getTexture().Bounds().Dy())}) {
 			e.pos.x = 1800 + (rand.Float64() * 1000)
-			e.pos.y = -1800 - (rand.Float64() * 300)
+			e.pos.y = -1700 - (rand.Float64() * 300)
 		}
 	}
 	p.pos.x = 2000
 	p.pos.y = -1600
 
-	time.Sleep(30 * time.Second)
+	start_time := game_time
 
-	p.pos = l.player_spawn
+	for enemy_index := 0; enemy_index < len(affected); enemy_index++ {
+		e := affected[enemy_index].enemy
+		e.can_move = true
+	}
+
+	for start_time+150 > game_time {
+		for enemy_index := 0; enemy_index < len(affected); enemy_index++ {
+			de := affected[enemy_index]
+			if de.enemy.health < 0 {
+				de.alive = false
+			}
+		}
+	}
+
+	p.pos = player_start_pos
+
+	for enemy_index := 0; enemy_index < len(affected); enemy_index++ {
+		de := affected[enemy_index]
+		// de.enemy.can_move = true
+		de.enemy.pos = de.start_pos
+	}
 }
 
 func newPlayer(pos Vec2, img AnimatedTexture, domain_img RenderableTexture, domain_effect func(l *Level), attacks []Attack) (p Player) {
@@ -253,8 +282,8 @@ func (p *Player) Update() {
 
 	if p.domain_timer < 0 {
 		if ebiten.IsKeyPressed(ebiten.KeyR) {
-			go p.domain.effect(*&current_level)
-			p.domain_timer = 240
+			go p.domain.effect(current_level)
+			p.domain_timer = 360
 		}
 	} else {
 		p.domain_timer -= 0.1

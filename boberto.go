@@ -1,15 +1,19 @@
 package main
 
 import (
+	"fmt"
 	"math/rand"
-	"time"
 )
 
 func (p *Player) bobertoDamageBuff() {
 	p.damage_multiplier *= 1.3
 	p.img = *newAnimatedTexture("./art/players/strong_boberto.png")
 
-	time.Sleep(time.Second * 5)
+	start_time := game_time
+
+	for start_time+30 >= game_time {
+		fmt.Println("")
+	}
 
 	p.damage_multiplier /= 1.3
 	p.img = *newAnimatedTexture("./art/players/boberto.png")
@@ -28,8 +32,12 @@ func (p *Player) bobertoFirePiller() {
 }
 
 func (p *Player) bobertoDomain(l *Level) {
+	affected := []DomainedEnemy{}
+	player_start_pos := p.pos
+
 	for enemy_index := 0; enemy_index < len(l.enemies); enemy_index++ {
 		e := &l.enemies[enemy_index]
+		affected = append(affected, DomainedEnemy{e, true, e.pos})
 		if collide(Vec2{p.pos.x - 1024, p.pos.y - 1024}, Vec2{2048, 2048}, e.pos, Vec2{float64(e.tex.getTexture().Bounds().Dx()), float64(e.tex.getTexture().Bounds().Dy())}) {
 			e.pos.x = 1800 + (rand.Float64() * 1000)
 			e.pos.y = -1800 - (rand.Float64() * 300)
@@ -38,27 +46,35 @@ func (p *Player) bobertoDomain(l *Level) {
 	p.pos.x = 2000
 	p.pos.y = -1600
 
-	p.health /= 2
+	start_time := game_time
 
-	p.damage_multiplier *= 2
-	for enemy_index := 0; enemy_index < len(l.enemies); enemy_index++ {
-		e := &l.enemies[enemy_index]
-		e.damage *= 2
+	for enemy_index := 0; enemy_index < len(affected); enemy_index++ {
+		de := affected[enemy_index]
+		de.enemy.damage /= 2
 	}
 
-	time.Sleep(30 * time.Second)
-
-	p.damage_multiplier /= 2
-	for enemy_index := 0; enemy_index < len(l.enemies); enemy_index++ {
-		e := &l.enemies[enemy_index]
-		e.damage *= 2
+	for start_time+150 > game_time {
+		for enemy_index := 0; enemy_index < len(affected); enemy_index++ {
+			de := affected[enemy_index]
+			if de.enemy.health < 0 {
+				de.alive = false
+			}
+		}
 	}
 
-	p.pos = l.player_spawn
+	p.pos = player_start_pos
+
+	for enemy_index := 0; enemy_index < len(affected); enemy_index++ {
+		de := affected[enemy_index]
+		if de.alive {
+			de.enemy.pos = de.start_pos
+		}
+		de.enemy.damage *= 2
+	}
 }
 
 var boberto_attacks = []Attack{
-	{player.realBobertoDamageBuff, 0, 100},
-	{player.bobertoFireball, 0, 1},
+	{player.realBobertoDamageBuff, 0, 75},
+	{player.bobertoFireball, 0, 5},
 	{player.bobertoFirePiller, 0, 20},
 }

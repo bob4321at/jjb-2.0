@@ -31,7 +31,7 @@ func drawUi(s *ebiten.Image) {
 	s.DrawImage(keybind_cover, &op)
 
 	op.GeoM.Reset()
-	op.GeoM.Scale(1, (player.domain_timer / 240))
+	op.GeoM.Scale(1, (player.domain_timer / 360))
 	op.GeoM.Translate(16, 110)
 	s.DrawImage(keybind_cover, &op)
 }

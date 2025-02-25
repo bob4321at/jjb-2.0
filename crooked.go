@@ -72,6 +72,8 @@ func (e *Enemy) crookedUpdate(p *Player, l *Level) {
 		e.vel.x = 0
 	}
 
-	e.pos.x += e.vel.x
-	e.pos.y += e.vel.y
+	if e.can_move {
+		e.pos.x += e.vel.x
+		e.pos.y += e.vel.y
+	}
 }

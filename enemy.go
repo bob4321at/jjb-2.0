@@ -12,6 +12,7 @@ type Enemy struct {
 	alive      bool
 	pos        Vec2
 	vel        Vec2
+	can_move   bool
 	tex        RenderableTexture
 	dir        bool
 }
@@ -20,6 +21,7 @@ func newEnemy(id int, health int, damage int, pos Vec2, img RenderableTexture) (
 	e.id = id
 	e.pos = pos
 	e.vel = Vec2{0, 0}
+	e.can_move = true
 	e.health = health
 	e.max_health = health
 	e.alive = true
