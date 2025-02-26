@@ -25,8 +25,8 @@ func (e *Enemy) bossHeadUpdate(p *Player, l *Level) {
 
 	e.vel.y += 0.5
 
-	for le := 0; le < len(l.enemies); le++ {
-		oe := &l.enemies[le]
+	for level_enemies := 0; level_enemies < len(l.enemies); level_enemies++ {
+		oe := &l.enemies[level_enemies]
 		if e != oe {
 			if collide(Vec2{e.pos.x, e.pos.y + e.vel.y}, Vec2{128, 96}, Vec2{float64(oe.pos.x), float64(oe.pos.y)}, Vec2{float64(oe.tex.getTexture().Bounds().Dx()), float64(oe.tex.getTexture().Bounds().Dy())}) {
 				e.vel.y = -e.vel.y / 1.2
@@ -39,8 +39,8 @@ func (e *Enemy) bossHeadUpdate(p *Player, l *Level) {
 		}
 	}
 
-	for ti := 0; ti < len(l.tiles); ti++ {
-		t := &l.tiles[ti]
+	for tile_index := 0; tile_index < len(l.tiles); tile_index++ {
+		t := &l.tiles[tile_index]
 		if collide(Vec2{e.pos.x + e.vel.x, e.pos.y}, Vec2{128, 96}, Vec2{t.pos.x, t.pos.y}, Vec2{32, 32}) {
 			e.vel.x = -e.vel.x / 1.5
 		}

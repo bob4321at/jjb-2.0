@@ -35,6 +35,7 @@ func (g *Game) Setup() {
 		current_level_index = 0
 		current_level = &levels[current_level_index]
 		initPlayer()
+
 		player = players["greg"]
 	}
 

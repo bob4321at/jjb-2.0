@@ -43,7 +43,6 @@ func (e *Enemy) flieHeadUpdate(p *Player, l *Level) {
 			e.vel.y = 0
 		}
 	}
-
 	if collide(Vec2{e.pos.x, e.pos.y + e.vel.y + 2}, Vec2{32, 64}, Vec2{2000 - (1280 / 2), -2000 - (720 / 2) + (449 * 2)}, Vec2{2048, (126 * 2)}) {
 		e.vel.y = 0
 	}
