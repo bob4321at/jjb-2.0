@@ -92,15 +92,9 @@ func (l *Level) Update(p *Player) {
 	p.damageCheck(l)
 
 	for e := 0; e < len(l.enemies); e++ {
-		if l.enemies[e].id == 1 {
-			l.enemies[e].flieHeadUpdate(p, l)
-		} else if l.enemies[e].id == 2 {
-			l.enemies[e].crookedUpdate(p, l)
-		} else if l.enemies[e].id == 3 {
-			l.enemies[e].shrimpUpdate(p, l)
-		} else if l.enemies[e].id == 4 {
-			l.enemies[e].bossHeadUpdate(p, l)
-		}
+		l.enemies[e].update(&l.enemies[e], p, l)
+
+		l.enemies[e].updateProjectiles(&player)
 
 		l.enemies[e].tex.update()
 

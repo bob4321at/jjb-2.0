@@ -1,8 +1,10 @@
 package main
 
-import "math"
+import (
+	"math"
+)
 
-func flieHeadUpdate(e *Enemy, p *Player, l *Level) {
+func cloudHeadUpdate(e *Enemy, p *Player, l *Level) {
 	e.vel.x += -0.015 * (e.pos.x - p.pos.x) * (math.Abs(e.pos.y / 100)) / 20
 
 	if e.pos.y > p.pos.y-128 {
@@ -13,6 +15,12 @@ func flieHeadUpdate(e *Enemy, p *Player, l *Level) {
 		e.vel.x = 10
 	} else if e.vel.x < -10 {
 		e.vel.x = -10
+	}
+
+	check := int(math.Mod(game_time, 10))
+	if check == 0 {
+		e.newProjectile(e.pos, Vec2{0, 1}, newTexture("./art/enemies/cloudhead_rain.png"), 3, 100)
+		game_time += 1
 	}
 
 	e.vel.y += 0.5

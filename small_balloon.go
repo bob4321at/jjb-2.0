@@ -1,9 +1,12 @@
 package main
 
-import "math"
+import (
+	"math"
+)
 
-func flieHeadUpdate(e *Enemy, p *Player, l *Level) {
-	e.vel.x += -0.015 * (e.pos.x - p.pos.x) * (math.Abs(e.pos.y / 100)) / 20
+func smallBalloonUpdate(e *Enemy, p *Player, l *Level) {
+
+	e.vel.x += -0.025 * (e.pos.x - p.pos.x) * (math.Abs(e.pos.y / 100)) / 20
 
 	if e.pos.y > p.pos.y-128 {
 		e.vel.y -= 1

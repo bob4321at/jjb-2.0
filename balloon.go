@@ -1,8 +1,14 @@
 package main
 
-import "math"
+import (
+	"math"
+)
 
-func flieHeadUpdate(e *Enemy, p *Player, l *Level) {
+func balloonUpdate(e *Enemy, p *Player, l *Level) {
+	if e.health <= 0 {
+		l.enemies = append(l.enemies, newEnemy(5, 10, 5, e.pos, newTexture("./art/enemies/small_balloon.png"), smallBalloonUpdate))
+	}
+
 	e.vel.x += -0.015 * (e.pos.x - p.pos.x) * (math.Abs(e.pos.y / 100)) / 20
 
 	if e.pos.y > p.pos.y-128 {

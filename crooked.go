@@ -1,6 +1,6 @@
 package main
 
-func (e *Enemy) crookedUpdate(p *Player, l *Level) {
+func crookedUpdate(e *Enemy, p *Player, l *Level) {
 	e.vel.y += 0.1
 
 	if p.pos.x > e.pos.x {

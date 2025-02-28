@@ -61,21 +61,6 @@ func (g *Game) Update() error {
 	mouse_x, mouse_y = float64(rmx), float64(rmy)
 
 	player.Update()
-	if ebiten.IsKeyPressed(ebiten.KeyX) && !enemy_spawned {
-		current_level.Spawn(newEnemy(1, 5, 1, Vec2{}, newAnimatedTexture("./art/enemies/fliehead.png")))
-		enemy_spawned = true
-	}
-	if ebiten.IsKeyPressed(ebiten.KeyC) && !enemy_spawned {
-		current_level.Spawn(newEnemy(2, 10, 2, Vec2{}, newTexture("./art/enemies/crooked.png")))
-		enemy_spawned = true
-	}
-	if ebiten.IsKeyPressed(ebiten.KeyZ) && !enemy_spawned {
-		current_level.Spawn(newEnemy(3, 5, 2, Vec2{}, newTexture("./art/enemies/shrimp.png")))
-		enemy_spawned = true
-	}
-	if !ebiten.IsKeyPressed(ebiten.KeyX) && !ebiten.IsKeyPressed(ebiten.KeyC) && !ebiten.IsKeyPressed(ebiten.KeyZ) {
-		enemy_spawned = false
-	}
 
 	if ebiten.IsKeyPressed(ebiten.KeyG) {
 		player = players["greg"]

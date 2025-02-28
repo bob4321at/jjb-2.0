@@ -4,7 +4,7 @@ import (
 	"math"
 )
 
-func (e *Enemy) bossHeadUpdate(p *Player, l *Level) {
+func bossHeadUpdate(e *Enemy, p *Player, l *Level) {
 	e.vel.x += -0.015 * (e.pos.x - p.pos.x) * (math.Abs(e.pos.y / 100)) / 20
 
 	if e.pos.y > p.pos.y-256 {

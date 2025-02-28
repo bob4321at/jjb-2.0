@@ -17,6 +17,10 @@ func removeEnemy(index_to_remove int, slice []Enemy) []Enemy {
 	return append(slice[:index_to_remove], slice[index_to_remove+1:]...)
 }
 
+func removeEnemyProjectile(index_to_remove int, slice []EnemyProjectile) []EnemyProjectile {
+	return append(slice[:index_to_remove], slice[index_to_remove+1:]...)
+}
+
 func removePlayerEntity(index_to_remove int, slice []PlayerEntity) []PlayerEntity {
 	return append(slice[:index_to_remove], slice[index_to_remove+1:]...)
 }

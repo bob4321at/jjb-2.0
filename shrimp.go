@@ -2,7 +2,7 @@ package main
 
 import "math"
 
-func (e *Enemy) shrimpUpdate(p *Player, l *Level) {
+func shrimpUpdate(e *Enemy, p *Player, l *Level) {
 	this_enemy_index := 0
 
 	shrimps := 0
