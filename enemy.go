@@ -64,7 +64,12 @@ func (e *Enemy) Draw(s *ebiten.Image, cam *Camera) {
 		if e.pos.y-cam.offset.y+360+float64(e.tex.getTexture().Bounds().Dy()) > 0 && e.pos.y-cam.offset.y+360-float64(e.tex.getTexture().Bounds().Dy()) < 720 {
 			op := ebiten.DrawImageOptions{}
 
-			op.GeoM.Translate(e.pos.x-cam.offset.x+640, e.pos.y-cam.offset.y+360)
+			if !e.dir {
+				op.GeoM.Translate(e.pos.x-cam.offset.x+640, e.pos.y-cam.offset.y+360)
+			} else {
+				op.GeoM.Scale(-1, 1)
+				op.GeoM.Translate(e.pos.x-cam.offset.x+640+float64(e.tex.getTexture().Bounds().Dx()), e.pos.y-cam.offset.y+360)
+			}
 
 			e.tex.draw(s, &op)
 		}
@@ -126,6 +131,7 @@ func init() {
 		3: newEnemy(3, 10, 2, Vec2{}, newTexture("./art/enemies/shrimp.png"), shrimpUpdate),
 		4: newEnemy(4, 100, 5, Vec2{}, newAnimatedTexture("./art/enemies/bosshead.png"), bossHeadUpdate),
 		5: newEnemy(5, 10, 5, Vec2{}, newTexture("./art/enemies/cloudhead.png"), cloudHeadUpdate),
-		6: newEnemy(5, 20, 5, Vec2{}, newTexture("./art/enemies/balloon.png"), balloonUpdate),
+		6: newEnemy(6, 20, 3, Vec2{}, newTexture("./art/enemies/balloon.png"), balloonUpdate),
+		7: newEnemy(7, 10, 3, Vec2{}, newAnimatedTexture("./art/enemies/bunny.png"), bunnyUpdate),
 	}
 }
