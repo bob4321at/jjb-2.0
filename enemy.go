@@ -133,5 +133,6 @@ func init() {
 		5: newEnemy(5, 10, 5, Vec2{}, newTexture("./art/enemies/cloudhead.png"), cloudHeadUpdate),
 		6: newEnemy(6, 20, 3, Vec2{}, newTexture("./art/enemies/balloon.png"), balloonUpdate),
 		7: newEnemy(7, 10, 3, Vec2{}, newAnimatedTexture("./art/enemies/bunny.png"), bunnyUpdate),
+		8: newEnemy(8, 20, 3, Vec2{}, newAnimatedTexture("./art/enemies/fuzzball.png"), fuzzBallUpdate),
 	}
 }
