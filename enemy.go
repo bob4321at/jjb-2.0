@@ -126,13 +126,15 @@ var enemy_table = map[int]Enemy{}
 
 func init() {
 	enemy_table = map[int]Enemy{
-		1: newEnemy(1, 10, 1, Vec2{}, newAnimatedTexture("./art/enemies/fliehead.png"), flieHeadUpdate),
-		2: newEnemy(2, 20, 2, Vec2{}, newTexture("./art/enemies/crooked.png"), crookedUpdate),
-		3: newEnemy(3, 10, 2, Vec2{}, newTexture("./art/enemies/shrimp.png"), shrimpUpdate),
-		4: newEnemy(4, 100, 5, Vec2{}, newAnimatedTexture("./art/enemies/bosshead.png"), bossHeadUpdate),
-		5: newEnemy(5, 10, 5, Vec2{}, newTexture("./art/enemies/cloudhead.png"), cloudHeadUpdate),
-		6: newEnemy(6, 20, 3, Vec2{}, newTexture("./art/enemies/balloon.png"), balloonUpdate),
-		7: newEnemy(7, 10, 3, Vec2{}, newAnimatedTexture("./art/enemies/bunny.png"), bunnyUpdate),
-		8: newEnemy(8, 20, 3, Vec2{}, newAnimatedTexture("./art/enemies/fuzzball.png"), fuzzBallUpdate),
+		1:  newEnemy(1, 10, 1, Vec2{}, newAnimatedTexture("./art/enemies/fliehead.png"), flieHeadUpdate),
+		2:  newEnemy(2, 20, 2, Vec2{}, newTexture("./art/enemies/crooked.png"), crookedUpdate),
+		3:  newEnemy(3, 10, 2, Vec2{}, newTexture("./art/enemies/shrimp.png"), shrimpUpdate),
+		4:  newEnemy(4, 100, 5, Vec2{}, newAnimatedTexture("./art/enemies/bosshead.png"), bossHeadUpdate),
+		5:  newEnemy(5, 10, 5, Vec2{}, newTexture("./art/enemies/cloudhead.png"), cloudHeadUpdate),
+		6:  newEnemy(6, 20, 3, Vec2{}, newTexture("./art/enemies/balloon.png"), balloonUpdate),
+		7:  newEnemy(7, 10, 3, Vec2{}, newAnimatedTexture("./art/enemies/bunny.png"), bunnyUpdate),
+		8:  newEnemy(8, 20, 3, Vec2{}, newAnimatedTexture("./art/enemies/fuzzball.png"), fuzzBallUpdate),
+		9:  newEnemy(9, 200, 5, Vec2{}, newTexture("./art/enemies/simple_grade_curse.png"), simpleGradeCurseUpdate),
+		10: newEnemy(9, 200, 10, Vec2{}, newTexture("./art/enemies/sukuna.png"), sukunaUpdate),
 	}
 }

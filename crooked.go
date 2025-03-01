@@ -4,9 +4,11 @@ func crookedUpdate(e *Enemy, p *Player, l *Level) {
 	e.vel.y += 0.1
 
 	if p.pos.x > e.pos.x {
-		e.vel.x = 2
+		e.dir = true
+		e.vel.x = 4
 	} else if p.pos.x < e.pos.x {
-		e.vel.x = -2
+		e.dir = false
+		e.vel.x = -4
 	}
 
 	for ei := 0; ei < len(l.enemies); ei++ {

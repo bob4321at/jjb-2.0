@@ -17,12 +17,6 @@ func bossHeadUpdate(e *Enemy, p *Player, l *Level) {
 		e.vel.x = -10
 	}
 
-	check := int(math.Mod(game_time, 10))
-	if check == 0 {
-		l.Spawn(enemy_table[1])
-		game_time += 1
-	}
-
 	e.vel.y += 0.5
 
 	for level_enemies := 0; level_enemies < len(l.enemies); level_enemies++ {
@@ -71,5 +65,10 @@ func bossHeadUpdate(e *Enemy, p *Player, l *Level) {
 	if e.can_move {
 		e.pos.x += e.vel.x
 		e.pos.y += e.vel.y
+		check := int(math.Mod(game_time, 10))
+		if check == 0 {
+			l.Spawn(enemy_table[1])
+			game_time += 1
+		}
 	}
 }
