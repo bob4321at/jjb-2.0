@@ -24,11 +24,11 @@ func (p *Player) realBobertoDamageBuff() {
 }
 
 func (p *Player) bobertoFireball() {
-	p.newProjectile(Vec2{p.pos.x, p.pos.y}, Vec2{p.pos.x + (p.vel.x * 2) - mouse_x - camera.offset.x + 640 + (float64(p.img.getTexture().Bounds().Dx())), p.pos.y + (p.vel.y * 2) - mouse_y - camera.offset.y + 320 + (float64(p.img.getTexture().Bounds().Dy()))}, 5, 8, 1, -1, "./art/projectiles/boberto/fireball.png")
+	p.newProjectile(Vec2{p.pos.x, p.pos.y}, Vec2{p.pos.x + (p.vel.x * 2) - mouse_x - camera.offset.x + 640 + (float64(p.img.getTexture().Bounds().Dx())), p.pos.y + (p.vel.y * 2) - mouse_y - camera.offset.y + 320 + (float64(p.img.getTexture().Bounds().Dy()))}, 5, 8, 1, -1, newTexture("./art/projectiles/boberto/fireball.png"))
 }
 
 func (p *Player) bobertoFirePiller() {
-	p.newProjectile(Vec2{p.pos.x - 64, p.pos.y - 512 + 64}, Vec2{0, 0}, 20, 0, 100, 20, "./art/projectiles/boberto/fire_pillar.png")
+	p.newProjectile(Vec2{p.pos.x - 64, p.pos.y - 512 + 64}, Vec2{0, 0}, 20, 0, 100, 20, newTexture("./art/projectiles/boberto/fire_pillar.png"))
 }
 
 func (p *Player) bobertoDomain(l *Level) {

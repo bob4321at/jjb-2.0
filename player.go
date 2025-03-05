@@ -5,7 +5,6 @@ import (
 	"math/rand"
 
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
 type Player struct {
@@ -30,7 +29,7 @@ type Projectile struct {
 	speed    float64
 	pierce   float64
 	lifetime float64
-	img      *ebiten.Image
+	img      RenderableTexture
 }
 
 type PlayerEntity struct {
@@ -39,7 +38,7 @@ type PlayerEntity struct {
 	cooldown     float64
 	max_cooldown float64
 	lifespan     float64
-	img          *ebiten.Image
+	img          RenderableTexture
 	dir          bool
 	Update       func(e *PlayerEntity)
 }
@@ -60,25 +59,16 @@ var attack_keys = map[int]ebiten.Key{
 	2: ebiten.KeyF,
 }
 
-func (p *Player) newProjectile(pos, vel Vec2, damage int, speed float64, pierce float64, lifetime float64, img_path string) {
-	temp_img, _, err := ebitenutil.NewImageFromFile(img_path)
-	if err != nil {
-		panic(err)
-	}
-
-	projectile := Projectile{pos, vel, damage, speed, pierce, lifetime, temp_img}
+func (p *Player) newProjectile(pos, vel Vec2, damage int, speed float64, pierce float64, lifetime float64, img RenderableTexture) {
+	projectile := Projectile{pos, vel, damage, speed, pierce, lifetime, img}
 
 	p.projectiles = append(p.projectiles, projectile)
 }
 
-func (p *Player) newEntity(pos Vec2, starting_vel Vec2, cooldown float64, lifespan float64, path string, Update func(e *PlayerEntity)) (e *PlayerEntity) {
+func (p *Player) newEntity(pos Vec2, starting_vel Vec2, cooldown float64, lifespan float64, img RenderableTexture, Update func(e *PlayerEntity)) (e *PlayerEntity) {
 	entity := PlayerEntity{}
 
-	timg, _, err := ebitenutil.NewImageFromFile(path)
-	if err != nil {
-		panic(err)
-	}
-	entity.img = timg
+	entity.img = img
 
 	entity.pos = pos
 	entity.vel = starting_vel
@@ -211,15 +201,15 @@ func (p *Player) Draw(s *ebiten.Image) {
 			op.GeoM.Translate(e.pos.x-camera.offset.x+640, e.pos.y-camera.offset.y+360)
 		} else {
 			op.GeoM.Scale(-1, 1)
-			op.GeoM.Translate(e.pos.x-camera.offset.x+640+float64(e.img.Bounds().Dx()), e.pos.y-camera.offset.y+360)
+			op.GeoM.Translate(e.pos.x-camera.offset.x+640+float64(e.img.getTexture().Bounds().Dx()), e.pos.y-camera.offset.y+360)
 		}
-		s.DrawImage(e.img, &op)
+		s.DrawImage(e.img.getTexture(), &op)
 	}
 
 	for projectile_index := 0; projectile_index < len(p.projectiles); projectile_index++ {
 		op.GeoM.Reset()
 		op.GeoM.Translate(p.projectiles[projectile_index].pos.x-camera.offset.x+650, p.projectiles[projectile_index].pos.y-camera.offset.y+380)
-		s.DrawImage(p.projectiles[projectile_index].img, &op)
+		s.DrawImage(p.projectiles[projectile_index].img.getTexture(), &op)
 	}
 }
 
@@ -344,7 +334,7 @@ func (p *Player) Update() {
 
 		for ei := 0; ei < len(current_level.enemies); ei++ {
 			e := &current_level.enemies[ei]
-			if collide(projectile.pos, Vec2{float64(projectile.img.Bounds().Dx()), float64(projectile.img.Bounds().Dy())}, e.pos, Vec2{float64(e.tex.getTexture().Bounds().Dx()), float64(e.tex.getTexture().Bounds().Dy())}) {
+			if collide(projectile.pos, Vec2{float64(projectile.img.getTexture().Bounds().Dx()), float64(projectile.img.getTexture().Bounds().Dy())}, e.pos, Vec2{float64(e.tex.getTexture().Bounds().Dx()), float64(e.tex.getTexture().Bounds().Dy())}) {
 				e.health -= projectile.damage
 				if projectile.pierce == -1 {
 					p.projectiles = removeProjectile(projectile_index, p.projectiles)
