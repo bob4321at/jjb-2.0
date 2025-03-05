@@ -10,7 +10,7 @@ import (
 
 func makeLevel(path string, tileset_path string, background_path string) (l Level) {
 	l.enemies = []Enemy{}
-	l.background = newBackground(Vec2{0, 1024 * 1.8}, 100, background_path)
+	l.background = newBackground(Vec2{0, 1024 * 1.8}, 100, newTexture(background_path))
 
 	timg, _, err := ebitenutil.NewImageFromFile(tileset_path)
 	if err != nil {

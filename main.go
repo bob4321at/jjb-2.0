@@ -51,7 +51,7 @@ func (g *Game) Update() error {
 		player = players["greg"]
 	}
 
-	game_time += 0.1
+	game_time += 1
 
 	if !ebiten.IsMouseButtonPressed(ebiten.MouseButton0) {
 		clicked = false

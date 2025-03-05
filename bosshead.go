@@ -65,10 +65,9 @@ func bossHeadUpdate(e *Enemy, p *Player, l *Level) {
 	if e.can_move {
 		e.pos.x += e.vel.x
 		e.pos.y += e.vel.y
-		check := int(math.Mod(game_time, 10))
+		check := int(math.Mod(game_time, 100))
 		if check == 0 {
 			l.Spawn(enemy_table[1])
-			game_time += 1
 		}
 	}
 }

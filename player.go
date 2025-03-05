@@ -121,7 +121,7 @@ func (p *Player) simpleDomain(l *Level) {
 		e.can_move = true
 	}
 
-	for start_time+150 > game_time {
+	for start_time+1500 > game_time {
 		for enemy_index := 0; enemy_index < len(affected); enemy_index++ {
 			de := affected[enemy_index]
 			if de.enemy.health < 0 {

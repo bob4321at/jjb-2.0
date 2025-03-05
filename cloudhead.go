@@ -64,10 +64,9 @@ func cloudHeadUpdate(e *Enemy, p *Player, l *Level) {
 	if e.can_move {
 		e.pos.x += e.vel.x
 		e.pos.y += e.vel.y
-		check := int(math.Mod(game_time, 10))
+		check := int(math.Mod(game_time, 100))
 		if check == 0 {
 			e.newProjectile(e.pos, Vec2{0, 1}, newTexture("./art/enemies/cloudhead_rain.png"), 3, 100)
-			game_time += 1
 		}
 	}
 }

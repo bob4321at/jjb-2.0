@@ -79,14 +79,13 @@ func simpleGradeCurseUpdate(e *Enemy, p *Player, l *Level) {
 	if e.can_move {
 		e.pos.x += e.vel.x
 		e.pos.y += e.vel.y
-		check := int(math.Mod(game_time, 10))
+		check := int(math.Mod(game_time, 100))
 		if check == 0 {
 			if e.dir {
 				e.newProjectile(Vec2{e.pos.x, e.pos.y - 32}, Vec2{-7, 0}, newTexture("./art/enemies/simple_grade_curse_attack_left.png"), 5, 10)
 			} else {
 				e.newProjectile(Vec2{e.pos.x, e.pos.y - 32}, Vec2{7, 0}, newTexture("./art/enemies/simple_grade_curse_attack_right.png"), 5, 10)
 			}
-			game_time += 1
 		}
 	}
 }

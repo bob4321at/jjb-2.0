@@ -79,7 +79,7 @@ func sukunaUpdate(e *Enemy, p *Player, l *Level) {
 	if e.can_move {
 		e.pos.x += e.vel.x
 		e.pos.y += e.vel.y
-		check := int(math.Mod(game_time, 10))
+		check := int(math.Mod(game_time, 100))
 		if check == 0 {
 			if math.Abs(p.pos.x-e.pos.x) > 256 {
 				if e.dir {
@@ -94,7 +94,6 @@ func sukunaUpdate(e *Enemy, p *Player, l *Level) {
 					e.newProjectile(Vec2{e.pos.x, e.pos.y + 32}, Vec2{6, 0}, newTexture("./art/enemies/sukuna_attack_cut_right.png"), 5, 20)
 				}
 			}
-			game_time += 1
 		}
 	}
 }
