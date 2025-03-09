@@ -1,4 +1,4 @@
-module main
+module jjb
 
 go 1.23.3
 

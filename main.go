@@ -3,96 +3,84 @@ package main
 import (
 	"image/color"
 
+	"jjb/camera"
+	"jjb/level"
+	"jjb/players"
+	"jjb/utils"
+
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
 type Game struct{}
 
 var enemy_spawned bool = false
 
-var clicked bool = false
-
-var mouse_x, mouse_y float64
-
-var empty_key ebiten.Key
-
 var started = false
 
-var game_time float64 = 0
-
-var domain_background, _, _ = ebitenutil.NewImageFromFile("./art/domains/domain_backdrop.png")
-
-var healthbar_img, _, _ = ebitenutil.NewImageFromFile("./art/ui/healthbar.png")
-
-var keybinds, _, _ = ebitenutil.NewImageFromFile("./art/ui/keybinds.png")
-
-var keybind_cover, _, _ = ebitenutil.NewImageFromFile("./art/ui/keybing_cover.png")
-
-func (g *Game) Setup() {
+func (game *Game) Setup() {
 	if !started {
-		levels = loadAllLevels("./maps/")
-		current_level_index = 0
-		current_level = &levels[current_level_index]
-		initPlayer()
+		level.Levels = level.LoadAllLevels("./maps/")
+		level.Current_Level_Index = 0
+		level.Current_Level = &level.Levels[level.Current_Level_Index]
+		players.InitPlayer(level.Current_Level.Player_Spawn)
 
-		player = players["greg"]
+		players.Player_Ref = players.Players["greg"]
 	}
 
 	started = true
 }
 
-func (g *Game) Update() error {
-	g.Setup()
+func (game *Game) Update() error {
+	game.Setup()
 
-	if &levels[current_level_index] != current_level {
-		current_level = &levels[current_level_index]
-		initPlayer()
-		player = players["greg"]
+	if &level.Levels[level.Current_Level_Index] != level.Current_Level {
+		level.Current_Level = &level.Levels[level.Current_Level_Index]
+		players.InitPlayer(level.Current_Level.Player_Spawn)
+		players.Player_Ref = players.Players["greg"]
 	}
 
-	game_time += 1
+	utils.Game_Time += 1
 
 	if !ebiten.IsMouseButtonPressed(ebiten.MouseButton0) {
-		clicked = false
+		utils.Clicked = false
 	}
 
 	rmx, rmy := ebiten.CursorPosition()
-	mouse_x, mouse_y = float64(rmx), float64(rmy)
-
-	player.Update()
+	utils.Mouse_X, utils.Mouse_Y = float64(rmx), float64(rmy)
 
 	if ebiten.IsKeyPressed(ebiten.KeyG) {
-		player = players["greg"]
+		players.Player_Ref = players.Players["greg"]
 	} else if ebiten.IsKeyPressed(ebiten.KeyJ) {
-		player = players["gojo"]
+		players.Player_Ref = players.Players["gojo"]
 	} else if ebiten.IsKeyPressed(ebiten.KeyM) {
-		player = players["megumi"]
+		players.Player_Ref = players.Players["megumi"]
 	} else if ebiten.IsKeyPressed(ebiten.KeyB) {
-		player = players["boberto"]
+		players.Player_Ref = players.Players["boberto"]
+	} else if ebiten.IsKeyPressed(ebiten.KeyN) {
+		players.Player_Ref = players.Players["jerry"]
 	}
 
-	camera.offset.x = player.pos.x
-	camera.offset.y = player.pos.y
-	current_level.Update(&player)
+	camera.Cam.Offset.X = players.Player_Ref.Pos.X
+	camera.Cam.Offset.Y = players.Player_Ref.Pos.Y
+	level.Current_Level.Update(&players.Player_Ref)
 
 	return nil
 }
 
 var display_img = ebiten.NewImage(1280, 720)
 
-func (g *Game) Draw(s *ebiten.Image) {
+func (game *Game) Draw(screen *ebiten.Image) {
 	display_img.Fill(color.RGBA{0, 115, 255, 255})
-	current_level.Draw(display_img, &camera)
-	player.Draw(display_img)
+	level.Current_Level.Draw(display_img, &camera.Cam)
+	players.Player_Ref.Draw(display_img)
 	op := ebiten.DrawImageOptions{}
 	op.GeoM.Scale(1.5, 1.5)
-	op.GeoM.Translate(-float64(s.Bounds().Dx()/4), -float64(s.Bounds().Dy()/4))
-	s.DrawImage(display_img, &op)
-	drawUi(s)
+	op.GeoM.Translate(-float64(screen.Bounds().Dx()/4), -float64(screen.Bounds().Dy()/4))
+	screen.DrawImage(display_img, &op)
+	drawUi(screen)
 }
 
-func (g *Game) Layout(ow, oh int) (sw, sh int) {
+func (game *Game) Layout(origonal_width, origonal_height int) (screen_width, screen_height int) {
 	return 1280, 720
 }
 
