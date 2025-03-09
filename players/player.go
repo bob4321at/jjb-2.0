@@ -216,11 +216,13 @@ func (p *Player) Draw(s *ebiten.Image) {
 		p.Img.Draw(s, &op)
 	}
 
+	op.GeoM.Reset()
+
 	for entity_index := 0; entity_index < len(p.Entities); entity_index++ {
 		e := &p.Entities[entity_index]
 		op := ebiten.DrawImageOptions{}
 		if !e.Dir {
-			op.GeoM.Translate(e.Pos.X-camera.Cam.Offset.Y+640, e.Pos.Y-camera.Cam.Offset.Y+360)
+			op.GeoM.Translate(e.Pos.X-camera.Cam.Offset.X+640, e.Pos.Y-camera.Cam.Offset.Y+360)
 		} else {
 			op.GeoM.Scale(-1, 1)
 			op.GeoM.Translate(e.Pos.X-camera.Cam.Offset.X+640+float64(e.Img.GetTexture().Bounds().Dx()), e.Pos.Y-camera.Cam.Offset.Y+360)
