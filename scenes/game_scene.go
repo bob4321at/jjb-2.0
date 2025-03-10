@@ -11,8 +11,6 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
-var Game_Display = ebiten.NewImage(1280, 720)
-
 var Game_Scene = NewScene(1, Game_Scene_Draw, Game_Scene_Update, Game_Scene_Setup)
 
 func Game_Scene_Setup() {

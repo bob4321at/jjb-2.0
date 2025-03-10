@@ -7,7 +7,6 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
-var Start_Menu_Display = ebiten.NewImage(1280, 720)
 var Start_Menu_Scene = NewScene(0, Start_Menu_Scene_Draw, Start_Menu_Scene_Update, Start_Menu_Scene_Setup)
 
 var start_menu_img, _, _ = ebitenutil.NewImageFromFile("./art/ui/start_menu.png")
