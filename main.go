@@ -1,12 +1,7 @@
 package main
 
 import (
-	"image/color"
-
-	"jjb/camera"
-	"jjb/level"
-	"jjb/players"
-	"jjb/utils"
+	"jjb/scenes"
 
 	"github.com/hajimehoshi/ebiten/v2"
 )
@@ -17,52 +12,16 @@ var enemy_spawned bool = false
 
 var started = false
 
-func (game *Game) Setup() {
-	if !started {
-		level.Levels = level.LoadAllLevels("./maps/")
-		level.Current_Level_Index = 0
-		level.Current_Level = &level.Levels[level.Current_Level_Index]
-		players.InitPlayer(level.Current_Level.Player_Spawn)
-
-		players.Player_Ref = players.Players["greg"]
-	}
-
-	started = true
-}
+var list_of_scenes = []scenes.Scene{scenes.Game_Scene}
+var current_scene = 0
 
 func (game *Game) Update() error {
-	game.Setup()
-
-	if &level.Levels[level.Current_Level_Index] != level.Current_Level {
-		level.Current_Level = &level.Levels[level.Current_Level_Index]
-		players.InitPlayer(level.Current_Level.Player_Spawn)
-		players.Player_Ref = players.Players["greg"]
+	if list_of_scenes[current_scene].Setup_run == false {
+		list_of_scenes[current_scene].Setup()
+		list_of_scenes[current_scene].Setup_run = true
 	}
 
-	utils.Game_Time += 1
-
-	if !ebiten.IsMouseButtonPressed(ebiten.MouseButton0) {
-		utils.Clicked = false
-	}
-
-	rmx, rmy := ebiten.CursorPosition()
-	utils.Mouse_X, utils.Mouse_Y = float64(rmx), float64(rmy)
-
-	if ebiten.IsKeyPressed(ebiten.KeyG) {
-		players.Player_Ref = players.Players["greg"]
-	} else if ebiten.IsKeyPressed(ebiten.KeyJ) {
-		players.Player_Ref = players.Players["gojo"]
-	} else if ebiten.IsKeyPressed(ebiten.KeyM) {
-		players.Player_Ref = players.Players["megumi"]
-	} else if ebiten.IsKeyPressed(ebiten.KeyB) {
-		players.Player_Ref = players.Players["boberto"]
-	} else if ebiten.IsKeyPressed(ebiten.KeyN) {
-		players.Player_Ref = players.Players["jerry"]
-	}
-
-	camera.Cam.Offset.X = players.Player_Ref.Pos.X
-	camera.Cam.Offset.Y = players.Player_Ref.Pos.Y
-	level.Current_Level.Update(&players.Player_Ref)
+	list_of_scenes[current_scene].Update()
 
 	return nil
 }
@@ -70,14 +29,7 @@ func (game *Game) Update() error {
 var display_img = ebiten.NewImage(1280, 720)
 
 func (game *Game) Draw(screen *ebiten.Image) {
-	display_img.Fill(color.RGBA{0, 115, 255, 255})
-	level.Current_Level.Draw(display_img, &camera.Cam)
-	players.Player_Ref.Draw(display_img)
-	op := ebiten.DrawImageOptions{}
-	op.GeoM.Scale(1.5, 1.5)
-	op.GeoM.Translate(-float64(screen.Bounds().Dx()/4), -float64(screen.Bounds().Dy()/4))
-	screen.DrawImage(display_img, &op)
-	drawUi(screen)
+	list_of_scenes[current_scene].Draw(display_img, screen)
 }
 
 func (game *Game) Layout(origonal_width, origonal_height int) (screen_width, screen_height int) {

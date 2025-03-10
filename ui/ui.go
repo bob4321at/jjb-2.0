@@ -1,4 +1,4 @@
-package main
+package ui
 
 import (
 	"jjb/players"
@@ -13,7 +13,7 @@ var keybinds, _, _ = ebitenutil.NewImageFromFile("./art/ui/keybinds.png")
 
 var keybind_cover, _, _ = ebitenutil.NewImageFromFile("./art/ui/keybing_cover.png")
 
-func drawUi(s *ebiten.Image) {
+func DrawUi(s *ebiten.Image) {
 	op := ebiten.DrawImageOptions{}
 	op.GeoM.Translate(10, 10)
 	op.GeoM.Scale((float64(players.Player_Ref.Health) / 100), 1)

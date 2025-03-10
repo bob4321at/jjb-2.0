@@ -9,6 +9,11 @@ import (
 func (player *Player) jerrySlide() {
 	player.Vel.X *= 4
 	player.I_Frames = 40
+	player.jerrySpike()
+}
+
+func (player *Player) jerryMaxBust() {
+	player.NewProjectile(utils.Vec2{X: player.Pos.X - 64, Y: player.Pos.Y - 128 - 16}, utils.Vec2{}, 5, 0, 100, 10, textures.NewTexture("./art/projectiles/jerry/max_bust.png"))
 }
 
 func (player *Player) jerryWhiteStuff() {
@@ -123,7 +128,7 @@ func JerrySpikeAi(entity *PlayerEntity, level_hitbox []utils.HitBox) {
 }
 
 var jerry_attacks = []Attack{
-	{Player_Ref.jerrySlide, 0, 20},
+	{Player_Ref.jerrySlide, 0, 5},
 	{Player_Ref.jerryWhiteStuff, 0, 5},
-	{Player_Ref.jerrySpike, 0, 1},
+	{Player_Ref.jerryMaxBust, 0, 1},
 }
