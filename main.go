@@ -2,26 +2,23 @@ package main
 
 import (
 	"jjb/scenes"
+	"jjb/utils"
 
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
 type Game struct{}
 
-var enemy_spawned bool = false
-
-var started = false
-
-var list_of_scenes = []scenes.Scene{scenes.Game_Scene}
-var current_scene = 0
-
 func (game *Game) Update() error {
-	if list_of_scenes[current_scene].Setup_run == false {
-		list_of_scenes[current_scene].Setup()
-		list_of_scenes[current_scene].Setup_run = true
+	rmx, rmy := ebiten.CursorPosition()
+	utils.Mouse_X, utils.Mouse_Y = float64(rmx), float64(rmy)
+
+	if scenes.List_Of_Scenes[scenes.Current_Scene].Setup_run == false {
+		scenes.List_Of_Scenes[scenes.Current_Scene].Setup()
+		scenes.List_Of_Scenes[scenes.Current_Scene].Setup_run = true
 	}
 
-	list_of_scenes[current_scene].Update()
+	scenes.List_Of_Scenes[scenes.Current_Scene].Update()
 
 	return nil
 }
@@ -29,7 +26,7 @@ func (game *Game) Update() error {
 var display_img = ebiten.NewImage(1280, 720)
 
 func (game *Game) Draw(screen *ebiten.Image) {
-	list_of_scenes[current_scene].Draw(display_img, screen)
+	scenes.List_Of_Scenes[scenes.Current_Scene].Draw(display_img, screen)
 }
 
 func (game *Game) Layout(origonal_width, origonal_height int) (screen_width, screen_height int) {

@@ -21,3 +21,6 @@ func NewScene(id int, draw func(display_img *ebiten.Image, screen_img *ebiten.Im
 
 	return scene
 }
+
+var List_Of_Scenes = []Scene{Start_Menu_Scene, Game_Scene}
+var Current_Scene = 1

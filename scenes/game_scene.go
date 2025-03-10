@@ -48,9 +48,6 @@ func Game_Scene_Update() {
 		utils.Clicked = false
 	}
 
-	rmx, rmy := ebiten.CursorPosition()
-	utils.Mouse_X, utils.Mouse_Y = float64(rmx), float64(rmy)
-
 	if ebiten.IsKeyPressed(ebiten.KeyG) {
 		players.Player_Ref = players.Players["greg"]
 	} else if ebiten.IsKeyPressed(ebiten.KeyJ) {
