@@ -12,6 +12,7 @@ import (
 )
 
 var Game_Scene = NewScene(1, Game_Scene_Draw, Game_Scene_Update, Game_Scene_Setup)
+var selected_player = "greg"
 
 func Game_Scene_Setup() {
 	level.Levels = level.LoadAllLevels("./maps/")
@@ -19,7 +20,7 @@ func Game_Scene_Setup() {
 	level.Current_Level = &level.Levels[level.Current_Level_Index]
 	players.InitPlayer(level.Current_Level.Player_Spawn)
 
-	players.Player_Ref = players.Players["greg"]
+	players.Player_Ref = players.Players[selected_player]
 }
 
 func Game_Scene_Draw(display_img *ebiten.Image, screen *ebiten.Image) {
@@ -41,22 +42,6 @@ func Game_Scene_Update() {
 	}
 
 	utils.Game_Time += 1
-
-	if !ebiten.IsMouseButtonPressed(ebiten.MouseButton0) {
-		utils.Clicked = false
-	}
-
-	if ebiten.IsKeyPressed(ebiten.KeyG) {
-		players.Player_Ref = players.Players["greg"]
-	} else if ebiten.IsKeyPressed(ebiten.KeyJ) {
-		players.Player_Ref = players.Players["gojo"]
-	} else if ebiten.IsKeyPressed(ebiten.KeyM) {
-		players.Player_Ref = players.Players["megumi"]
-	} else if ebiten.IsKeyPressed(ebiten.KeyB) {
-		players.Player_Ref = players.Players["boberto"]
-	} else if ebiten.IsKeyPressed(ebiten.KeyN) {
-		players.Player_Ref = players.Players["jerry"]
-	}
 
 	camera.Cam.Offset.X = players.Player_Ref.Pos.X
 	camera.Cam.Offset.Y = players.Player_Ref.Pos.Y

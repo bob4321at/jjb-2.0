@@ -1,7 +1,6 @@
 package level
 
 import (
-	"fmt"
 	"jjb/camera"
 	"jjb/enemyai"
 	"jjb/players"
@@ -98,8 +97,6 @@ func (level *Level) Update(player *players.Player) {
 	player.DamageCheck()
 
 	player.Update(level.HitBox)
-
-	fmt.Println(enemyai.Enemies_In_World)
 
 	enemyai.Enemies_In_World = []*enemyai.Enemy{}
 	for enemy_index := 0; enemy_index < len(level.Enemies); enemy_index++ {

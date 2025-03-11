@@ -250,7 +250,7 @@ func (p *Player) Update(level_hitbox []utils.HitBox) {
 	if p.Vel.X > 5 {
 		p.Vel.X -= 0.1
 		if p.Vel.X > 10 {
-			p.Vel.X += 0.2
+			p.Vel.X -= 0.2
 		}
 	} else if p.Vel.X < -5 {
 		p.Vel.X += 0.1

@@ -7,20 +7,20 @@ import (
 )
 
 func (player *Player) jerrySlide() {
-	player.Vel.X *= 4
+	player.Vel.X *= 2
 	player.I_Frames = 40
 	player.jerrySpike()
 }
 
-func (player *Player) jerryMaxBust() {
-	player.NewProjectile(utils.Vec2{X: player.Pos.X - 64, Y: player.Pos.Y - 128 - 16}, utils.Vec2{}, 5, 0, 100, 10, textures.NewTexture("./art/projectiles/jerry/max_bust.png"))
+func (player *Player) jerryMaxBurst() {
+	player.NewProjectile(utils.Vec2{X: player.Pos.X - 64, Y: player.Pos.Y - 128 - 16}, utils.Vec2{}, 5, 0, 100, 10, textures.NewTexture("./art/projectiles/jerry/max_burst.png"))
 }
 
-func (player *Player) jerryWhiteStuff() {
-	player.NewEntity(player.Pos, utils.Vec2{X: 0, Y: 1}, 2, 50, textures.NewTexture("./art/entities/jerry/jerry_white_stuff.png"), jerryWhiteStuffAi)
+func (player *Player) jerryWaterTrap() {
+	player.NewEntity(player.Pos, utils.Vec2{X: 0, Y: 1}, 2, 50, textures.NewTexture("./art/entities/jerry/jerry_water_trap.png"), jerryWaterTrapAi)
 }
 
-func jerryWhiteStuffAi(entity *PlayerEntity, level_hitbox []utils.HitBox) {
+func jerryWaterTrapAi(entity *PlayerEntity, level_hitbox []utils.HitBox) {
 	entity.Vel.Y += 0.1
 
 	entity.Lifespan -= 0.1
@@ -129,6 +129,6 @@ func JerrySpikeAi(entity *PlayerEntity, level_hitbox []utils.HitBox) {
 
 var jerry_attacks = []Attack{
 	{Player_Ref.jerrySlide, 0, 5},
-	{Player_Ref.jerryWhiteStuff, 0, 5},
-	{Player_Ref.jerryMaxBust, 0, 1},
+	{Player_Ref.jerryWaterTrap, 0, 5},
+	{Player_Ref.jerryMaxBurst, 0, 1},
 }
