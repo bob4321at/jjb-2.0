@@ -38,7 +38,7 @@ func Game_Scene_Update() {
 	if &level.Levels[level.Current_Level_Index] != level.Current_Level {
 		level.Current_Level = &level.Levels[level.Current_Level_Index]
 		players.InitPlayer(level.Current_Level.Player_Spawn)
-		players.Player_Ref = players.Players["greg"]
+		players.Player_Ref = players.Players[selected_player]
 	}
 
 	utils.Game_Time += 1

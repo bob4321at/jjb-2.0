@@ -13,7 +13,7 @@ func (player *Player) jerrySlide() {
 }
 
 func (player *Player) jerryMaxBurst() {
-	player.NewProjectile(utils.Vec2{X: player.Pos.X - 64, Y: player.Pos.Y - 128 - 16}, utils.Vec2{}, 5, 0, 100, 10, textures.NewTexture("./art/projectiles/jerry/max_burst.png"))
+	player.NewProjectile(utils.Vec2{X: player.Pos.X - 64, Y: player.Pos.Y - 128 - 16}, utils.Vec2{}, 1, 0, 100, 2, textures.NewTexture("./art/projectiles/jerry/max_burst.png"))
 }
 
 func (player *Player) jerryWaterTrap() {
@@ -68,9 +68,9 @@ func jerryWaterTrapAi(entity *PlayerEntity, level_hitbox []utils.HitBox) {
 
 func (player *Player) jerrySpike() {
 	if player.Dir {
-		player.NewEntity(utils.Vec2{X: player.Pos.X - 64, Y: player.Pos.Y - 64}, utils.Vec2{X: -6, Y: 0}, 2, 50, textures.NewAnimatedTexture("./art/entities/jerry/jerry_spike.png"), JerrySpikeAi)
+		player.NewEntity(utils.Vec2{X: player.Pos.X - 64, Y: player.Pos.Y - 64}, utils.Vec2{X: -6, Y: 0}, 1, 50, textures.NewAnimatedTexture("./art/entities/jerry/jerry_spike.png"), JerrySpikeAi)
 	} else {
-		player.NewEntity(utils.Vec2{X: player.Pos.X - 64, Y: player.Pos.Y - 64}, utils.Vec2{X: 6, Y: 0}, 2, 50, textures.NewAnimatedTexture("./art/entities/jerry/jerry_spike.png"), JerrySpikeAi)
+		player.NewEntity(utils.Vec2{X: player.Pos.X - 64, Y: player.Pos.Y - 64}, utils.Vec2{X: 6, Y: 0}, 1, 50, textures.NewAnimatedTexture("./art/entities/jerry/jerry_spike.png"), JerrySpikeAi)
 
 	}
 }
@@ -95,7 +95,7 @@ func JerrySpikeAi(entity *PlayerEntity, level_hitbox []utils.HitBox) {
 		for enemy_index := 0; enemy_index < len(enemyai.Enemies_In_World); enemy_index++ {
 			enemy := enemyai.Enemies_In_World[enemy_index]
 			if utils.Collide(utils.Vec2{X: entity.Pos.X, Y: entity.Pos.Y - 8}, utils.Vec2{X: 128, Y: 128}, utils.Vec2{X: enemy.Pos.X, Y: enemy.Pos.Y}, utils.Vec2{X: float64(enemy.Tex.GetTexture().Bounds().Dx()), Y: float64(enemy.Tex.GetTexture().Bounds().Dy())}) {
-				enemy.Health -= 2
+				enemy.Health -= 4
 				entity.Cooldown = entity.Max_Cooldown
 			}
 		}
@@ -130,5 +130,5 @@ func JerrySpikeAi(entity *PlayerEntity, level_hitbox []utils.HitBox) {
 var jerry_attacks = []Attack{
 	{Player_Ref.jerrySlide, 0, 5},
 	{Player_Ref.jerryWaterTrap, 0, 5},
-	{Player_Ref.jerryMaxBurst, 0, 1},
+	{Player_Ref.jerryMaxBurst, 0, 10},
 }
