@@ -32,7 +32,7 @@ func (player *Player) bobertoFireball() {
 }
 
 func (player *Player) bobertoFirePiller() {
-	player.NewProjectile(utils.Vec2{X: player.Pos.X - 64, Y: player.Pos.Y - 512 + 64}, utils.Vec2{X: 0, Y: 0}, 20, 0, 100, 20, textures.NewTexture("./art/projectiles/boberto/fire_pillar.png"))
+	player.NewProjectile(utils.Vec2{X: player.Pos.X - 64, Y: player.Pos.Y - 512 + 64}, utils.Vec2{X: 0, Y: 0}, 1, 0, 40, 20, textures.NewTexture("./art/projectiles/boberto/fire_pillar.png"))
 }
 
 func (player *Player) bobertoDomain(enemies []*enemyai.Enemy) {

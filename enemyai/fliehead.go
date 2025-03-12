@@ -6,7 +6,7 @@ import (
 )
 
 func flieHeadUpdate(e *Enemy, player_pos utils.Vec2, level_hitbox []utils.HitBox) {
-	e.Vel.X += -0.015 * (e.Pos.Y - player_pos.X) * (math.Abs(e.Pos.Y / 100)) / 20
+	e.Vel.X += -0.015 * (e.Pos.X - player_pos.X) * (math.Abs(e.Pos.Y / 100)) / 20
 
 	if e.Pos.Y > player_pos.Y-128 {
 		e.Vel.Y -= 1
