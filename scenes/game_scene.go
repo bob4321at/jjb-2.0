@@ -14,6 +14,8 @@ import (
 var Game_Scene = NewScene(1, Game_Scene_Draw, Game_Scene_Update, Game_Scene_Setup)
 var selected_player = "greg"
 
+var tab_key_hit = false
+
 func Game_Scene_Setup() {
 	level.Levels = level.LoadAllLevels("./maps/")
 	level.Current_Level_Index = 0
@@ -39,6 +41,14 @@ func Game_Scene_Update() {
 		level.Current_Level = &level.Levels[level.Current_Level_Index]
 		players.InitPlayer(level.Current_Level.Player_Spawn)
 		players.Player_Ref = players.Players[selected_player]
+	}
+
+	if !ebiten.IsKeyPressed(ebiten.KeyTab) {
+		tab_key_hit = false
+	}
+	if ebiten.IsKeyPressed(ebiten.KeyTab) && !tab_key_hit {
+		tab_key_hit = true
+		level.Current_Level_Index += 1
 	}
 
 	utils.Game_Time += 1
