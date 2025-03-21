@@ -81,9 +81,9 @@ func sukunaUpdate(e *Enemy, player_pos utils.Vec2, level_hitbox []utils.HitBox) 
 		if check == 0 {
 			if math.Abs(player_pos.X-e.Pos.X) > 256 {
 				if e.Dir {
-					e.NewProjectile(utils.Vec2{X: e.Pos.X, Y: e.Pos.Y + 32}, utils.Vec2{X: -5, Y: 0}, textures.NewTexture("./art/enemies/sukuna_fire_attack.png"), 10, 100)
+					e.NewProjectile(utils.Vec2{X: e.Pos.X, Y: e.Pos.Y + 32}, utils.Vec2{X: -5, Y: 0}, textures.NewTexture("./art/enemies/fuego_left.png"), 10, 100)
 				} else {
-					e.NewProjectile(utils.Vec2{X: e.Pos.X, Y: e.Pos.Y + 32}, utils.Vec2{X: 5, Y: 0}, textures.NewTexture("./art/enemies/sukuna_fire_attack.png"), 10, 100)
+					e.NewProjectile(utils.Vec2{X: e.Pos.X, Y: e.Pos.Y + 32}, utils.Vec2{X: 5, Y: 0}, textures.NewTexture("./art/enemies/fuego_right.png"), 10, 100)
 				}
 			} else {
 				if e.Dir {

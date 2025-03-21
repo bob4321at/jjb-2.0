@@ -353,6 +353,8 @@ func (p *Player) Update(level_hitbox []utils.HitBox) {
 		projectile.Pos.X -= math.Cos(projectile_move_dir) * projectile.Speed
 		projectile.Pos.Y -= math.Sin(projectile_move_dir) * projectile.Speed
 
+		projectile.Img.Update()
+
 		for enemy_index := 0; enemy_index < len(enemyai.Enemies_In_World); enemy_index++ {
 			e := enemyai.Enemies_In_World[enemy_index]
 			if utils.Collide(projectile.Pos, utils.Vec2{X: float64(projectile.Img.GetTexture().Bounds().Dx()), Y: float64(projectile.Img.GetTexture().Bounds().Dy())}, e.Pos, utils.Vec2{X: float64(e.Tex.GetTexture().Bounds().Dx()), Y: float64(e.Tex.GetTexture().Bounds().Dy())}) {

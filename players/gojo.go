@@ -24,15 +24,16 @@ func gojoBlueAi(entity *PlayerEntity, level_hitbox []utils.HitBox) {
 	for ei := 0; ei < len(enemyai.Enemies_In_World); ei++ {
 		enemy := enemyai.Enemies_In_World[ei]
 
+		// extra math is to convert mouse_cords to world cords
 		if utils.Collide(utils.Vec2{X: entity.Pos.X - 144, Y: entity.Pos.Y}, utils.Vec2{X: 144 * 3, Y: 144 * 3}, enemy.Pos, utils.Vec2{X: float64(enemy.Tex.GetTexture().Bounds().Dx()), Y: float64(enemy.Tex.GetTexture().Bounds().Dy())}) {
 
 			enemy.Can_Move = false
-			if enemy.Pos.X >= entity.Pos.X+72 {
+			if enemy.Pos.X+float64(enemy.Tex.GetTexture().Bounds().Dx()/2) >= entity.Pos.X+72 {
 				enemy.Vel.X = -0.5
 			} else {
 				enemy.Vel.X = 0.5
 			}
-			if enemy.Pos.Y >= entity.Pos.Y+72 {
+			if enemy.Pos.Y+float64(enemy.Tex.GetTexture().Bounds().Dy()/2) >= entity.Pos.Y+72 {
 				enemy.Vel.Y = -0.5
 			} else {
 				enemy.Vel.Y = 0.5
@@ -42,7 +43,6 @@ func gojoBlueAi(entity *PlayerEntity, level_hitbox []utils.HitBox) {
 			enemy.Can_Move = true
 		}
 	}
-	// extra math is to convert mouse_cords to world cords
 }
 
 func (player *Player) gojoPurple() {

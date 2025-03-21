@@ -15,5 +15,7 @@ func InitPlayer(spawn_point utils.Vec2) {
 		"megumi":  newPlayer(spawn_point, *textures.NewAnimatedTexture("./art/players/megumi.png"), textures.NewTexture("./art/domains/megumi_domain.png"), func(enemies []*enemyai.Enemy) { Player_Ref.megumiDomain(enemyai.Enemies_In_World) }, megumi_attacks),
 		"boberto": newPlayer(spawn_point, *textures.NewAnimatedTexture("./art/players/boberto.png"), textures.NewTexture("./art/domains/boberto_domain.png"), func(enemies []*enemyai.Enemy) { Player_Ref.bobertoDomain(enemyai.Enemies_In_World) }, boberto_attacks),
 		"jerry":   newPlayer(spawn_point, *textures.NewAnimatedTexture("./art/players/jerry.png"), textures.NewTexture("./art/domains/simple_domain.png"), func(enemies []*enemyai.Enemy) { Player_Ref.simpleDomain(enemyai.Enemies_In_World) }, jerry_attacks),
+		"sukuna":  newPlayer(spawn_point, *textures.NewAnimatedTexture("./art/players/sukuna_playable.png"), textures.NewTexture("./art/domains/sukuna_domain.png"), func(enemies []*enemyai.Enemy) { Player_Ref.simpleDomain(enemyai.Enemies_In_World) }, sukuna_attacks),
+		"hermes":  newPlayer(spawn_point, *textures.NewAnimatedTexture("./art/players/hermes.png"), textures.NewTexture("./art/domains/simple_domain.png"), func(enemies []*enemyai.Enemy) { Player_Ref.simpleDomain(enemyai.Enemies_In_World) }, hermes_attacks),
 	}
 }

@@ -111,5 +111,7 @@ func init() {
 		8:  NewEnemy(8, 20, 3, utils.Vec2{}, textures.NewAnimatedTexture("./art/enemies/fuzzball.png"), fuzzBallUpdate),
 		9:  NewEnemy(9, 200, 5, utils.Vec2{}, textures.NewTexture("./art/enemies/simple_grade_curse.png"), simpleGradeCurseUpdate),
 		10: NewEnemy(9, 200, 10, utils.Vec2{}, textures.NewTexture("./art/enemies/sukuna.png"), sukunaUpdate),
+		11: NewEnemy(6, 50, 3, utils.Vec2{}, textures.NewTexture("./art/enemies/green_balloon.png"), greenBalloonUpdate),
+		12: NewEnemy(6, 100, 3, utils.Vec2{}, textures.NewTexture("./art/enemies/purple_balloon.png"), purpleBalloonUpdate),
 	}
 }
