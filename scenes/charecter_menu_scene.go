@@ -21,7 +21,7 @@ func Charecter_Menu_Scene_Update() {
 	if ebiten.IsMouseButtonPressed(ebiten.MouseButton0) && !utils.Clicked {
 		if utils.Collide(utils.Vec2{X: utils.Mouse_X, Y: utils.Mouse_Y}, utils.Vec2{X: 1, Y: 1}, utils.Vec2{X: 35, Y: 155}, utils.Vec2{X: 181, Y: 74}) {
 			Current_Scene = 2
-			selected_player = "hermes"
+			selected_player = "greg"
 			Game_Scene.Setup()
 		} else if utils.Collide(utils.Vec2{X: utils.Mouse_X, Y: utils.Mouse_Y}, utils.Vec2{X: 1, Y: 1}, utils.Vec2{X: 221, Y: 155}, utils.Vec2{X: 181, Y: 74}) {
 			Current_Scene = 2
@@ -43,7 +43,12 @@ func Charecter_Menu_Scene_Update() {
 			Current_Scene = 2
 			selected_player = "hermes"
 			Game_Scene.Setup()
+		} else if utils.Collide(utils.Vec2{X: utils.Mouse_X, Y: utils.Mouse_Y}, utils.Vec2{X: 1, Y: 1}, utils.Vec2{X: 35, Y: 234}, utils.Vec2{X: 181, Y: 74}) {
+			Current_Scene = 2
+			selected_player = "test_player"
+			Game_Scene.Setup()
 		}
+
 		if ebiten.IsKeyPressed(ebiten.KeyS) && ebiten.IsKeyPressed(ebiten.KeyR) {
 			Current_Scene = 2
 			selected_player = "sukuna"
