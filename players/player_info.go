@@ -18,5 +18,6 @@ func InitPlayer(spawn_point utils.Vec2) {
 		"sukuna":      newPlayer(spawn_point, *textures.NewAnimatedTexture("./art/players/sukuna_playable.png"), textures.NewTexture("./art/domains/sukuna_domain.png"), func(enemies []*enemyai.Enemy) { Player_Ref.simpleDomain(enemyai.Enemies_In_World) }, sukuna_attacks),
 		"hermes":      newPlayer(spawn_point, *textures.NewAnimatedTexture("./art/players/hermes.png"), textures.NewTexture("./art/domains/simple_domain.png"), func(enemies []*enemyai.Enemy) { Player_Ref.simpleDomain(enemyai.Enemies_In_World) }, hermes_attacks),
 		"test_player": newPlayer(spawn_point, *textures.NewAnimatedTexture("./art/players/test_player.png"), textures.NewTexture("./art/domains/simple_domain.png"), func(enemies []*enemyai.Enemy) { Player_Ref.simpleDomain(enemyai.Enemies_In_World) }, test_player_attacks),
+		"agent_21":    newPlayer(spawn_point, *textures.NewAnimatedTexture("./art/players/agent_21.png"), textures.NewTexture("./art/domains/simple_domain.png"), func(enemies []*enemyai.Enemy) { Player_Ref.simpleDomain(enemyai.Enemies_In_World) }, agent_21_attacks),
 	}
 }
