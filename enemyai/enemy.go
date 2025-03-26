@@ -47,6 +47,7 @@ type Enemy struct {
 	Dir         bool
 	Update      func(e *Enemy, player_pos utils.Vec2, level_hitbox []utils.HitBox)
 	Coll_Shape  utils.HitBox
+	I_Frames    float64
 }
 
 func NewEnemy(id int, health int, damage int, pos utils.Vec2, img textures.RenderableTexture, update func(enemy *Enemy, player_pos utils.Vec2, level_hitbox []utils.HitBox)) (enemy Enemy) {
@@ -69,6 +70,13 @@ func NewEnemy(id int, health int, damage int, pos utils.Vec2, img textures.Rende
 }
 
 func (enemy *Enemy) Draw(screen *ebiten.Image, cam *camera.Camera) {
+	if enemy.I_Frames > 0 {
+		enemy.I_Frames -= 0.1
+	} else {
+		enemy.I_Frames = 0
+		enemy.Tex.RefreshTexture()
+	}
+
 	if enemy.Pos.X-cam.Offset.X+640+float64(enemy.Tex.GetTexture().Bounds().Dx()) > 0 && enemy.Pos.X-cam.Offset.X+640-float64(enemy.Tex.GetTexture().Bounds().Dx()) < 1280 {
 		if enemy.Pos.Y-cam.Offset.Y+360+float64(enemy.Tex.GetTexture().Bounds().Dy()) > 0 && enemy.Pos.Y-cam.Offset.Y+360-float64(enemy.Tex.GetTexture().Bounds().Dy()) < 720 {
 			op := ebiten.DrawImageOptions{}
@@ -94,7 +102,11 @@ func (enemy *Enemy) Draw(screen *ebiten.Image, cam *camera.Camera) {
 	}
 }
 
-func (enemy *Enemy) CheckRemove() {
+func (enemy *Enemy) DoDamage(amount int) {
+	if enemy.I_Frames >= 0 {
+		enemy.Health -= amount
+		enemy.I_Frames = 4
+	}
 }
 
 var Enemy_Table = map[int]Enemy{}
@@ -102,16 +114,16 @@ var Enemy_Table = map[int]Enemy{}
 func init() {
 	Enemy_Table = map[int]Enemy{
 		1:  NewEnemy(1, 10, 1, utils.Vec2{}, textures.NewAnimatedTexture("./art/enemies/fliehead.png"), flieHeadUpdate),
-		2:  NewEnemy(2, 20, 2, utils.Vec2{}, textures.NewTexture("./art/enemies/crooked.png"), crookedUpdate),
-		3:  NewEnemy(3, 10, 2, utils.Vec2{}, textures.NewTexture("./art/enemies/shrimp.png"), shrimpUpdate),
+		2:  NewEnemy(2, 20, 2, utils.Vec2{}, textures.NewTexture("./art/enemies/crooked.png", ""), crookedUpdate),
+		3:  NewEnemy(3, 10, 2, utils.Vec2{}, textures.NewTexture("./art/enemies/shrimp.png", ""), shrimpUpdate),
 		4:  NewEnemy(4, 100, 5, utils.Vec2{}, textures.NewAnimatedTexture("./art/enemies/bosshead.png"), bossHeadUpdate),
-		5:  NewEnemy(5, 10, 5, utils.Vec2{}, textures.NewTexture("./art/enemies/cloudhead.png"), cloudHeadUpdate),
-		6:  NewEnemy(6, 20, 3, utils.Vec2{}, textures.NewTexture("./art/enemies/balloon.png"), balloonUpdate),
+		5:  NewEnemy(5, 10, 5, utils.Vec2{}, textures.NewTexture("./art/enemies/cloudhead.png", ""), cloudHeadUpdate),
+		6:  NewEnemy(6, 20, 3, utils.Vec2{}, textures.NewTexture("./art/enemies/balloon.png", ""), balloonUpdate),
 		7:  NewEnemy(7, 10, 3, utils.Vec2{}, textures.NewAnimatedTexture("./art/enemies/bunny.png"), bunnyUpdate),
 		8:  NewEnemy(8, 20, 3, utils.Vec2{}, textures.NewAnimatedTexture("./art/enemies/fuzzball.png"), fuzzBallUpdate),
-		9:  NewEnemy(9, 200, 5, utils.Vec2{}, textures.NewTexture("./art/enemies/simple_grade_curse.png"), simpleGradeCurseUpdate),
-		10: NewEnemy(9, 200, 10, utils.Vec2{}, textures.NewTexture("./art/enemies/sukuna.png"), sukunaUpdate),
-		11: NewEnemy(6, 50, 3, utils.Vec2{}, textures.NewTexture("./art/enemies/green_balloon.png"), greenBalloonUpdate),
-		12: NewEnemy(6, 100, 3, utils.Vec2{}, textures.NewTexture("./art/enemies/purple_balloon.png"), purpleBalloonUpdate),
+		9:  NewEnemy(9, 200, 5, utils.Vec2{}, textures.NewTexture("./art/enemies/simple_grade_curse.png", ""), simpleGradeCurseUpdate),
+		10: NewEnemy(9, 200, 10, utils.Vec2{}, textures.NewTexture("./art/enemies/sukuna.png", ""), sukunaUpdate),
+		11: NewEnemy(6, 50, 3, utils.Vec2{}, textures.NewTexture("./art/enemies/green_balloon.png", ""), greenBalloonUpdate),
+		12: NewEnemy(6, 100, 3, utils.Vec2{}, textures.NewTexture("./art/enemies/purple_balloon.png", ""), purpleBalloonUpdate),
 	}
 }

@@ -15,17 +15,17 @@ func (player *Player) megumiTp() {
 
 func (player *Player) megumiBird() {
 	if player.Pos.X-camera.Cam.Offset.X+640 < utils.Mouse_X {
-		player.NewProjectile(utils.Vec2{X: player.Pos.X, Y: player.Pos.Y}, utils.Vec2{X: -1, Y: 0.5}, 1, 3, 5, 100, textures.NewTexture("./art/projectiles/megumi/birdright.png"))
+		player.NewProjectile(utils.Vec2{X: player.Pos.X, Y: player.Pos.Y}, utils.Vec2{X: -1, Y: 0.5}, 1, 3, 5, 100, textures.NewTexture("./art/projectiles/megumi/birdright.png", ""))
 	} else {
-		player.NewProjectile(utils.Vec2{X: player.Pos.X, Y: player.Pos.Y}, utils.Vec2{X: 1, Y: 0.5}, 1, 3, 5, 100, textures.NewTexture("./art/projectiles/megumi/birdleft.png"))
+		player.NewProjectile(utils.Vec2{X: player.Pos.X, Y: player.Pos.Y}, utils.Vec2{X: 1, Y: 0.5}, 1, 3, 5, 100, textures.NewTexture("./art/projectiles/megumi/birdleft.png", ""))
 	}
 }
 
 func (player *Player) megumiMahoraga() {
 	if !player.Dir {
-		player.NewEntity(utils.Vec2{X: player.Pos.X - 16, Y: player.Pos.Y - 32}, utils.Vec2{X: 1, Y: 0}, 1, 100, textures.NewTexture("./art/entities/megumi/mahoraga.png"), mahoragaUpdate)
+		player.NewEntity(utils.Vec2{X: player.Pos.X - 16, Y: player.Pos.Y - 32}, utils.Vec2{X: 1, Y: 0}, 1, 100, textures.NewTexture("./art/entities/megumi/mahoraga.png", ""), mahoragaUpdate)
 	} else {
-		player.NewEntity(utils.Vec2{X: player.Pos.X - 16, Y: player.Pos.Y - 32}, utils.Vec2{X: -1, Y: 0}, 1, 100, textures.NewTexture("./art/entities/megumi/mahoraga.png"), mahoragaUpdate)
+		player.NewEntity(utils.Vec2{X: player.Pos.X - 16, Y: player.Pos.Y - 32}, utils.Vec2{X: -1, Y: 0}, 1, 100, textures.NewTexture("./art/entities/megumi/mahoraga.png", ""), mahoragaUpdate)
 	}
 }
 
@@ -58,7 +58,7 @@ func mahoragaUpdate(entity *PlayerEntity, level_hitbox []utils.HitBox) {
 		for enemy_index := 0; enemy_index < len(enemyai.Enemies_In_World); enemy_index++ {
 			enemy := enemyai.Enemies_In_World[enemy_index]
 			if utils.Collide(entity.Pos, utils.Vec2{X: float64(entity.Img.GetTexture().Bounds().Dx()), Y: float64(entity.Img.GetTexture().Bounds().Dy())}, enemy.Pos, utils.Vec2{X: float64(enemy.Tex.GetTexture().Bounds().Dx()), Y: float64(enemy.Tex.GetTexture().Bounds().Dy())}) {
-				enemy.Health -= 2
+				enemy.DoDamage(2)
 				entity.Cooldown = 0.5
 			}
 		}

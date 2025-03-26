@@ -8,9 +8,9 @@ import (
 
 func purpleBalloonUpdate(e *Enemy, player_pos utils.Vec2, level_hitbox []utils.HitBox) {
 	if e.Health <= 0 {
-		Enemies_To_Add = append(Enemies_To_Add, NewEnemy(5, 10, 5, e.Pos, textures.NewTexture("./art/enemies/green_balloon.png"), greenBalloonUpdate))
-		Enemies_To_Add = append(Enemies_To_Add, NewEnemy(5, 10, 5, e.Pos, textures.NewTexture("./art/enemies/green_balloon.png"), greenBalloonUpdate))
-		Enemies_To_Add = append(Enemies_To_Add, NewEnemy(5, 10, 5, e.Pos, textures.NewTexture("./art/enemies/green_balloon.png"), greenBalloonUpdate))
+		Enemies_To_Add = append(Enemies_To_Add, NewEnemy(5, 10, 5, e.Pos, textures.NewTexture("./art/enemies/green_balloon.png", ""), greenBalloonUpdate))
+		Enemies_To_Add = append(Enemies_To_Add, NewEnemy(5, 10, 5, e.Pos, textures.NewTexture("./art/enemies/green_balloon.png", ""), greenBalloonUpdate))
+		Enemies_To_Add = append(Enemies_To_Add, NewEnemy(5, 10, 5, e.Pos, textures.NewTexture("./art/enemies/green_balloon.png", ""), greenBalloonUpdate))
 	}
 
 	e.Vel.X += -0.015 * (e.Pos.X - player_pos.X) * (math.Abs(e.Pos.Y / 100)) / 20
@@ -54,6 +54,9 @@ func purpleBalloonUpdate(e *Enemy, player_pos utils.Vec2, level_hitbox []utils.H
 		}
 	}
 	if utils.Collide(utils.Vec2{X: e.Pos.X, Y: e.Pos.Y + e.Vel.Y + 2}, utils.Vec2{X: 256, Y: 256}, utils.Vec2{X: 2000 - (1280 / 2), Y: -2000 - (720 / 2) + (449 * 2)}, utils.Vec2{X: 2048, Y: (126 * 2)}) {
+		e.Vel.Y = 0
+	}
+	if utils.Collide(utils.Vec2{X: e.Pos.X, Y: e.Pos.Y + e.Vel.Y + 2}, utils.Vec2{X: 32, Y: 64}, utils.Vec2{X: 2000 - (1280 / 2), Y: -2000 - (720 / 2) - (575/2 - 32)}, utils.Vec2{X: 2048, Y: (126 * 2)}) {
 		e.Vel.Y = 0
 	}
 

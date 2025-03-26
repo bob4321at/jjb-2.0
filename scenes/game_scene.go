@@ -26,7 +26,7 @@ func Game_Scene_Setup() {
 }
 
 func Game_Scene_Draw(display_img *ebiten.Image, screen *ebiten.Image) {
-	display_img.Fill(color.RGBA{0, 115, 255, 255})
+	display_img.Fill(color.RGBA{0, 0, 0, 255})
 	level.Current_Level.Draw(display_img, &camera.Cam)
 	players.Player_Ref.Draw(display_img)
 	op := ebiten.DrawImageOptions{}

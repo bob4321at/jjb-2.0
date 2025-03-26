@@ -14,7 +14,7 @@ import (
 
 func makeLevel(path string, tileset_path string, background_path string) (level Level) {
 	level.Enemies = []enemyai.Enemy{}
-	level.Background = newBackground(utils.Vec2{X: 0, Y: 1024 * 1.8}, 100, textures.NewTexture(background_path))
+	level.Background = newBackground(utils.Vec2{X: 0, Y: 1024 * 1.8}, 100, textures.NewTexture(background_path, ""))
 
 	temporary_image, _, err := ebitenutil.NewImageFromFile(tileset_path)
 	if err != nil {

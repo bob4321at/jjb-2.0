@@ -79,9 +79,9 @@ func simpleGradeCurseUpdate(e *Enemy, player_pos utils.Vec2, level_hitbox []util
 		check := int(math.Mod(utils.Game_Time, 100))
 		if check == 0 {
 			if e.Dir {
-				e.NewProjectile(utils.Vec2{X: e.Pos.X, Y: e.Pos.Y - 32}, utils.Vec2{X: -7, Y: 0}, textures.NewTexture("./art/enemies/simple_grade_curse_attack_left.png"), 5, 10)
+				e.NewProjectile(utils.Vec2{X: e.Pos.X, Y: e.Pos.Y - 32}, utils.Vec2{X: -7, Y: 0}, textures.NewTexture("./art/enemies/simple_grade_curse_attack_left.png", ""), 5, 10)
 			} else {
-				e.NewProjectile(utils.Vec2{X: e.Pos.X, Y: e.Pos.Y - 32}, utils.Vec2{X: 7, Y: 0}, textures.NewTexture("./art/enemies/simple_grade_curse_attack_right.png"), 5, 10)
+				e.NewProjectile(utils.Vec2{X: e.Pos.X, Y: e.Pos.Y - 32}, utils.Vec2{X: 7, Y: 0}, textures.NewTexture("./art/enemies/simple_grade_curse_attack_right.png", ""), 5, 10)
 			}
 		}
 	}

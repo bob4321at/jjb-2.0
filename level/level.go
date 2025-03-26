@@ -106,8 +106,6 @@ func (level *Level) Update(player *players.Player) {
 
 		level.Enemies[enemy_index].Tex.Update()
 
-		level.Enemies[enemy_index].CheckRemove()
-
 		for projectile_index := 0; projectile_index < len(enemy.Projectiles); projectile_index++ {
 			projectile := &enemy.Projectiles[projectile_index]
 			projectile.Pos.X += projectile.Vel.X

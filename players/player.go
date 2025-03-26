@@ -233,12 +233,16 @@ func (p *Player) Draw(s *ebiten.Image) {
 	for projectile_index := 0; projectile_index < len(p.Projectiles); projectile_index++ {
 		op.GeoM.Reset()
 		op.GeoM.Translate(p.Projectiles[projectile_index].Pos.X-camera.Cam.Offset.X+650, p.Projectiles[projectile_index].Pos.Y-camera.Cam.Offset.Y+380)
-		s.DrawImage(p.Projectiles[projectile_index].Img.GetTexture(), &op)
+		p.Projectiles[projectile_index].Img.Draw(s, &op)
 	}
 }
 
 func (p *Player) Update(level_hitbox []utils.HitBox) {
 	p.Img.Update()
+	p.Img.RefreshTexture()
+
+	if p.I_Frames > 0 {
+	}
 
 	p.Vel.Y += 0.1
 	if p.Vel.X != 0 {
@@ -312,6 +316,16 @@ func (p *Player) Update(level_hitbox []utils.HitBox) {
 			}
 		}
 	}
+	if utils.Collide(utils.Vec2{X: p.Pos.X, Y: p.Pos.Y + p.Vel.Y + 2}, utils.Vec2{X: 32, Y: 62}, utils.Vec2{X: 2000 - (1280 / 2), Y: -2000 - (720 / 2) - (250)}, utils.Vec2{X: 2048, Y: (126 * 2)}) {
+		p.Vel.Y = 0
+		if ebiten.IsKeyPressed(ebiten.KeyW) || ebiten.IsKeyPressed(ebiten.KeySpace) {
+			if utils.Collide(utils.Vec2{X: p.Pos.X, Y: p.Pos.Y + p.Vel.Y - 2}, utils.Vec2{X: 32, Y: 62}, utils.Vec2{X: 2000, Y: -2000 + (449 * 2)}, utils.Vec2{X: 2048, Y: (126 * 2)}) {
+				p.Vel.Y = 0
+			} else {
+				p.Vel.Y = -5.1
+			}
+		}
+	}
 
 	if utils.Collide(utils.Vec2{X: p.Pos.X + p.Vel.X, Y: p.Pos.Y + 2}, utils.Vec2{X: 32, Y: 62}, utils.Vec2{X: 2000 - (1280 / 2), Y: -2000 - (720 / 2) + (449 * 2)}, utils.Vec2{X: 2048, Y: (126 * 2)}) {
 		p.Vel.X = 0
@@ -357,15 +371,17 @@ func (p *Player) Update(level_hitbox []utils.HitBox) {
 
 		for enemy_index := 0; enemy_index < len(enemyai.Enemies_In_World); enemy_index++ {
 			e := enemyai.Enemies_In_World[enemy_index]
-			if utils.Collide(projectile.Pos, utils.Vec2{X: float64(projectile.Img.GetTexture().Bounds().Dx()), Y: float64(projectile.Img.GetTexture().Bounds().Dy())}, e.Pos, utils.Vec2{X: float64(e.Tex.GetTexture().Bounds().Dx()), Y: float64(e.Tex.GetTexture().Bounds().Dy())}) {
-				e.Health -= projectile.Damage
-				if projectile.Pierce == -1 {
-					utils.RemoveArrayElement(projectile_index, &p.Projectiles)
-					break
-				} else {
-					projectile.Pierce -= 1.1
-					if projectile.Pierce <= 0 {
-						projectile.Damage = 0
+			if e.I_Frames == 0 {
+				if utils.Collide(projectile.Pos, utils.Vec2{X: float64(projectile.Img.GetTexture().Bounds().Dx()), Y: float64(projectile.Img.GetTexture().Bounds().Dy())}, e.Pos, utils.Vec2{X: float64(e.Tex.GetTexture().Bounds().Dx()), Y: float64(e.Tex.GetTexture().Bounds().Dy())}) {
+					e.DoDamage(projectile.Damage)
+					if projectile.Pierce == -1 {
+						utils.RemoveArrayElement(projectile_index, &p.Projectiles)
+						break
+					} else {
+						projectile.Pierce -= 1.1
+						if projectile.Pierce <= 0 {
+							projectile.Damage = 0
+						}
 					}
 				}
 			}
@@ -394,5 +410,5 @@ func (p *Player) Update(level_hitbox []utils.HitBox) {
 var Player_Ref Player
 
 func init() {
-	Player_Ref = newPlayer(utils.Vec2{X: 0, Y: 0}, *textures.NewAnimatedTexture("./art/players/greg.png"), textures.NewTexture("./art/domains/simple_domain.png"), func(enemies []*enemyai.Enemy) { Player_Ref.simpleDomain(enemyai.Enemies_In_World) }, greg_attacks)
+	Player_Ref = newPlayer(utils.Vec2{X: 0, Y: 0}, *textures.NewAnimatedTexture("./art/players/greg.png"), textures.NewTexture("./art/domains/simple_domain.png", ""), func(enemies []*enemyai.Enemy) { Player_Ref.simpleDomain(enemyai.Enemies_In_World) }, greg_attacks)
 }

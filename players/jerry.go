@@ -13,11 +13,11 @@ func (player *Player) jerrySlide() {
 }
 
 func (player *Player) jerryMaxBurst() {
-	player.NewProjectile(utils.Vec2{X: player.Pos.X - 64, Y: player.Pos.Y - 128 - 16}, utils.Vec2{}, 1, 0, 100, 2, textures.NewTexture("./art/projectiles/jerry/max_burst.png"))
+	player.NewProjectile(utils.Vec2{X: player.Pos.X - 64, Y: player.Pos.Y - 128 - 16}, utils.Vec2{}, 1, 0, 100, 2, textures.NewTexture("./art/projectiles/jerry/max_burst.png", ""))
 }
 
 func (player *Player) jerryWaterTrap() {
-	player.NewEntity(player.Pos, utils.Vec2{X: 0, Y: 1}, 2, 50, textures.NewTexture("./art/entities/jerry/jerry_water_trap.png"), jerryWaterTrapAi)
+	player.NewEntity(player.Pos, utils.Vec2{X: 0, Y: 1}, 2, 50, textures.NewTexture("./art/entities/jerry/jerry_water_trap.png", ""), jerryWaterTrapAi)
 }
 
 func jerryWaterTrapAi(entity *PlayerEntity, level_hitbox []utils.HitBox) {
@@ -39,7 +39,7 @@ func jerryWaterTrapAi(entity *PlayerEntity, level_hitbox []utils.HitBox) {
 		for enemy_index := 0; enemy_index < len(enemyai.Enemies_In_World); enemy_index++ {
 			enemy := enemyai.Enemies_In_World[enemy_index]
 			if utils.Collide(utils.Vec2{X: entity.Pos.X, Y: entity.Pos.Y - 8}, utils.Vec2{X: 64, Y: 16}, utils.Vec2{X: enemy.Pos.X, Y: enemy.Pos.Y}, utils.Vec2{X: float64(enemy.Tex.GetTexture().Bounds().Dx()), Y: float64(enemy.Tex.GetTexture().Bounds().Dy())}) {
-				enemy.Health -= 1
+				enemy.DoDamage(1)
 				enemy.Vel.X *= -3
 				entity.Cooldown = entity.Max_Cooldown
 			}
@@ -95,7 +95,7 @@ func JerrySpikeAi(entity *PlayerEntity, level_hitbox []utils.HitBox) {
 		for enemy_index := 0; enemy_index < len(enemyai.Enemies_In_World); enemy_index++ {
 			enemy := enemyai.Enemies_In_World[enemy_index]
 			if utils.Collide(utils.Vec2{X: entity.Pos.X, Y: entity.Pos.Y - 8}, utils.Vec2{X: 128, Y: 128}, utils.Vec2{X: enemy.Pos.X, Y: enemy.Pos.Y}, utils.Vec2{X: float64(enemy.Tex.GetTexture().Bounds().Dx()), Y: float64(enemy.Tex.GetTexture().Bounds().Dy())}) {
-				enemy.Health -= 4
+				enemy.DoDamage(4)
 				entity.Cooldown = entity.Max_Cooldown
 			}
 		}

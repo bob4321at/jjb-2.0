@@ -9,11 +9,11 @@ import (
 )
 
 func (player *Player) gojoRed() {
-	player.NewProjectile(utils.Vec2{X: player.Pos.X, Y: player.Pos.Y}, utils.Vec2{X: player.Pos.X + player.Vel.X - utils.Mouse_X - camera.Cam.Offset.X + 640 + (float64(player.Img.GetTexture().Bounds().Dx())), Y: player.Pos.Y + player.Vel.Y - utils.Mouse_Y - camera.Cam.Offset.Y + 320 + (float64(player.Img.GetTexture().Bounds().Dy()))}, 5, 5, 1, -1, textures.NewTexture("./art/projectiles/gojo/red.png"))
+	player.NewProjectile(utils.Vec2{X: player.Pos.X, Y: player.Pos.Y}, utils.Vec2{X: player.Pos.X + player.Vel.X - utils.Mouse_X - camera.Cam.Offset.X + 640 + (float64(player.Img.GetTexture().Bounds().Dx())), Y: player.Pos.Y + player.Vel.Y - utils.Mouse_Y - camera.Cam.Offset.Y + 320 + (float64(player.Img.GetTexture().Bounds().Dy()))}, 5, 5, 1, -1, textures.NewTexture("./art/projectiles/gojo/red.png", ""))
 }
 
 func (player *Player) gojoBlue() {
-	player.NewEntity(player.Pos, utils.Vec2{}, 0, 1, textures.NewTexture("./art/entities/gojo/blue.png"), gojoBlueAi)
+	player.NewEntity(player.Pos, utils.Vec2{}, 0, 1, textures.NewTexture("./art/entities/gojo/blue.png", ""), gojoBlueAi)
 }
 
 func gojoBlueAi(entity *PlayerEntity, level_hitbox []utils.HitBox) {
@@ -46,7 +46,7 @@ func gojoBlueAi(entity *PlayerEntity, level_hitbox []utils.HitBox) {
 }
 
 func (player *Player) gojoPurple() {
-	player.NewProjectile(utils.Vec2{X: player.Pos.X, Y: player.Pos.Y}, utils.Vec2{X: player.Pos.X + player.Vel.X - utils.Mouse_X - camera.Cam.Offset.X + 640 + (float64(player.Img.GetTexture().Bounds().Dx())), Y: player.Pos.Y + player.Vel.Y - utils.Mouse_Y - camera.Cam.Offset.Y + 320 + (float64(player.Img.GetTexture().Bounds().Dy()))}, 1, 7, 40, 10, textures.NewTexture("./art/projectiles/gojo/purple.png"))
+	player.NewProjectile(utils.Vec2{X: player.Pos.X, Y: player.Pos.Y}, utils.Vec2{X: player.Pos.X + player.Vel.X - utils.Mouse_X - camera.Cam.Offset.X + 640 + (float64(player.Img.GetTexture().Bounds().Dx())), Y: player.Pos.Y + player.Vel.Y - utils.Mouse_Y - camera.Cam.Offset.Y + 320 + (float64(player.Img.GetTexture().Bounds().Dy()))}, 1, 7, 40, 10, textures.NewTexture("./art/projectiles/gojo/purple.png", ""))
 }
 
 func (player *Player) gojoDomain(enemies []*enemyai.Enemy) {
