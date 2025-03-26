@@ -11,7 +11,7 @@ import (
 
 func (player *Player) bobertoDamageBuff() {
 	player.Damage_Multiplier *= 1.3
-	player.Img = *textures.NewAnimatedTexture("./art/players/strong_boberto.png")
+	player.Img = *textures.NewAnimatedTexture("./art/players/strong_boberto.png", "")
 
 	start_time := utils.Game_Time
 
@@ -20,7 +20,7 @@ func (player *Player) bobertoDamageBuff() {
 	}
 
 	player.Damage_Multiplier /= 1.3
-	player.Img = *textures.NewAnimatedTexture("./art/players/boberto.png")
+	player.Img = *textures.NewAnimatedTexture("./art/players/boberto.png", "")
 }
 
 func (player *Player) realBobertoDamageBuff() {

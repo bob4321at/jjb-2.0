@@ -3,8 +3,7 @@ package textures
 import (
 	"encoding/json"
 	"image"
-	"jjb/utils"
-	"math"
+	"jjb/shaders"
 	"os"
 	"strings"
 
@@ -17,6 +16,7 @@ type RenderableTexture interface {
 	Update()
 	GetTexture() *ebiten.Image
 	RefreshTexture()
+	SetUniforms(uniforms map[string]any)
 }
 
 type Texture struct {
@@ -37,18 +37,9 @@ func NewTexture(img_path string, shader string) *Texture {
 	}
 	t.Img = timg
 
-	// if shader == "" {
-	shader = `//kage:unit pixels
-			package main
-
-			var U float
-
-			func Fragment(targetCoords vec4, srcPos vec2, _ vec4) vec4 {
-				col := imageSrc0At(srcPos.xy)
-				return vec4(col.x, col.y + U, col.z, col.w)
-			}
-		`
-	// }
+	if shader == "" {
+		shader = shaders.Base_Shader
+	}
 
 	t.Shader, err = ebiten.NewShader([]byte(shader))
 	if err != nil {
@@ -61,12 +52,13 @@ func NewTexture(img_path string, shader string) *Texture {
 func (t *Texture) Draw(s *ebiten.Image, op *ebiten.DrawImageOptions) {
 	opts := &ebiten.DrawRectShaderOptions{}
 	opts.Images[0] = t.Img
-	opts.Uniforms = map[string]any{
-		"U": math.Cos(utils.Game_Time / 40),
-	}
+	opts.Uniforms = t.Uniforms
 	opts.GeoM = op.GeoM
 	s.DrawRectShader(t.Img.Bounds().Dx(), t.Img.Bounds().Dy(), t.Shader, opts)
-	// s.DrawImage(t.Img, op)
+}
+
+func (t *Texture) SetUniforms(uniforms map[string]any) {
+	t.Uniforms = uniforms
 }
 
 func (t *Texture) GetTexture() *ebiten.Image {
@@ -101,10 +93,12 @@ type AnimatedTexture struct {
 	Path              string
 	Animations        []Animation
 	Modified          bool
+	Shader            *ebiten.Shader
+	Uniforms          map[string]any
 	Current_Animation int
 }
 
-func NewAnimatedTexture(path string) *AnimatedTexture {
+func NewAnimatedTexture(path string, shader string) *AnimatedTexture {
 	sprite_sheet, _, err := ebitenutil.NewImageFromFile(path)
 	if err != nil {
 		panic(err)
@@ -135,11 +129,29 @@ func NewAnimatedTexture(path string) *AnimatedTexture {
 	}
 	at.Animations = animations
 
+	if shader == "" {
+		shader = shaders.Base_Shader
+	}
+
+	at.Shader, err = ebiten.NewShader([]byte(shader))
+	if err != nil {
+		panic(err)
+	}
+
 	return &at
 }
 
 func (t *AnimatedTexture) Draw(s *ebiten.Image, op *ebiten.DrawImageOptions) {
-	s.DrawImage(t.Animations[t.Current_Animation].Frames[t.Animations[t.Current_Animation].Animation_Progress], op)
+	opts := &ebiten.DrawRectShaderOptions{}
+	opts.Images[0] = t.Animations[t.Current_Animation].Frames[t.Animations[t.Current_Animation].Animation_Progress]
+	opts.Uniforms = t.Uniforms
+	opts.GeoM = op.GeoM
+	s.DrawRectShader(t.Animations[t.Current_Animation].Frames[t.Animations[t.Current_Animation].Animation_Progress].Bounds().Dx(), t.Animations[t.Current_Animation].Frames[t.Animations[t.Current_Animation].Animation_Progress].Bounds().Dy(), t.Shader, opts)
+	// s.DrawImage(t.Animations[t.Current_Animation].Frames[t.Animations[t.Current_Animation].Animation_Progress], op)
+}
+
+func (t *AnimatedTexture) SetUniforms(uniforms map[string]any) {
+	t.Uniforms = uniforms
 }
 
 func (t *AnimatedTexture) RefreshTexture() {

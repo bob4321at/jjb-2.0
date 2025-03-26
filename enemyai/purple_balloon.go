@@ -1,6 +1,7 @@
 package enemyai
 
 import (
+	"jjb/shaders"
 	"jjb/textures"
 	"jjb/utils"
 	"math"
@@ -8,9 +9,9 @@ import (
 
 func purpleBalloonUpdate(e *Enemy, player_pos utils.Vec2, level_hitbox []utils.HitBox) {
 	if e.Health <= 0 {
-		Enemies_To_Add = append(Enemies_To_Add, NewEnemy(5, 10, 5, e.Pos, textures.NewTexture("./art/enemies/green_balloon.png", ""), greenBalloonUpdate))
-		Enemies_To_Add = append(Enemies_To_Add, NewEnemy(5, 10, 5, e.Pos, textures.NewTexture("./art/enemies/green_balloon.png", ""), greenBalloonUpdate))
-		Enemies_To_Add = append(Enemies_To_Add, NewEnemy(5, 10, 5, e.Pos, textures.NewTexture("./art/enemies/green_balloon.png", ""), greenBalloonUpdate))
+		Enemies_To_Add = append(Enemies_To_Add, NewEnemy(5, 10, 5, e.Pos, textures.NewTexture("./art/enemies/green_balloon.png", shaders.Enemy_Shader), greenBalloonUpdate))
+		Enemies_To_Add = append(Enemies_To_Add, NewEnemy(5, 10, 5, e.Pos, textures.NewTexture("./art/enemies/green_balloon.png", shaders.Enemy_Shader), greenBalloonUpdate))
+		Enemies_To_Add = append(Enemies_To_Add, NewEnemy(5, 10, 5, e.Pos, textures.NewTexture("./art/enemies/green_balloon.png", shaders.Enemy_Shader), greenBalloonUpdate))
 	}
 
 	e.Vel.X += -0.015 * (e.Pos.X - player_pos.X) * (math.Abs(e.Pos.Y / 100)) / 20

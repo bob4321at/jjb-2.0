@@ -68,9 +68,9 @@ func jerryWaterTrapAi(entity *PlayerEntity, level_hitbox []utils.HitBox) {
 
 func (player *Player) jerrySpike() {
 	if player.Dir {
-		player.NewEntity(utils.Vec2{X: player.Pos.X - 64, Y: player.Pos.Y - 64}, utils.Vec2{X: -6, Y: 0}, 1, 50, textures.NewAnimatedTexture("./art/entities/jerry/jerry_spike.png"), JerrySpikeAi)
+		player.NewEntity(utils.Vec2{X: player.Pos.X - 64, Y: player.Pos.Y - 64}, utils.Vec2{X: -6, Y: 0}, 1, 50, textures.NewAnimatedTexture("./art/entities/jerry/jerry_spike.png", ""), JerrySpikeAi)
 	} else {
-		player.NewEntity(utils.Vec2{X: player.Pos.X - 64, Y: player.Pos.Y - 64}, utils.Vec2{X: 6, Y: 0}, 1, 50, textures.NewAnimatedTexture("./art/entities/jerry/jerry_spike.png"), JerrySpikeAi)
+		player.NewEntity(utils.Vec2{X: player.Pos.X - 64, Y: player.Pos.Y - 64}, utils.Vec2{X: 6, Y: 0}, 1, 50, textures.NewAnimatedTexture("./art/entities/jerry/jerry_spike.png", ""), JerrySpikeAi)
 
 	}
 }

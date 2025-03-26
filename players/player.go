@@ -3,6 +3,7 @@ package players
 import (
 	"jjb/camera"
 	"jjb/enemyai"
+	"jjb/shaders"
 	"jjb/textures"
 	"jjb/utils"
 	"math"
@@ -207,9 +208,13 @@ func (p *Player) Draw(s *ebiten.Image) {
 
 	op.GeoM.Reset()
 
+	p.Img.SetUniforms(map[string]any{
+		"I_Frames": p.I_Frames,
+	})
+
 	if !p.Dir {
 		op.GeoM.Translate(640, 360)
-		s.DrawImage(p.Img.GetTexture(), &op)
+		p.Img.Draw(s, &op)
 	} else {
 		op.GeoM.Scale(-1, 1)
 		op.GeoM.Translate(640+32, 360)
@@ -410,5 +415,5 @@ func (p *Player) Update(level_hitbox []utils.HitBox) {
 var Player_Ref Player
 
 func init() {
-	Player_Ref = newPlayer(utils.Vec2{X: 0, Y: 0}, *textures.NewAnimatedTexture("./art/players/greg.png"), textures.NewTexture("./art/domains/simple_domain.png", ""), func(enemies []*enemyai.Enemy) { Player_Ref.simpleDomain(enemyai.Enemies_In_World) }, greg_attacks)
+	Player_Ref = newPlayer(utils.Vec2{X: 0, Y: 0}, *textures.NewAnimatedTexture("./art/players/greg.png", ""), textures.NewTexture("./art/domains/simple_domain.png", shaders.Player_Shader), func(enemies []*enemyai.Enemy) { Player_Ref.simpleDomain(enemyai.Enemies_In_World) }, greg_attacks)
 }

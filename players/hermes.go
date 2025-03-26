@@ -8,11 +8,11 @@ import (
 
 func (p *Player) hermesJump() {
 	p.Vel.Y = -7
-	p.NewProjectile(utils.Vec2{X: p.Pos.X - 64, Y: p.Pos.Y + 32}, utils.Vec2{X: 0, Y: 0}, 10, 0, 1, 3, textures.NewAnimatedTexture("./art/projectiles/hermes/cloud_jump.png"))
+	p.NewProjectile(utils.Vec2{X: p.Pos.X - 64, Y: p.Pos.Y + 32}, utils.Vec2{X: 0, Y: 0}, 10, 0, 1, 3, textures.NewAnimatedTexture("./art/projectiles/hermes/cloud_jump.png", ""))
 }
 
 func (p *Player) hermesTornado() {
-	p.NewProjectile(utils.Vec2{X: p.Pos.X - 64, Y: p.Pos.Y - 64}, utils.Vec2{X: 0, Y: 1}, 1, 10, 100, 100, textures.NewAnimatedTexture("./art/projectiles/hermes/tornado.png"))
+	p.NewProjectile(utils.Vec2{X: p.Pos.X - 64, Y: p.Pos.Y - 64}, utils.Vec2{X: 0, Y: 1}, 1, 10, 100, 100, textures.NewAnimatedTexture("./art/projectiles/hermes/tornado.png", ""))
 }
 
 func (player *Player) hermesWindBall() {

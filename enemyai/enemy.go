@@ -2,6 +2,7 @@ package enemyai
 
 import (
 	"jjb/camera"
+	"jjb/shaders"
 	"jjb/textures"
 	"jjb/utils"
 
@@ -77,6 +78,10 @@ func (enemy *Enemy) Draw(screen *ebiten.Image, cam *camera.Camera) {
 		enemy.Tex.RefreshTexture()
 	}
 
+	enemy.Tex.SetUniforms(map[string]any{
+		"I_Frames": enemy.I_Frames,
+	})
+
 	if enemy.Pos.X-cam.Offset.X+640+float64(enemy.Tex.GetTexture().Bounds().Dx()) > 0 && enemy.Pos.X-cam.Offset.X+640-float64(enemy.Tex.GetTexture().Bounds().Dx()) < 1280 {
 		if enemy.Pos.Y-cam.Offset.Y+360+float64(enemy.Tex.GetTexture().Bounds().Dy()) > 0 && enemy.Pos.Y-cam.Offset.Y+360-float64(enemy.Tex.GetTexture().Bounds().Dy()) < 720 {
 			op := ebiten.DrawImageOptions{}
@@ -113,17 +118,17 @@ var Enemy_Table = map[int]Enemy{}
 
 func init() {
 	Enemy_Table = map[int]Enemy{
-		1:  NewEnemy(1, 10, 1, utils.Vec2{}, textures.NewAnimatedTexture("./art/enemies/fliehead.png"), flieHeadUpdate),
-		2:  NewEnemy(2, 20, 2, utils.Vec2{}, textures.NewTexture("./art/enemies/crooked.png", ""), crookedUpdate),
-		3:  NewEnemy(3, 10, 2, utils.Vec2{}, textures.NewTexture("./art/enemies/shrimp.png", ""), shrimpUpdate),
-		4:  NewEnemy(4, 100, 5, utils.Vec2{}, textures.NewAnimatedTexture("./art/enemies/bosshead.png"), bossHeadUpdate),
-		5:  NewEnemy(5, 10, 5, utils.Vec2{}, textures.NewTexture("./art/enemies/cloudhead.png", ""), cloudHeadUpdate),
-		6:  NewEnemy(6, 20, 3, utils.Vec2{}, textures.NewTexture("./art/enemies/balloon.png", ""), balloonUpdate),
-		7:  NewEnemy(7, 10, 3, utils.Vec2{}, textures.NewAnimatedTexture("./art/enemies/bunny.png"), bunnyUpdate),
-		8:  NewEnemy(8, 20, 3, utils.Vec2{}, textures.NewAnimatedTexture("./art/enemies/fuzzball.png"), fuzzBallUpdate),
-		9:  NewEnemy(9, 200, 5, utils.Vec2{}, textures.NewTexture("./art/enemies/simple_grade_curse.png", ""), simpleGradeCurseUpdate),
-		10: NewEnemy(9, 200, 10, utils.Vec2{}, textures.NewTexture("./art/enemies/sukuna.png", ""), sukunaUpdate),
-		11: NewEnemy(6, 50, 3, utils.Vec2{}, textures.NewTexture("./art/enemies/green_balloon.png", ""), greenBalloonUpdate),
-		12: NewEnemy(6, 100, 3, utils.Vec2{}, textures.NewTexture("./art/enemies/purple_balloon.png", ""), purpleBalloonUpdate),
+		1:  NewEnemy(1, 10, 1, utils.Vec2{}, textures.NewAnimatedTexture("./art/enemies/fliehead.png", shaders.Enemy_Shader), flieHeadUpdate),
+		2:  NewEnemy(2, 20, 2, utils.Vec2{}, textures.NewTexture("./art/enemies/crooked.png", shaders.Enemy_Shader), crookedUpdate),
+		3:  NewEnemy(3, 10, 2, utils.Vec2{}, textures.NewTexture("./art/enemies/shrimp.png", shaders.Enemy_Shader), shrimpUpdate),
+		4:  NewEnemy(4, 100, 5, utils.Vec2{}, textures.NewAnimatedTexture("./art/enemies/bosshead.png", shaders.Enemy_Shader), bossHeadUpdate),
+		5:  NewEnemy(5, 10, 5, utils.Vec2{}, textures.NewTexture("./art/enemies/cloudhead.png", shaders.Enemy_Shader), cloudHeadUpdate),
+		6:  NewEnemy(6, 20, 3, utils.Vec2{}, textures.NewTexture("./art/enemies/balloon.png", shaders.Enemy_Shader), balloonUpdate),
+		7:  NewEnemy(7, 10, 3, utils.Vec2{}, textures.NewAnimatedTexture("./art/enemies/bunny.png", shaders.Enemy_Shader), bunnyUpdate),
+		8:  NewEnemy(8, 20, 3, utils.Vec2{}, textures.NewAnimatedTexture("./art/enemies/fuzzball.png", shaders.Enemy_Shader), fuzzBallUpdate),
+		9:  NewEnemy(9, 200, 5, utils.Vec2{}, textures.NewTexture("./art/enemies/simple_grade_curse.png", shaders.Enemy_Shader), simpleGradeCurseUpdate),
+		10: NewEnemy(9, 200, 10, utils.Vec2{}, textures.NewTexture("./art/enemies/sukuna.png", shaders.Enemy_Shader), sukunaUpdate),
+		11: NewEnemy(6, 50, 3, utils.Vec2{}, textures.NewTexture("./art/enemies/green_balloon.png", shaders.Enemy_Shader), greenBalloonUpdate),
+		12: NewEnemy(6, 100, 3, utils.Vec2{}, textures.NewTexture("./art/enemies/purple_balloon.png", shaders.Enemy_Shader), purpleBalloonUpdate),
 	}
 }

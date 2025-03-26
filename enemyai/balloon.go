@@ -1,6 +1,7 @@
 package enemyai
 
 import (
+	"jjb/shaders"
 	"jjb/textures"
 	"jjb/utils"
 	"math"
@@ -8,7 +9,7 @@ import (
 
 func balloonUpdate(e *Enemy, player_pos utils.Vec2, level_hitbox []utils.HitBox) {
 	if e.Health <= 0 {
-		Enemies_To_Add = append(Enemies_To_Add, NewEnemy(5, 10, 5, e.Pos, textures.NewTexture("./art/enemies/small_balloon.png", ""), smallBalloonUpdate))
+		Enemies_To_Add = append(Enemies_To_Add, NewEnemy(5, 10, 5, e.Pos, textures.NewTexture("./art/enemies/small_balloon.png", shaders.Enemy_Shader), smallBalloonUpdate))
 	}
 
 	e.Vel.X += -0.015 * (e.Pos.X - player_pos.X) * (math.Abs(e.Pos.Y / 100)) / 20
