@@ -46,7 +46,7 @@ func gojoBlueAi(entity *PlayerEntity, level_hitbox []utils.HitBox) {
 }
 
 func (player *Player) gojoPurple() {
-	player.NewProjectile(utils.Vec2{X: player.Pos.X, Y: player.Pos.Y}, utils.Vec2{X: player.Pos.X + player.Vel.X - utils.Mouse_X - camera.Cam.Offset.X + 640 + (float64(player.Img.GetTexture().Bounds().Dx())), Y: player.Pos.Y + player.Vel.Y - utils.Mouse_Y - camera.Cam.Offset.Y + 320 + (float64(player.Img.GetTexture().Bounds().Dy()))}, 1, 7, 40, 10, textures.NewTexture("./art/projectiles/gojo/purple.png", ""))
+	player.NewProjectile(utils.Vec2{X: player.Pos.X, Y: player.Pos.Y}, utils.Vec2{X: player.Pos.X + player.Vel.X - utils.Mouse_X - camera.Cam.Offset.X + 640 + (float64(player.Img.GetTexture().Bounds().Dx())), Y: player.Pos.Y + player.Vel.Y - utils.Mouse_Y - camera.Cam.Offset.Y + 320 + (float64(player.Img.GetTexture().Bounds().Dy()))}, 10, 7, 40, 10, textures.NewTexture("./art/projectiles/gojo/purple.png", ""))
 }
 
 func (player *Player) gojoDomain(enemies []*enemyai.Enemy) {
