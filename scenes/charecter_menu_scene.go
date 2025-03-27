@@ -1,6 +1,8 @@
 package scenes
 
 import (
+	"jjb/level"
+	"jjb/players"
 	"jjb/utils"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -10,7 +12,14 @@ import (
 var charecter_menu_img, _, _ = ebitenutil.NewImageFromFile("./art/ui/charecter_menu.png")
 var Charecter_Menu_Scene = NewScene(0, Charecter_Menu_Scene_Draw, Charecter_Menu_Scene_Update, Charecter_Menu_Scene_Setup)
 
-func Charecter_Menu_Scene_Setup() {}
+func Charecter_Menu_Scene_Setup() {
+	level.Levels = level.LoadAllLevels("./maps/")
+	level.Current_Level_Index = 0
+	level.Current_Level = &level.Levels[level.Current_Level_Index]
+	players.InitPlayer(level.Current_Level.Player_Spawn)
+
+	players.Player_Ref.Health = 1
+}
 
 func Charecter_Menu_Scene_Draw(display_img *ebiten.Image, screen *ebiten.Image) {
 	display_img.DrawImage(charecter_menu_img, &ebiten.DrawImageOptions{})

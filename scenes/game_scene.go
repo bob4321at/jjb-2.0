@@ -17,11 +17,6 @@ var selected_player = "greg"
 var tab_key_hit = false
 
 func Game_Scene_Setup() {
-	level.Levels = level.LoadAllLevels("./maps/")
-	level.Current_Level_Index = 0
-	level.Current_Level = &level.Levels[level.Current_Level_Index]
-	players.InitPlayer(level.Current_Level.Player_Spawn)
-
 	players.Player_Ref = players.Players[selected_player]
 }
 
