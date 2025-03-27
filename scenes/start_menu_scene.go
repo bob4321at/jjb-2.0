@@ -24,7 +24,6 @@ func Start_Menu_Scene_Update() {
 		if utils.Collide(utils.Vec2{X: utils.Mouse_X, Y: utils.Mouse_Y}, utils.Vec2{X: 1, Y: 1}, utils.Vec2{X: 94, Y: 188}, utils.Vec2{X: 411, Y: 121}) {
 			Current_Scene = 1
 			utils.Clicked = true
-			Game_Scene.Setup()
 		}
 
 		if utils.Collide(utils.Vec2{X: utils.Mouse_X, Y: utils.Mouse_Y}, utils.Vec2{X: 1, Y: 1}, utils.Vec2{X: 94, Y: 322}, utils.Vec2{X: 411, Y: 121}) {

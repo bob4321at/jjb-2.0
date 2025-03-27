@@ -17,6 +17,11 @@ var selected_player = "greg"
 var tab_key_hit = false
 
 func Game_Scene_Setup() {
+	level.Levels = append(level.Levels, level.LoadLevel("./maps/level01/"))
+	level.Current_Level_Index = 0
+	level.Current_Level = &level.Levels[level.Current_Level_Index]
+	players.InitPlayer(level.Current_Level.Player_Spawn)
+	go level.LoadAllLevels("./maps/", &level.Levels)
 	players.Player_Ref = players.Players[selected_player]
 }
 
@@ -51,4 +56,5 @@ func Game_Scene_Update() {
 	camera.Cam.Offset.X = players.Player_Ref.Pos.X
 	camera.Cam.Offset.Y = players.Player_Ref.Pos.Y
 	level.Current_Level.Update(&players.Player_Ref)
+
 }

@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-func loadLevel(path string) Level {
+func LoadLevel(path string) Level {
 	level := makeLevel(path+"level.png", path+"tileset.png", path+"bg.png")
 
 	file, err := os.ReadFile(path + "waves.json")
@@ -27,16 +27,14 @@ func loadLevel(path string) Level {
 	return level
 }
 
-func LoadAllLevels(path string) (levels []Level) {
+func LoadAllLevels(path string, levels *[]Level) {
 	dir, err := os.ReadDir(path)
 	if err != nil {
 		panic(err)
 	}
 
-	for folder_index := 0; folder_index < len(dir); folder_index++ {
+	for folder_index := 1; folder_index < len(dir); folder_index++ {
 		folder := dir[folder_index]
-		levels = append(levels, loadLevel(path+folder.Name()+"/"))
+		*levels = append(*levels, LoadLevel(path+folder.Name()+"/"))
 	}
-
-	return levels
 }

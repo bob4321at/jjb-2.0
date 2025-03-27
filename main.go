@@ -17,15 +17,6 @@ func (game *Game) Update() error {
 		utils.Clicked = false
 	}
 
-	if scenes.List_Of_Scenes[scenes.Current_Scene].Setup_run == false {
-		scenes.List_Of_Scenes[scenes.Current_Scene].Setup()
-		scenes.List_Of_Scenes[scenes.Current_Scene].Setup_run = true
-	}
-	if scenes.Current_Scene != scenes.Old_Scene {
-		scenes.Old_Scene = scenes.Current_Scene
-		scenes.List_Of_Scenes[scenes.Current_Scene].Setup_run = false
-	}
-
 	if players.Player_Ref.Health <= 0 {
 		scenes.Current_Scene = 3
 		players.Player_Ref.Health = 100

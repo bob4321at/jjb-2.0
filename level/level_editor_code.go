@@ -4,7 +4,6 @@ import (
 	"image"
 	"image/color"
 	"jjb/enemyai"
-	"jjb/players"
 	"jjb/textures"
 	"jjb/utils"
 
@@ -395,10 +394,6 @@ func makeLevel(path string, tileset_path string, background_path string) (level 
 		level.HitBox = append(level.HitBox, utils.HitBox{X: t.Pos.X, Y: t.Pos.Y, W: 32, H: 32})
 	}
 	level.Gnerated = true
-
-	Current_Level = &level
-
-	players.InitPlayer(Current_Level.Player_Spawn)
 
 	return level
 }
