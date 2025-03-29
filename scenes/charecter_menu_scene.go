@@ -20,48 +20,48 @@ func Charecter_Menu_Scene_Draw(display_img *ebiten.Image, screen *ebiten.Image) 
 func Charecter_Menu_Scene_Update() {
 	if ebiten.IsMouseButtonPressed(ebiten.MouseButton0) && !utils.Clicked {
 		if utils.Collide(utils.Vec2{X: utils.Mouse_X, Y: utils.Mouse_Y}, utils.Vec2{X: 1, Y: 1}, utils.Vec2{X: 35, Y: 155}, utils.Vec2{X: 181, Y: 74}) {
-			Current_Scene = 2
+			Current_Scene = 3
 			selected_player = "greg"
 			Game_Scene.Setup()
 		} else if utils.Collide(utils.Vec2{X: utils.Mouse_X, Y: utils.Mouse_Y}, utils.Vec2{X: 1, Y: 1}, utils.Vec2{X: 221, Y: 155}, utils.Vec2{X: 181, Y: 74}) {
-			Current_Scene = 2
+			Current_Scene = 3
 			selected_player = "gojo"
 			Game_Scene.Setup()
 		} else if utils.Collide(utils.Vec2{X: utils.Mouse_X, Y: utils.Mouse_Y}, utils.Vec2{X: 1, Y: 1}, utils.Vec2{X: 407, Y: 155}, utils.Vec2{X: 181, Y: 74}) {
-			Current_Scene = 2
+			Current_Scene = 3
 			selected_player = "megumi"
 			Game_Scene.Setup()
 		} else if utils.Collide(utils.Vec2{X: utils.Mouse_X, Y: utils.Mouse_Y}, utils.Vec2{X: 1, Y: 1}, utils.Vec2{X: 593, Y: 155}, utils.Vec2{X: 181, Y: 74}) {
-			Current_Scene = 2
+			Current_Scene = 3
 			selected_player = "boberto"
 			Game_Scene.Setup()
 		} else if utils.Collide(utils.Vec2{X: utils.Mouse_X, Y: utils.Mouse_Y}, utils.Vec2{X: 1, Y: 1}, utils.Vec2{X: 779, Y: 155}, utils.Vec2{X: 181, Y: 74}) {
-			Current_Scene = 2
+			Current_Scene = 3
 			selected_player = "jerry"
 			Game_Scene.Setup()
 		} else if utils.Collide(utils.Vec2{X: utils.Mouse_X, Y: utils.Mouse_Y}, utils.Vec2{X: 1, Y: 1}, utils.Vec2{X: 965, Y: 155}, utils.Vec2{X: 181, Y: 74}) {
-			Current_Scene = 2
+			Current_Scene = 3
 			selected_player = "hermes"
 			Game_Scene.Setup()
 		} else if utils.Collide(utils.Vec2{X: utils.Mouse_X, Y: utils.Mouse_Y}, utils.Vec2{X: 1, Y: 1}, utils.Vec2{X: 35, Y: 234}, utils.Vec2{X: 181, Y: 74}) {
-			Current_Scene = 2
+			Current_Scene = 3
 			selected_player = "test_player"
 			Game_Scene.Setup()
 		} else if utils.Collide(utils.Vec2{X: utils.Mouse_X, Y: utils.Mouse_Y}, utils.Vec2{X: 1, Y: 1}, utils.Vec2{X: 221, Y: 234}, utils.Vec2{X: 181, Y: 74}) {
-			Current_Scene = 2
+			Current_Scene = 3
 			selected_player = "agent_21"
 			Game_Scene.Setup()
 		} else if utils.Collide(utils.Vec2{X: utils.Mouse_X, Y: utils.Mouse_Y}, utils.Vec2{X: 1, Y: 1}, utils.Vec2{X: 407, Y: 234}, utils.Vec2{X: 181, Y: 74}) {
-			Current_Scene = 2
+			Current_Scene = 3
 			selected_player = "tk"
 			Game_Scene.Setup()
 		} else if utils.Collide(utils.Vec2{X: utils.Mouse_X, Y: utils.Mouse_Y}, utils.Vec2{X: 1, Y: 1}, utils.Vec2{X: 593, Y: 234}, utils.Vec2{X: 181, Y: 74}) {
-			Current_Scene = 2
+			Current_Scene = 3
 			selected_player = "pyro"
 			Game_Scene.Setup()
 		}
 		if ebiten.IsKeyPressed(ebiten.KeyS) && ebiten.IsKeyPressed(ebiten.KeyR) {
-			Current_Scene = 2
+			Current_Scene = 3
 			selected_player = "sukuna"
 			Game_Scene.Setup()
 		}

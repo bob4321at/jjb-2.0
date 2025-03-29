@@ -2,7 +2,6 @@ package level
 
 import (
 	"encoding/json"
-	"fmt"
 	"os"
 )
 
@@ -37,6 +36,5 @@ func LoadAllLevels(path string, levels *[]Level) {
 	for folder_index := 1; folder_index < len(dir); folder_index++ {
 		folder := dir[folder_index]
 		*levels = append(*levels, LoadLevel(path+folder.Name()+"/"))
-		fmt.Println("testing")
 	}
 }

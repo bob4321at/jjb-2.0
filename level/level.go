@@ -26,6 +26,7 @@ type Waves struct {
 type Level struct {
 	Tile_map             [][]uint8
 	Tiles                []Tile
+	Level_Cached_Image   *ebiten.Image
 	Player_Spawn         utils.Vec2
 	Spawn_Points         []utils.Vec2
 	Enemies              []enemyai.Enemy
@@ -45,16 +46,24 @@ var Levels = []Level{}
 var Current_Level *Level
 var Current_Level_Index int
 
+var test = ebiten.NewImage(128*32, 128*32)
+
 func (level *Level) Draw(screen *ebiten.Image, cam *camera.Camera) {
+	if level.Level_Cached_Image == nil {
+		level.Level_Cached_Image = ebiten.NewImage(128*32, 128*32)
+		for _, tile := range level.Tiles {
+			op := ebiten.DrawImageOptions{}
+			op.GeoM.Translate(tile.Pos.X, tile.Pos.Y)
+			level.Level_Cached_Image.DrawImage(level.Tileset[tile.Tile], &op)
+		}
+	}
+
 	op := ebiten.DrawImageOptions{}
 	level.Background.Draw(screen, cam)
 
-	for tile_index := 0; tile_index < len(level.Tiles); tile_index++ {
-		tile := &level.Tiles[tile_index]
-		op.GeoM.Reset()
-		op.GeoM.Translate(tile.Pos.X-cam.Offset.X+640, tile.Pos.Y-cam.Offset.Y+360)
-		screen.DrawImage(level.Tileset[tile.Tile], &op)
-	}
+	op.GeoM.Reset()
+	op.GeoM.Translate(-cam.Offset.X+640, -cam.Offset.Y+360)
+	screen.DrawImage(level.Level_Cached_Image, &op)
 
 	op.GeoM.Reset()
 
