@@ -75,7 +75,6 @@ func (enemy *Enemy) Draw(screen *ebiten.Image, cam *camera.Camera) {
 		enemy.I_Frames -= 0.1
 	} else {
 		enemy.I_Frames = 0
-		enemy.Tex.RefreshTexture()
 	}
 
 	enemy.Tex.SetUniforms(map[string]any{

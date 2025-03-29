@@ -101,6 +101,7 @@ func (level *Level) Update(player *players.Player) {
 	enemyai.Enemies_In_World = []*enemyai.Enemy{}
 	for enemy_index := 0; enemy_index < len(level.Enemies); enemy_index++ {
 		enemy := &level.Enemies[enemy_index]
+		enemyai.Enemies_In_World = append(enemyai.Enemies_In_World, enemy)
 
 		enemy.Update(&level.Enemies[enemy_index], players.Player_Ref.Pos, level.HitBox)
 
@@ -123,20 +124,23 @@ func (level *Level) Update(player *players.Player) {
 			}
 			utils.RemoveArrayElement(enemy_index, &level.Enemies)
 		}
-		enemyai.Enemies_In_World = append(enemyai.Enemies_In_World, enemy)
 	}
 
+	for enemy_index := 0; enemy_index < len(enemyai.Enemies_To_Add); enemy_index++ {
+		level.Spawn(enemyai.Enemies_To_Add[enemy_index])
+		utils.RemoveArrayElement(enemy_index, &enemyai.Enemies_To_Add)
+	}
 	if !level.Spawned && level.Current_Wave < len(level.Waves.Waves) {
 		go level.SpawnWave()
 		level.Spawned = true
 	}
 	if level.Current_Wave >= len(level.Waves.Waves) && Current_Level_Index+1 < len(Levels) {
 		Current_Level_Index += 1
-	}
-
-	for enemy_index := 0; enemy_index < len(enemyai.Enemies_To_Add); enemy_index++ {
-		level.Spawn(enemyai.Enemies_To_Add[enemy_index])
-		utils.RemoveArrayElement(enemy_index, &enemyai.Enemies_To_Add)
+		if &Levels[Current_Level_Index] != Current_Level {
+			Current_Level = &Levels[Current_Level_Index]
+			players.InitPlayer(Current_Level.Player_Spawn)
+			players.Player_Ref = players.Players[players.Player_Ref.Player_Name]
+		}
 	}
 }
 

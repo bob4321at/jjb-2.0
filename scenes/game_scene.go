@@ -16,13 +16,17 @@ var selected_player = "greg"
 
 var tab_key_hit = false
 
+var amount_of_inits = 0
+
 func Game_Scene_Setup() {
 	level.Levels = append(level.Levels, level.LoadLevel("./maps/level01/"))
 	level.Current_Level_Index = 0
 	level.Current_Level = &level.Levels[level.Current_Level_Index]
-	players.InitPlayer(level.Current_Level.Player_Spawn)
+	level.Current_Level.Spawned = false
 	go level.LoadAllLevels("./maps/", &level.Levels)
+	players.InitPlayer(level.Current_Level.Player_Spawn)
 	players.Player_Ref = players.Players[selected_player]
+	players.Player_Ref.Player_Name = selected_player
 }
 
 func Game_Scene_Draw(display_img *ebiten.Image, screen *ebiten.Image) {
@@ -37,18 +41,17 @@ func Game_Scene_Draw(display_img *ebiten.Image, screen *ebiten.Image) {
 }
 
 func Game_Scene_Update() {
-	if &level.Levels[level.Current_Level_Index] != level.Current_Level {
-		level.Current_Level = &level.Levels[level.Current_Level_Index]
-		players.InitPlayer(level.Current_Level.Player_Spawn)
-		players.Player_Ref = players.Players[selected_player]
-	}
-
 	if !ebiten.IsKeyPressed(ebiten.KeyTab) {
 		tab_key_hit = false
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyTab) && !tab_key_hit {
 		tab_key_hit = true
 		level.Current_Level_Index += 1
+		if &level.Levels[level.Current_Level_Index] != level.Current_Level {
+			level.Current_Level = &level.Levels[level.Current_Level_Index]
+			players.InitPlayer(level.Current_Level.Player_Spawn)
+			players.Player_Ref = players.Players[selected_player]
+		}
 	}
 
 	utils.Game_Time += 1

@@ -22,6 +22,6 @@ func InitPlayer(spawn_point utils.Vec2) {
 		"agent_21":    newPlayer(spawn_point, *textures.NewAnimatedTexture("./art/players/agent_21.png", shaders.Player_Shader), textures.NewTexture("./art/domains/simple_domain.png", ""), func(enemies []*enemyai.Enemy) { Player_Ref.simpleDomain(enemyai.Enemies_In_World) }, agent_21_attacks),
 
 		"tk":   newPlayer(spawn_point, *textures.NewAnimatedTexture("./art/players/tk.png", shaders.Player_Shader), textures.NewTexture("./art/domains/simple_domain.png", ""), func(enemies []*enemyai.Enemy) { Player_Ref.simpleDomain(enemyai.Enemies_In_World) }, tk_attacks),
-		"pyro": newPlayer(spawn_point, *textures.NewAnimatedTexture("./art/players/pyro.png", shaders.Player_Shader), textures.NewTexture("./art/domains/simple_domain.png", ""), func(enemies []*enemyai.Enemy) { Player_Ref.simpleDomain(enemyai.Enemies_In_World) }, pyro_attacks),
+		"pyro": newPlayer(spawn_point, *textures.NewAnimatedTexture("./art/players/pyro.png", shaders.Player_Shader), textures.NewTexture("./art/domains/pyro_domain.png", ""), func(enemies []*enemyai.Enemy) { Player_Ref.pyroDomain(enemyai.Enemies_In_World) }, pyro_attacks),
 	}
 }

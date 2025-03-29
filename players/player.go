@@ -25,6 +25,7 @@ type Player struct {
 	Domain            Domain
 	Domain_Timer      float64
 	I_Frames          float64
+	Player_Name       string
 }
 
 type Projectile struct {

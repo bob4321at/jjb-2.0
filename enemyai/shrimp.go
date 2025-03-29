@@ -21,7 +21,7 @@ func shrimpUpdate(e *Enemy, player_pos utils.Vec2, level_hitbox []utils.HitBox) 
 		}
 	}
 
-	target_pos := utils.Vec2{X: player_pos.X + (math.Sin(utils.Deg2Rad(utils.Game_Time+float64(this_enemy_index*90))/1000) * 300), Y: player_pos.Y + (math.Cos(utils.Deg2Rad(utils.Game_Time+float64(this_enemy_index*90))/1000) * 300)}
+	target_pos := utils.Vec2{X: player_pos.X + (math.Sin(utils.Deg2Rad(utils.Game_Time+float64(this_enemy_index*90))/10000) * 300), Y: player_pos.Y + (math.Cos(utils.Deg2Rad(utils.Game_Time+float64(this_enemy_index*90))/10000) * 300)}
 
 	if e.Pos.X > target_pos.X {
 		e.Vel.X = -3
