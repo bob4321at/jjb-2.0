@@ -39,6 +39,7 @@ type Level struct {
 	Origonal_Spawn_Timer float64
 	Spawned              bool
 	HitBox               []utils.HitBox
+	Beaten               bool
 }
 
 var Levels = []Level{}
@@ -62,20 +63,22 @@ func (level *Level) Draw(screen *ebiten.Image, cam *camera.Camera) {
 	level.Background.Draw(screen, cam)
 
 	op.GeoM.Reset()
-	op.GeoM.Translate(-cam.Offset.X+640, -cam.Offset.Y+360)
+	op.GeoM.Translate(-cam.Offset.X-cam.Manual_Offset.X+640, -cam.Offset.Y-cam.Manual_Offset.Y+360)
 	screen.DrawImage(level.Level_Cached_Image, &op)
 
 	op.GeoM.Reset()
 
 	op.GeoM.Scale(2, 2)
-	op.GeoM.Translate(1000-camera.Cam.Offset.X, -2500-camera.Cam.Offset.Y)
+	op.GeoM.Translate(1000-camera.Cam.Offset.X-camera.Cam.Manual_Offset.X, -2500-camera.Cam.Offset.Y-camera.Cam.Manual_Offset.Y)
 	screen.DrawImage(utils.Domain_Background, &op)
 
 	op.GeoM.Reset()
 
 	op.GeoM.Scale(2, 2)
-	op.GeoM.Translate(2000-camera.Cam.Offset.X, -2000-camera.Cam.Offset.Y)
-	screen.DrawImage(players.Player_Ref.Domain.Img.GetTexture(), &op)
+	op.GeoM.Translate(2000-camera.Cam.Offset.X-camera.Cam.Manual_Offset.X, -2000-camera.Cam.Offset.Y-camera.Cam.Manual_Offset.Y)
+
+	// players.Player_Ref.Domain.Img = players.Players[players.Player_Ref.Player_Name].Domain.Img
+	players.Player_Ref.Domain.Img.Draw(screen, &op)
 
 	for enemy_index := 0; enemy_index < len(level.Enemies); enemy_index++ {
 		level.Enemies[enemy_index].Draw(screen, cam)
@@ -144,12 +147,15 @@ func (level *Level) Update(player *players.Player) {
 		level.Spawned = true
 	}
 	if level.Current_Wave >= len(level.Waves.Waves) && Current_Level_Index+1 < len(Levels) {
-		Current_Level_Index += 1
-		if &Levels[Current_Level_Index] != Current_Level {
-			Current_Level = &Levels[Current_Level_Index]
-			players.InitPlayer(Current_Level.Player_Spawn)
-			players.Player_Ref = players.Players[players.Player_Ref.Player_Name]
-		}
+		// level.Level_Cached_Image = ebiten.NewImage(16, 16)
+		// if &Levels[Current_Level_Index] != Current_Level {
+		// 	Current_Level_Index += 1
+		// 	Current_Level = &Levels[Current_Level_Index]
+		// 	players.InitPlayer(Current_Level.Player_Spawn)
+		// 	players.Player_Ref = players.Players[players.Player_Ref.Player_Name]
+		// 	players.Player_Ref.Pos = Current_Level.Player_Spawn
+		// }
+		level.Beaten = true
 	}
 }
 

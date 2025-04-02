@@ -81,15 +81,15 @@ func (enemy *Enemy) Draw(screen *ebiten.Image, cam *camera.Camera) {
 		"I_Frames": enemy.I_Frames,
 	})
 
-	if enemy.Pos.X-cam.Offset.X+640+float64(enemy.Tex.GetTexture().Bounds().Dx()) > 0 && enemy.Pos.X-cam.Offset.X+640-float64(enemy.Tex.GetTexture().Bounds().Dx()) < 1280 {
-		if enemy.Pos.Y-cam.Offset.Y+360+float64(enemy.Tex.GetTexture().Bounds().Dy()) > 0 && enemy.Pos.Y-cam.Offset.Y+360-float64(enemy.Tex.GetTexture().Bounds().Dy()) < 720 {
+	if enemy.Pos.X-cam.Offset.X-cam.Manual_Offset.X+640+float64(enemy.Tex.GetTexture().Bounds().Dx()) > 0 && enemy.Pos.X-cam.Offset.X-cam.Manual_Offset.X+640-float64(enemy.Tex.GetTexture().Bounds().Dx()) < 1280 {
+		if enemy.Pos.Y-cam.Offset.Y-cam.Manual_Offset.Y+360+float64(enemy.Tex.GetTexture().Bounds().Dy()) > 0 && enemy.Pos.Y-cam.Offset.Y-cam.Manual_Offset.Y+360-float64(enemy.Tex.GetTexture().Bounds().Dy()) < 720 {
 			op := ebiten.DrawImageOptions{}
 
 			if !enemy.Dir {
-				op.GeoM.Translate(enemy.Pos.X-cam.Offset.X+640, enemy.Pos.Y-cam.Offset.Y+360)
+				op.GeoM.Translate(enemy.Pos.X-cam.Offset.X-cam.Manual_Offset.X+640, enemy.Pos.Y-cam.Manual_Offset.Y-cam.Offset.Y+360)
 			} else {
 				op.GeoM.Scale(-1, 1)
-				op.GeoM.Translate(enemy.Pos.X-cam.Offset.X+640+float64(enemy.Tex.GetTexture().Bounds().Dx()), enemy.Pos.Y-cam.Offset.Y+360)
+				op.GeoM.Translate(enemy.Pos.X-cam.Offset.X-cam.Manual_Offset.X+640+float64(enemy.Tex.GetTexture().Bounds().Dx()), enemy.Pos.Y-cam.Offset.Y-cam.Manual_Offset.Y+360)
 			}
 
 			enemy.Tex.Draw(screen, &op)
@@ -100,7 +100,7 @@ func (enemy *Enemy) Draw(screen *ebiten.Image, cam *camera.Camera) {
 		projectile := &enemy.Projectiles[projectile_index]
 
 		op := ebiten.DrawImageOptions{}
-		op.GeoM.Translate(projectile.Pos.X-cam.Offset.X+640, projectile.Pos.Y-cam.Offset.Y+360)
+		op.GeoM.Translate(projectile.Pos.X-cam.Offset.X-cam.Manual_Offset.X+640, projectile.Pos.Y-cam.Offset.Y-cam.Manual_Offset.Y+360)
 
 		projectile.Img.Draw(screen, &op)
 	}

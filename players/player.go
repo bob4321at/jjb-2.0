@@ -47,6 +47,7 @@ type PlayerEntity struct {
 	Img          textures.RenderableTexture
 	Dir          bool
 	Update       func(e *PlayerEntity, level_hitbox []utils.HitBox)
+	ID           int
 }
 
 type Domain struct {
@@ -88,8 +89,11 @@ func (p *Player) NewEntity(pos utils.Vec2, starting_vel utils.Vec2, cooldown flo
 
 	p.Entities = append(p.Entities, entity)
 
-	e = &entity
-	return e
+	return &p.Entities[len(p.Entities)-1]
+}
+
+func (e *PlayerEntity) SetID(num int) {
+	e.ID = num
 }
 
 func (p *Player) NewDomain(img textures.RenderableTexture, effect func(l []*enemyai.Enemy)) (d Domain) {
@@ -214,11 +218,11 @@ func (p *Player) Draw(s *ebiten.Image) {
 	})
 
 	if !p.Dir {
-		op.GeoM.Translate(640, 360)
+		op.GeoM.Translate(640-camera.Cam.Manual_Offset.X, 360-camera.Cam.Manual_Offset.Y)
 		p.Img.Draw(s, &op)
 	} else {
 		op.GeoM.Scale(-1, 1)
-		op.GeoM.Translate(640+32, 360)
+		op.GeoM.Translate(640+32-camera.Cam.Manual_Offset.X, 360-camera.Cam.Manual_Offset.Y)
 		p.Img.Draw(s, &op)
 	}
 
@@ -228,17 +232,17 @@ func (p *Player) Draw(s *ebiten.Image) {
 		e := &p.Entities[entity_index]
 		op := ebiten.DrawImageOptions{}
 		if !e.Dir {
-			op.GeoM.Translate(e.Pos.X-camera.Cam.Offset.X+640, e.Pos.Y-camera.Cam.Offset.Y+360)
+			op.GeoM.Translate(e.Pos.X-camera.Cam.Offset.X+640-camera.Cam.Manual_Offset.X, e.Pos.Y-camera.Cam.Offset.Y+360-camera.Cam.Manual_Offset.Y)
 		} else {
 			op.GeoM.Scale(-1, 1)
-			op.GeoM.Translate(e.Pos.X-camera.Cam.Offset.X+640+float64(e.Img.GetTexture().Bounds().Dx()), e.Pos.Y-camera.Cam.Offset.Y+360)
+			op.GeoM.Translate(e.Pos.X-camera.Cam.Offset.X-camera.Cam.Manual_Offset.X+640+float64(e.Img.GetTexture().Bounds().Dx()), e.Pos.Y-camera.Cam.Offset.Y-camera.Cam.Manual_Offset.Y+360)
 		}
 		s.DrawImage(e.Img.GetTexture(), &op)
 	}
 
 	for projectile_index := 0; projectile_index < len(p.Projectiles); projectile_index++ {
 		op.GeoM.Reset()
-		op.GeoM.Translate(p.Projectiles[projectile_index].Pos.X-camera.Cam.Offset.X+650, p.Projectiles[projectile_index].Pos.Y-camera.Cam.Offset.Y+380)
+		op.GeoM.Translate(p.Projectiles[projectile_index].Pos.X-camera.Cam.Offset.X-camera.Cam.Manual_Offset.X+650, p.Projectiles[projectile_index].Pos.Y-camera.Cam.Offset.Y-camera.Cam.Manual_Offset.Y+380)
 		p.Projectiles[projectile_index].Img.Draw(s, &op)
 	}
 }

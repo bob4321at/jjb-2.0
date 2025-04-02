@@ -1,6 +1,8 @@
 package utils
 
 import (
+	"math"
+
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
@@ -40,4 +42,18 @@ func RemoveArrayElement[T any](index_to_remove int, slice *[]T) {
 
 func Deg2Rad(num float64) float64 {
 	return num * (180 / 3.14159)
+}
+
+func GetDist(p1, p2 Vec2) float64 {
+	offx := math.Abs(p1.X - p2.X)
+	offy := math.Abs(p1.Y - p2.Y)
+
+	return math.Sqrt((offx * offx) + (offy * offy))
+}
+
+func GetAngle(p1, p2 Vec2) float64 {
+	offx := p1.X - p2.X
+	offy := p1.Y - p2.Y
+
+	return math.Atan2(offx, offy)
 }
