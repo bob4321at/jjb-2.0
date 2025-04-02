@@ -38,18 +38,6 @@ type Projectile struct {
 	Img      textures.RenderableTexture
 }
 
-type PlayerEntity struct {
-	Pos          utils.Vec2
-	Vel          utils.Vec2
-	Cooldown     float64
-	Max_Cooldown float64
-	Lifespan     float64
-	Img          textures.RenderableTexture
-	Dir          bool
-	Update       func(e *PlayerEntity, level_hitbox []utils.HitBox)
-	ID           int
-}
-
 type Domain struct {
 	Img    textures.RenderableTexture
 	Effect func(enemies []*enemyai.Enemy)
@@ -70,30 +58,6 @@ func (p *Player) NewProjectile(pos, vel utils.Vec2, damage int, speed float64, p
 	projectile := Projectile{pos, vel, damage, speed, pierce, lifetime, img}
 
 	p.Projectiles = append(p.Projectiles, projectile)
-}
-
-func (p *Player) NewEntity(pos utils.Vec2, starting_vel utils.Vec2, cooldown float64, lifespan float64, img textures.RenderableTexture, Update func(e *PlayerEntity, level_hitbox []utils.HitBox)) (e *PlayerEntity) {
-	entity := PlayerEntity{}
-
-	entity.Img = img
-
-	entity.Pos = pos
-	entity.Vel = starting_vel
-
-	entity.Cooldown = cooldown
-	entity.Max_Cooldown = cooldown
-
-	entity.Lifespan = lifespan
-
-	entity.Update = Update
-
-	p.Entities = append(p.Entities, entity)
-
-	return &p.Entities[len(p.Entities)-1]
-}
-
-func (e *PlayerEntity) SetID(num int) {
-	e.ID = num
 }
 
 func (p *Player) NewDomain(img textures.RenderableTexture, effect func(l []*enemyai.Enemy)) (d Domain) {
@@ -232,8 +196,14 @@ func (p *Player) Draw(s *ebiten.Image) {
 		e := &p.Entities[entity_index]
 		op := ebiten.DrawImageOptions{}
 		if !e.Dir {
+			op.GeoM.Translate(-(float64(e.Img.GetTexture().Bounds().Dx()))/2, -(float64(e.Img.GetTexture().Bounds().Dy()))/2)
+			op.GeoM.Rotate(utils.Deg2Rad(e.Rotation))
+			op.GeoM.Translate((float64(e.Img.GetTexture().Bounds().Dx()))/2, (float64(e.Img.GetTexture().Bounds().Dy()))/2)
 			op.GeoM.Translate(e.Pos.X-camera.Cam.Offset.X+640-camera.Cam.Manual_Offset.X, e.Pos.Y-camera.Cam.Offset.Y+360-camera.Cam.Manual_Offset.Y)
 		} else {
+			op.GeoM.Translate(-(float64(e.Img.GetTexture().Bounds().Dx()))/2, -(float64(e.Img.GetTexture().Bounds().Dy()))/2)
+			op.GeoM.Rotate(utils.Deg2Rad(e.Rotation))
+			op.GeoM.Translate((float64(e.Img.GetTexture().Bounds().Dx()))/2, (float64(e.Img.GetTexture().Bounds().Dy()))/2)
 			op.GeoM.Scale(-1, 1)
 			op.GeoM.Translate(e.Pos.X-camera.Cam.Offset.X-camera.Cam.Manual_Offset.X+640+float64(e.Img.GetTexture().Bounds().Dx()), e.Pos.Y-camera.Cam.Offset.Y-camera.Cam.Manual_Offset.Y+360)
 		}

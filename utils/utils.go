@@ -41,7 +41,7 @@ func RemoveArrayElement[T any](index_to_remove int, slice *[]T) {
 }
 
 func Deg2Rad(num float64) float64 {
-	return num * (180 / 3.14159)
+	return num * (3.14159 / 180)
 }
 
 func GetDist(p1, p2 Vec2) float64 {

@@ -28,7 +28,7 @@ func (b *Background) Draw(s *ebiten.Image, cam *camera.Camera) {
 
 	for repition := 0; repition < b.repeat_times; repition++ {
 		op.GeoM.Reset()
-		op.GeoM.Translate(b.start.X+float64(repition*b.img.GetTexture().Bounds().Dx())-cam.Offset.X, b.start.Y-cam.Offset.Y)
+		op.GeoM.Translate(b.start.X+float64(repition*b.img.GetTexture().Bounds().Dx())-cam.Offset.X-cam.Manual_Offset.X, b.start.Y-cam.Offset.Y-cam.Manual_Offset.Y)
 		b.img.Draw(s, &op)
 	}
 }
