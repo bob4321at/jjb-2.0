@@ -21,12 +21,12 @@ func Start_Menu_Scene_Draw(display_img *ebiten.Image, screen *ebiten.Image) {
 
 func Start_Menu_Scene_Update() {
 	if ebiten.IsMouseButtonPressed(ebiten.MouseButton0) && !utils.Clicked {
-		if utils.Collide(utils.Vec2{X: utils.Mouse_X, Y: utils.Mouse_Y}, utils.Vec2{X: 1, Y: 1}, utils.Vec2{X: 94, Y: 188}, utils.Vec2{X: 411, Y: 121}) {
+		if utils.Collide(utils.Vec2{X: utils.Mouse_X, Y: utils.Mouse_Y}, utils.Vec2{X: 1, Y: 1}, utils.Vec2{X: 0, Y: 41}, utils.Vec2{X: 405, Y: 153}) {
 			Current_Scene = 1
 			utils.Clicked = true
 		}
 
-		if utils.Collide(utils.Vec2{X: utils.Mouse_X, Y: utils.Mouse_Y}, utils.Vec2{X: 1, Y: 1}, utils.Vec2{X: 94, Y: 322}, utils.Vec2{X: 411, Y: 121}) {
+		if utils.Collide(utils.Vec2{X: utils.Mouse_X, Y: utils.Mouse_Y}, utils.Vec2{X: 1, Y: 1}, utils.Vec2{X: 0, Y: 206}, utils.Vec2{X: 355, Y: 151}) {
 			os.Exit(0)
 		}
 	}

@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"jjb/camera"
 	"jjb/enemyai"
-	"jjb/shaders"
 	"jjb/textures"
 	"jjb/utils"
 	"math"
@@ -19,11 +18,11 @@ func (player *Player) megumiTp() {
 }
 
 func (player *Player) megumiSnake() {
-	player.NewEntity(player.Pos, utils.Vec2{X: -(player.Pos.X + (player.Vel.X * 2) - utils.Mouse_X - camera.Cam.Offset.X + 640 + (float64(player.Img.GetTexture().Bounds().Dx()))), Y: -(player.Pos.Y + (player.Vel.Y * 2) - utils.Mouse_Y - camera.Cam.Offset.Y + 320 + (float64(player.Img.GetTexture().Bounds().Dy())))}, 0, 100, textures.NewTexture("./art/entities/megumi/snake_part.png", shaders.Snake_Head_Shader), player.megumiSnakeAi)
 	for i := 0; i < 25; i++ {
-		e := player.NewEntity(player.Pos, utils.Vec2{X: 0, Y: 0}, 0, 100, textures.NewTexture("./art/entities/megumi/snake_part.png", shaders.Snake_Ball_Shader), player.megumiSnakeBallsAi)
+		e := player.NewEntity(player.Pos, utils.Vec2{X: 0, Y: 0}, 0, 75, textures.NewTexture("./art/entities/megumi/snake_part.png", ""), player.megumiSnakeBallsAi)
 		e.SetID(1)
 	}
+	player.NewEntity(player.Pos, utils.Vec2{X: -(player.Pos.X + (player.Vel.X * 2) - utils.Mouse_X - camera.Cam.Offset.X + 640 + (float64(player.Img.GetTexture().Bounds().Dx()))), Y: -(player.Pos.Y + (player.Vel.Y * 2) - utils.Mouse_Y - camera.Cam.Offset.Y + 320 + (float64(player.Img.GetTexture().Bounds().Dy())))}, 0, 75, textures.NewTexture("./art/entities/megumi/snake_part.png", ""), player.megumiSnakeAi)
 }
 
 func (player *Player) megumiSnakeAi(entity *PlayerEntity, level_hitbox []utils.HitBox) {
@@ -235,7 +234,7 @@ func (player *Player) megumiDomain(enemies []*enemyai.Enemy) {
 }
 
 var megumi_attacks = []Attack{
-	{Player_Ref.megumiSnake, 0, 4},
+	{Player_Ref.megumiSnake, 0, 100},
 	{Player_Ref.megumiBird, 0, 4},
 	{Player_Ref.megumiMahoraga, 0, 33},
 }

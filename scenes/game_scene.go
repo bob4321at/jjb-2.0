@@ -54,6 +54,9 @@ func Game_Scene_Update() {
 			players.Player_Ref = players.Players[selected_player]
 			players.InitPlayer(level.Current_Level.Player_Spawn)
 			players.Player_Ref = players.Players[selected_player]
+			players.Player_Ref.Attacks[0].Cooldown = 0
+			players.Player_Ref.Attacks[1].Cooldown = 0
+			players.Player_Ref.Attacks[2].Cooldown = 0
 		}
 	}
 
@@ -64,6 +67,9 @@ func Game_Scene_Update() {
 			players.Player_Ref = players.Players[selected_player]
 			players.InitPlayer(level.Current_Level.Player_Spawn)
 			players.Player_Ref = players.Players[selected_player]
+			players.Player_Ref.Attacks[0].Cooldown = 0
+			players.Player_Ref.Attacks[1].Cooldown = 0
+			players.Player_Ref.Attacks[2].Cooldown = 0
 		}
 	}
 
