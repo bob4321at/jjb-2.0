@@ -1,7 +1,6 @@
 package players
 
 import (
-	"fmt"
 	"jjb/camera"
 	"jjb/enemyai"
 	"jjb/textures"
@@ -18,11 +17,12 @@ func (player *Player) megumiTp() {
 }
 
 func (player *Player) megumiSnake() {
+	snake_head := player.NewEntity(player.Pos, utils.Vec2{X: -(player.Pos.X + (player.Vel.X * 2) - utils.Mouse_X - camera.Cam.Offset.X + 640 + (float64(player.Img.GetTexture().Bounds().Dx()))), Y: -(player.Pos.Y + (player.Vel.Y * 2) - utils.Mouse_Y - camera.Cam.Offset.Y + 320 + (float64(player.Img.GetTexture().Bounds().Dy())))}, 0, 75, textures.NewTexture("./art/entities/megumi/snake_part.png", ""), player.megumiSnakeAi)
+	snake_head.SetID(0)
 	for i := 0; i < 25; i++ {
-		e := player.NewEntity(player.Pos, utils.Vec2{X: 0, Y: 0}, 0, 75, textures.NewTexture("./art/entities/megumi/snake_part.png", ""), player.megumiSnakeBallsAi)
-		e.SetID(1)
+		snake_balls := player.NewEntity(player.Pos, utils.Vec2{X: 0, Y: 0}, 0, 75, textures.NewTexture("./art/entities/megumi/snake_part.png", ""), player.megumiSnakeBallsAi)
+		snake_balls.SetID(1)
 	}
-	player.NewEntity(player.Pos, utils.Vec2{X: -(player.Pos.X + (player.Vel.X * 2) - utils.Mouse_X - camera.Cam.Offset.X + 640 + (float64(player.Img.GetTexture().Bounds().Dx()))), Y: -(player.Pos.Y + (player.Vel.Y * 2) - utils.Mouse_Y - camera.Cam.Offset.Y + 320 + (float64(player.Img.GetTexture().Bounds().Dy())))}, 0, 75, textures.NewTexture("./art/entities/megumi/snake_part.png", ""), player.megumiSnakeAi)
 }
 
 func (player *Player) megumiSnakeAi(entity *PlayerEntity, level_hitbox []utils.HitBox) {
@@ -43,7 +43,7 @@ func (player *Player) megumiSnakeAi(entity *PlayerEntity, level_hitbox []utils.H
 	angle_dir := math.Atan2(entity.Vel.X, entity.Vel.Y)
 	if len(enemyai.Enemies_In_World) > 0 {
 		closest_enemy := enemyai.Enemies_In_World[0]
-		last_dist := 100000000.0
+		last_dist := utils.GetDist(entity.Pos, enemyai.Enemies_In_World[0].Pos)
 
 		for ei := 0; ei < len(enemyai.Enemies_In_World); ei++ {
 			if utils.GetDist(entity.Pos, enemyai.Enemies_In_World[ei].Pos) < last_dist {
@@ -104,7 +104,6 @@ func (player *Player) megumiSnakeBallsAi(entity *PlayerEntity, level_hitbox []ut
 					snake_balls = append(snake_balls, entitty)
 				}
 			}
-			fmt.Println(snake_balls)
 			snake_balls[len(snake_balls)-1].Lifespan = -1
 		}
 	}

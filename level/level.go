@@ -147,14 +147,6 @@ func (level *Level) Update(player *players.Player) {
 		level.Spawned = true
 	}
 	if level.Current_Wave >= len(level.Waves.Waves) && Current_Level_Index+1 < len(Levels) {
-		// level.Level_Cached_Image = ebiten.NewImage(16, 16)
-		// if &Levels[Current_Level_Index] != Current_Level {
-		// 	Current_Level_Index += 1
-		// 	Current_Level = &Levels[Current_Level_Index]
-		// 	players.InitPlayer(Current_Level.Player_Spawn)
-		// 	players.Player_Ref = players.Players[players.Player_Ref.Player_Name]
-		// 	players.Player_Ref.Pos = Current_Level.Player_Spawn
-		// }
 		level.Beaten = true
 	}
 }
