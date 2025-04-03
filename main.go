@@ -1,7 +1,6 @@
 package main
 
 import (
-	"jjb/players"
 	"jjb/scenes"
 	"jjb/utils"
 	"strconv"
@@ -15,11 +14,6 @@ type Game struct{}
 func (game *Game) Update() error {
 	if !ebiten.IsMouseButtonPressed(ebiten.MouseButton0) {
 		utils.Clicked = false
-	}
-
-	if players.Player_Ref.Health <= 0 {
-		scenes.Current_Scene = 3
-		players.Player_Ref.Health = 100
 	}
 
 	rmx, rmy := ebiten.CursorPosition()

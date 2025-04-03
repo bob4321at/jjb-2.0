@@ -73,6 +73,11 @@ func Game_Scene_Update() {
 		}
 	}
 
+	if players.Player_Ref.Health <= 0 {
+		Current_Scene = 4
+		players.Player_Ref.Health = 100
+	}
+
 	utils.Game_Time += 1
 
 	camera.Cam.Offset.X = players.Player_Ref.Pos.X

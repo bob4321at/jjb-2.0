@@ -15,7 +15,7 @@ func (player *Player) megumiTp() {
 }
 
 func (player *Player) megumiSnake() {
-	for i := 0; i < 50; i++ {
+	for i := 0; i < 35; i++ {
 		snake_balls := player.NewEntity(player.Pos, utils.Vec2{X: 0, Y: 0}, 0, 75, textures.NewTexture("./art/entities/megumi/snake_part.png", ""), player.megumiSnakeBallsAi)
 		snake_balls.SetID(1)
 	}
