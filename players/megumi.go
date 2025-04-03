@@ -15,7 +15,7 @@ func (player *Player) megumiTp() {
 }
 
 func (player *Player) megumiSnake() {
-	for i := 0; i < 25; i++ {
+	for i := 0; i < 50; i++ {
 		snake_balls := player.NewEntity(player.Pos, utils.Vec2{X: 0, Y: 0}, 0, 75, textures.NewTexture("./art/entities/megumi/snake_part.png", ""), player.megumiSnakeBallsAi)
 		snake_balls.SetID(1)
 	}
@@ -36,20 +36,6 @@ func (player *Player) megumiSnakeAi(entity *PlayerEntity, level_hitbox []utils.H
 	}
 	if len(snake_balls) == 0 {
 		entity.Lifespan = -1
-	}
-
-	// angle_dir := math.Atan2(entity.Vel.X, entity.Vel.Y)
-	if len(enemyai.Enemies_In_World) > 0 {
-		// closest_enemy := enemyai.Enemies_In_World[0]
-		last_dist := utils.GetDist(entity.Pos, enemyai.Enemies_In_World[0].Pos)
-
-		for ei := 0; ei < len(enemyai.Enemies_In_World); ei++ {
-			if utils.GetDist(entity.Pos, enemyai.Enemies_In_World[ei].Pos) < last_dist {
-				// closest_enemy = enemyai.Enemies_In_World[ei]
-			}
-		}
-
-		// angle_dir = -(utils.GetAngle(entity.Pos, closest_enemy.Pos))
 	}
 
 	if len(snake_balls) != 0 {
@@ -74,7 +60,13 @@ func (player *Player) megumiSnakeAi(entity *PlayerEntity, level_hitbox []utils.H
 		if len(enemyai.Enemies_In_World) > 0 {
 			closest_enemy := enemyai.Enemies_In_World[0]
 
-			closest_enemy = enemyai.Enemies_In_World[0]
+			last_dist := utils.GetDist(entity.Pos, enemyai.Enemies_In_World[0].Pos)
+
+			for ei := 0; ei < len(enemyai.Enemies_In_World); ei++ {
+				if utils.GetDist(entity.Pos, enemyai.Enemies_In_World[ei].Pos) < last_dist {
+					closest_enemy = enemyai.Enemies_In_World[ei]
+				}
+			}
 
 			entity.Rotation = -(utils.GetAngle(utils.Vec2{X: entity.Pos.X + entity.Vel.X, Y: entity.Pos.Y + entity.Vel.Y}, utils.Vec2{X: closest_enemy.Pos.X + closest_enemy.Vel.X, Y: closest_enemy.Pos.Y + closest_enemy.Vel.Y})) - 90
 
