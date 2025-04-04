@@ -1,11 +1,12 @@
 package enemyai
 
 import (
+	"jjb/textures"
 	"jjb/utils"
 	"math"
 )
 
-func shrimpUpdate(e *Enemy, player_pos utils.Vec2, level_hitbox []utils.HitBox) {
+func hornetUpdate(e *Enemy, player_pos utils.Vec2, level_hitbox []utils.HitBox) {
 	this_enemy_index := 0
 
 	shrimps := 0
@@ -17,7 +18,7 @@ func shrimpUpdate(e *Enemy, player_pos utils.Vec2, level_hitbox []utils.HitBox) 
 	}
 
 	for enemy_index := 0; enemy_index < len(Enemies_In_World); enemy_index++ {
-		if e.Id == 3 {
+		if e.Id == 13 {
 			shrimps += 1
 		}
 
@@ -43,5 +44,11 @@ func shrimpUpdate(e *Enemy, player_pos utils.Vec2, level_hitbox []utils.HitBox) 
 	if e.Can_Move {
 		e.Pos.X += e.Vel.X
 		e.Pos.Y += e.Vel.Y
+
+		if math.Mod(utils.Game_Time, 100) == 0 {
+			angle := -utils.GetAngle(e.Pos, player_pos)
+
+			e.NewProjectile(e.Pos, utils.Vec2{X: math.Sin(angle), Y: -math.Cos(angle)}, textures.NewTexture("./art/enemies/hornet_stinger.png", ""), 5, 20)
+		}
 	}
 }

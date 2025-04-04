@@ -126,8 +126,9 @@ func init() {
 		7:  NewEnemy(7, 10, 3, utils.Vec2{}, textures.NewAnimatedTexture("./art/enemies/bunny.png", shaders.Enemy_Shader), bunnyUpdate),
 		8:  NewEnemy(8, 20, 3, utils.Vec2{}, textures.NewAnimatedTexture("./art/enemies/fuzzball.png", shaders.Enemy_Shader), fuzzBallUpdate),
 		9:  NewEnemy(9, 200, 5, utils.Vec2{}, textures.NewTexture("./art/enemies/simple_grade_curse.png", shaders.Enemy_Shader), simpleGradeCurseUpdate),
-		10: NewEnemy(9, 200, 10, utils.Vec2{}, textures.NewTexture("./art/enemies/sukuna.png", shaders.Enemy_Shader), sukunaUpdate),
-		11: NewEnemy(6, 50, 3, utils.Vec2{}, textures.NewTexture("./art/enemies/green_balloon.png", shaders.Enemy_Shader), greenBalloonUpdate),
-		12: NewEnemy(6, 100, 3, utils.Vec2{}, textures.NewTexture("./art/enemies/purple_balloon.png", shaders.Enemy_Shader), purpleBalloonUpdate),
+		10: NewEnemy(10, 200, 10, utils.Vec2{}, textures.NewTexture("./art/enemies/sukuna.png", shaders.Enemy_Shader), sukunaUpdate),
+		11: NewEnemy(11, 50, 3, utils.Vec2{}, textures.NewTexture("./art/enemies/green_balloon.png", shaders.Enemy_Shader), greenBalloonUpdate),
+		12: NewEnemy(12, 100, 3, utils.Vec2{}, textures.NewTexture("./art/enemies/purple_balloon.png", shaders.Enemy_Shader), purpleBalloonUpdate),
+		13: NewEnemy(13, 20, 5, utils.Vec2{}, textures.NewTexture("./art/enemies/hornet.png", shaders.Enemy_Shader), hornetUpdate),
 	}
 }

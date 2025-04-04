@@ -19,6 +19,7 @@ func Death_Menu_Scene_Draw(display_img *ebiten.Image, screen *ebiten.Image) {
 func Death_Menu_Scene_Update() {
 	if ebiten.IsMouseButtonPressed(ebiten.MouseButton0) && !utils.Clicked {
 		Current_Scene = 0
+		Story_Tex.Current_Animation = 0
 		utils.Clicked = true
 	}
 }
