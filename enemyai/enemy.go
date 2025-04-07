@@ -20,7 +20,7 @@ type EnemyProjectile struct {
 	Lifetime float64
 }
 
-func (e *Enemy) NewProjectile(pos, vel utils.Vec2, img textures.RenderableTexture, damage int, lifetime float64) {
+func (enemy *Enemy) NewProjectile(pos, vel utils.Vec2, img textures.RenderableTexture, damage int, lifetime float64) {
 	projectile := EnemyProjectile{}
 
 	projectile.Pos = pos
@@ -31,7 +31,7 @@ func (e *Enemy) NewProjectile(pos, vel utils.Vec2, img textures.RenderableTextur
 	projectile.Damage = damage
 	projectile.Lifetime = lifetime
 
-	e.Projectiles = append(e.Projectiles, projectile)
+	enemy.Projectiles = append(enemy.Projectiles, projectile)
 }
 
 type Enemy struct {
@@ -65,7 +65,7 @@ func NewEnemy(id int, health int, damage int, pos utils.Vec2, img textures.Rende
 
 	enemy.Update = update
 
-	enemy.Coll_Shape = utils.HitBox{X: pos.X, Y: pos.Y, W: float64(enemy.Tex.GetTexture().Bounds().Dx()), H: float64(enemy.Tex.GetTexture().Bounds().Dy())}
+	enemy.Coll_Shape = utils.HitBox{X: pos.X, Y: pos.Y, Width: float64(enemy.Tex.GetTexture().Bounds().Dx()), Height: float64(enemy.Tex.GetTexture().Bounds().Dy())}
 
 	return enemy
 }
@@ -107,7 +107,7 @@ func (enemy *Enemy) Draw(screen *ebiten.Image, cam *camera.Camera) {
 }
 
 func (enemy *Enemy) DoDamage(amount int) {
-	if enemy.I_Frames >= 0 {
+	if enemy.I_Frames <= 0 {
 		enemy.Health -= amount
 		enemy.I_Frames = 4
 	}
@@ -129,6 +129,6 @@ func init() {
 		10: NewEnemy(10, 200, 10, utils.Vec2{}, textures.NewTexture("./art/enemies/sukuna.png", shaders.Enemy_Shader), sukunaUpdate),
 		11: NewEnemy(11, 50, 3, utils.Vec2{}, textures.NewTexture("./art/enemies/green_balloon.png", shaders.Enemy_Shader), greenBalloonUpdate),
 		12: NewEnemy(12, 100, 3, utils.Vec2{}, textures.NewTexture("./art/enemies/purple_balloon.png", shaders.Enemy_Shader), purpleBalloonUpdate),
-		13: NewEnemy(13, 20, 5, utils.Vec2{}, textures.NewTexture("./art/enemies/hornet.png", shaders.Enemy_Shader), hornetUpdate),
+		13: NewEnemy(13, 20, 5, utils.Vec2{}, textures.NewAnimatedTexture("./art/enemies/hornet.png", shaders.Enemy_Shader), hornetUpdate),
 	}
 }

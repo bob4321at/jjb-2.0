@@ -14,21 +14,21 @@ type Background struct {
 	img          textures.RenderableTexture
 }
 
-func newBackground(start_pos utils.Vec2, amount int, img textures.RenderableTexture) (b Background) {
-	b.img = img
+func newBackground(start_pos utils.Vec2, amount int, img textures.RenderableTexture) (background Background) {
+	background.img = img
 
-	b.start = start_pos
-	b.repeat_times = amount
+	background.start = start_pos
+	background.repeat_times = amount
 
-	return b
+	return background
 }
 
-func (b *Background) Draw(s *ebiten.Image, cam *camera.Camera) {
+func (background *Background) Draw(screen *ebiten.Image, cam *camera.Camera) {
 	op := ebiten.DrawImageOptions{}
 
-	for repition := 0; repition < b.repeat_times; repition++ {
+	for repition := 0; repition < background.repeat_times; repition++ {
 		op.GeoM.Reset()
-		op.GeoM.Translate(b.start.X+float64(repition*b.img.GetTexture().Bounds().Dx())-cam.Offset.X-cam.Manual_Offset.X, b.start.Y-cam.Offset.Y-cam.Manual_Offset.Y)
-		b.img.Draw(s, &op)
+		op.GeoM.Translate(background.start.X+float64(repition*background.img.GetTexture().Bounds().Dx())-cam.Offset.X-cam.Manual_Offset.X, background.start.Y-cam.Offset.Y-cam.Manual_Offset.Y)
+		background.img.Draw(screen, &op)
 	}
 }

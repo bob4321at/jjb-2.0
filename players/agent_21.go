@@ -82,6 +82,7 @@ func agent_21MolotovAi(entity *PlayerEntity, level_hitbox []utils.HitBox) {
 }
 
 func agent_21Firewall(entity *PlayerEntity, level_hitbox []utils.HitBox) {
+	entity.Lifespan -= 1
 	if entity.Cooldown <= 0 {
 		for enemy_index := 0; enemy_index < len(enemyai.Enemies_In_World); enemy_index++ {
 			enemy := enemyai.Enemies_In_World[enemy_index]

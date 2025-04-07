@@ -12,7 +12,7 @@ import (
 )
 
 type RenderableTexture interface {
-	Draw(s *ebiten.Image, op *ebiten.DrawImageOptions)
+	Draw(screen *ebiten.Image, op *ebiten.DrawImageOptions)
 	Update()
 	GetTexture() *ebiten.Image
 	RefreshTexture()
@@ -27,54 +27,54 @@ type Texture struct {
 }
 
 func NewTexture(img_path string, shader string) *Texture {
-	t := Texture{}
+	texture := Texture{}
 
-	t.Path = img_path
+	texture.Path = img_path
 
 	timg, _, err := ebitenutil.NewImageFromFile(img_path)
 	if err != nil {
 		panic(err)
 	}
-	t.Img = timg
+	texture.Img = timg
 
 	if shader == "" {
 		shader = shaders.Base_Shader
 	}
 
-	t.Shader, err = ebiten.NewShader([]byte(shader))
+	texture.Shader, err = ebiten.NewShader([]byte(shader))
 	if err != nil {
 		panic(err)
 	}
 
-	return &t
+	return &texture
 }
 
-func (t *Texture) Draw(s *ebiten.Image, op *ebiten.DrawImageOptions) {
+func (texture *Texture) Draw(screen *ebiten.Image, op *ebiten.DrawImageOptions) {
 	opts := &ebiten.DrawRectShaderOptions{}
-	opts.Images[0] = t.Img
-	opts.Uniforms = t.Uniforms
+	opts.Images[0] = texture.Img
+	opts.Uniforms = texture.Uniforms
 	opts.GeoM = op.GeoM
-	s.DrawRectShader(t.Img.Bounds().Dx(), t.Img.Bounds().Dy(), t.Shader, opts)
+	screen.DrawRectShader(texture.Img.Bounds().Dx(), texture.Img.Bounds().Dy(), texture.Shader, opts)
 }
 
-func (t *Texture) SetUniforms(uniforms map[string]any) {
-	t.Uniforms = uniforms
+func (texture *Texture) SetUniforms(uniforms map[string]any) {
+	texture.Uniforms = uniforms
 }
 
-func (t *Texture) GetTexture() *ebiten.Image {
-	return t.Img
+func (texture *Texture) GetTexture() *ebiten.Image {
+	return texture.Img
 }
 
-func (t *Texture) Update() {}
+func (texture *Texture) Update() {}
 
-func (t *Texture) RefreshTexture() {
-	t.Path = t.Path
+func (texture *Texture) RefreshTexture() {
+	texture.Path = texture.Path
 
-	timg, _, err := ebitenutil.NewImageFromFile(t.Path)
+	timg, _, err := ebitenutil.NewImageFromFile(texture.Path)
 	if err != nil {
 		panic(err)
 	}
-	t.Img = timg
+	texture.Img = timg
 }
 
 type Animation struct {
@@ -104,9 +104,9 @@ func NewAnimatedTexture(path string, shader string) *AnimatedTexture {
 		panic(err)
 	}
 
-	at := AnimatedTexture{}
+	animated_texture := AnimatedTexture{}
 
-	at.Path = path
+	animated_texture.Path = path
 
 	temp := SpriteSheetData{}
 
@@ -118,51 +118,50 @@ func NewAnimatedTexture(path string, shader string) *AnimatedTexture {
 
 	animations := []Animation{}
 
-	for anim := 0; anim < len(temp.Frames); anim++ {
+	for animation := 0; animation < len(temp.Frames); animation++ {
 		animations = append(animations, Animation{})
-		animations[anim].Speed = float64(temp.Speed)
-		animations[anim].Timer = 0
-		for fram := 0; fram < len(temp.Frames[anim]); fram++ {
-			frame := []float64{float64(int(temp.Frames[anim][fram][0])), float64(int(temp.Frames[anim][fram][1])), float64(int(temp.Frames[anim][fram][2])), float64(int(temp.Frames[anim][fram][3]))}
-			animations[anim].Frames = append(animations[anim].Frames, ebiten.NewImageFromImage(sprite_sheet.SubImage(image.Rect(int(frame[0]), int(frame[1]), int(frame[2]), int(frame[3])))))
+		animations[animation].Speed = float64(temp.Speed)
+		animations[animation].Timer = 0
+		for fram := 0; fram < len(temp.Frames[animation]); fram++ {
+			frame := []float64{float64(int(temp.Frames[animation][fram][0])), float64(int(temp.Frames[animation][fram][1])), float64(int(temp.Frames[animation][fram][2])), float64(int(temp.Frames[animation][fram][3]))}
+			animations[animation].Frames = append(animations[animation].Frames, ebiten.NewImageFromImage(sprite_sheet.SubImage(image.Rect(int(frame[0]), int(frame[1]), int(frame[2]), int(frame[3])))))
 		}
 	}
-	at.Animations = animations
+	animated_texture.Animations = animations
 
 	if shader == "" {
 		shader = shaders.Base_Shader
 	}
 
-	at.Shader, err = ebiten.NewShader([]byte(shader))
+	animated_texture.Shader, err = ebiten.NewShader([]byte(shader))
 	if err != nil {
 		panic(err)
 	}
 
-	return &at
+	return &animated_texture
 }
 
-func (t *AnimatedTexture) Draw(s *ebiten.Image, op *ebiten.DrawImageOptions) {
+func (texture *AnimatedTexture) Draw(screen *ebiten.Image, op *ebiten.DrawImageOptions) {
 	opts := &ebiten.DrawRectShaderOptions{}
-	opts.Images[0] = t.Animations[t.Current_Animation].Frames[t.Animations[t.Current_Animation].Animation_Progress]
-	opts.Uniforms = t.Uniforms
+	opts.Images[0] = texture.Animations[texture.Current_Animation].Frames[texture.Animations[texture.Current_Animation].Animation_Progress]
+	opts.Uniforms = texture.Uniforms
 	opts.GeoM = op.GeoM
-	s.DrawRectShader(t.Animations[t.Current_Animation].Frames[t.Animations[t.Current_Animation].Animation_Progress].Bounds().Dx(), t.Animations[t.Current_Animation].Frames[t.Animations[t.Current_Animation].Animation_Progress].Bounds().Dy(), t.Shader, opts)
-	// s.DrawImage(t.Animations[t.Current_Animation].Frames[t.Animations[t.Current_Animation].Animation_Progress], op)
+	screen.DrawRectShader(texture.Animations[texture.Current_Animation].Frames[texture.Animations[texture.Current_Animation].Animation_Progress].Bounds().Dx(), texture.Animations[texture.Current_Animation].Frames[texture.Animations[texture.Current_Animation].Animation_Progress].Bounds().Dy(), texture.Shader, opts)
 }
 
-func (t *AnimatedTexture) SetUniforms(uniforms map[string]any) {
-	t.Uniforms = uniforms
+func (texture *AnimatedTexture) SetUniforms(uniforms map[string]any) {
+	texture.Uniforms = uniforms
 }
 
-func (t *AnimatedTexture) RefreshTexture() {
-	sprite_sheet, _, err := ebitenutil.NewImageFromFile(t.Path)
+func (texture *AnimatedTexture) RefreshTexture() {
+	sprite_sheet, _, err := ebitenutil.NewImageFromFile(texture.Path)
 	if err != nil {
 		panic(err)
 	}
 
 	temp := SpriteSheetData{}
 
-	json_path := strings.Replace(t.Path, "png", "json", -1)
+	json_path := strings.Replace(texture.Path, "png", "json", -1)
 
 	temp_data, _ := os.ReadFile(json_path)
 
@@ -173,28 +172,28 @@ func (t *AnimatedTexture) RefreshTexture() {
 	for anim := 0; anim < len(temp.Frames); anim++ {
 		animations = append(animations, Animation{})
 		animations[anim].Speed = float64(temp.Speed)
-		animations[anim].Timer = t.Animations[anim].Timer
-		animations[anim].Animation_Progress = t.Animations[anim].Animation_Progress
+		animations[anim].Timer = texture.Animations[anim].Timer
+		animations[anim].Animation_Progress = texture.Animations[anim].Animation_Progress
 		for fram := 0; fram < len(temp.Frames[anim]); fram++ {
 			frame := []float64{float64(int(temp.Frames[anim][fram][0])), float64(int(temp.Frames[anim][fram][1])), float64(int(temp.Frames[anim][fram][2])), float64(int(temp.Frames[anim][fram][3]))}
 			animations[anim].Frames = append(animations[anim].Frames, ebiten.NewImageFromImage(sprite_sheet.SubImage(image.Rect(int(frame[0]), int(frame[1]), int(frame[2]), int(frame[3])))))
 		}
 	}
-	t.Animations = animations
+	texture.Animations = animations
 }
 
-func (t *AnimatedTexture) Update() {
-	t.Animations[t.Current_Animation].Timer -= t.Animations[t.Current_Animation].Speed
+func (texture *AnimatedTexture) Update() {
+	texture.Animations[texture.Current_Animation].Timer -= texture.Animations[texture.Current_Animation].Speed
 
-	if t.Animations[t.Current_Animation].Timer < 0 {
-		t.Animations[t.Current_Animation].Animation_Progress += 1
-		if t.Animations[t.Current_Animation].Animation_Progress >= len(t.Animations[t.Current_Animation].Frames) {
-			t.Animations[t.Current_Animation].Animation_Progress = 0
+	if texture.Animations[texture.Current_Animation].Timer < 0 {
+		texture.Animations[texture.Current_Animation].Animation_Progress += 1
+		if texture.Animations[texture.Current_Animation].Animation_Progress >= len(texture.Animations[texture.Current_Animation].Frames) {
+			texture.Animations[texture.Current_Animation].Animation_Progress = 0
 		}
-		t.Animations[t.Current_Animation].Timer = 1
+		texture.Animations[texture.Current_Animation].Timer = 1
 	}
 }
 
-func (t *AnimatedTexture) GetTexture() *ebiten.Image {
-	return t.Animations[t.Current_Animation].Frames[t.Animations[t.Current_Animation].Animation_Progress]
+func (texture *AnimatedTexture) GetTexture() *ebiten.Image {
+	return texture.Animations[texture.Current_Animation].Frames[texture.Animations[texture.Current_Animation].Animation_Progress]
 }

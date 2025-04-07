@@ -56,20 +56,20 @@ func (player *Player) pyroFireBlasts() {
 	player.NewProjectile(utils.Vec2{X: player.Pos.X - 64, Y: player.Pos.Y - 64}, utils.Vec2{X: 1, Y: 0}, 10, 10, 10, 3, textures.NewAnimatedTexture("./art/projectiles/pyro/firedropflipped.png", ""))
 }
 
-func (p *Player) pyroDomain(enemies []*enemyai.Enemy) {
+func (player *Player) pyroDomain(enemies []*enemyai.Enemy) {
 	affected := []DomainedEnemy{}
-	player_start_pos := p.Pos
+	player_start_pos := player.Pos
 
 	for enemy_index := 0; enemy_index < len(enemyai.Enemies_In_World); enemy_index++ {
 		e := enemyai.Enemies_In_World[enemy_index]
 		affected = append(affected, DomainedEnemy{e, true, e.Pos})
-		if utils.Collide(utils.Vec2{X: p.Pos.X - 1024, Y: p.Pos.Y - 1024}, utils.Vec2{X: 2048, Y: 2048}, e.Pos, utils.Vec2{X: float64(e.Tex.GetTexture().Bounds().Dx()), Y: float64(e.Tex.GetTexture().Bounds().Dy())}) {
+		if utils.Collide(utils.Vec2{X: player.Pos.X - 1024, Y: player.Pos.Y - 1024}, utils.Vec2{X: 2048, Y: 2048}, e.Pos, utils.Vec2{X: float64(e.Tex.GetTexture().Bounds().Dx()), Y: float64(e.Tex.GetTexture().Bounds().Dy())}) {
 			e.Pos.X = 1800 + (rand.Float64() * 1000)
 			e.Pos.Y = -1700 - (rand.Float64() * 300)
 		}
 	}
-	p.Pos.X = 2000
-	p.Pos.Y = -1600
+	player.Pos.X = 2000
+	player.Pos.Y = -1600
 
 	start_time := utils.Game_Time
 
@@ -91,7 +91,7 @@ func (p *Player) pyroDomain(enemies []*enemyai.Enemy) {
 		}
 	}
 
-	p.Pos = player_start_pos
+	player.Pos = player_start_pos
 
 	for enemy_index := 0; enemy_index < len(affected); enemy_index++ {
 		de := affected[enemy_index]

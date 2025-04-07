@@ -16,8 +16,8 @@ func (game *Game) Update() error {
 		utils.Clicked = false
 	}
 
-	rmx, rmy := ebiten.CursorPosition()
-	utils.Mouse_X, utils.Mouse_Y = float64(rmx), float64(rmy)
+	real_mouse_x, real_mouse_y := ebiten.CursorPosition()
+	utils.Mouse_X, utils.Mouse_Y = float64(real_mouse_x), float64(real_mouse_y)
 
 	scenes.List_Of_Scenes[scenes.Current_Scene].Update()
 

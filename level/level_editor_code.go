@@ -88,7 +88,7 @@ func makeLevel(path string, tileset_path string, background_path string) (level 
 
 	for y := 0; y < len(level.Tile_map); y++ {
 		for x := 0; x < len(level.Tile_map[y]); x++ {
-			t := &new_map[y][x]
+			tile := &new_map[y][x]
 			if level.Tile_map[y][x] == 5 {
 				// top left
 				if x-1 > 0 {
@@ -98,7 +98,7 @@ func makeLevel(path string, tileset_path string, background_path string) (level 
 								if level.Tile_map[y+1][x] != 0 {
 									if x+1 < len(level.Tile_map[y]) {
 										if level.Tile_map[y][x+1] != 0 {
-											*t = 1
+											*tile = 1
 										}
 									}
 								}
@@ -114,7 +114,7 @@ func makeLevel(path string, tileset_path string, background_path string) (level 
 								if level.Tile_map[y+1][x] != 0 {
 									if x+1 < len(level.Tile_map[y]) {
 										if level.Tile_map[y][x+1] != 0 {
-											*t = 2
+											*tile = 2
 										}
 									}
 								}
@@ -130,7 +130,7 @@ func makeLevel(path string, tileset_path string, background_path string) (level 
 								if level.Tile_map[y+1][x] != 0 {
 									if x+1 < len(level.Tile_map[y]) {
 										if level.Tile_map[y][x+1] == 0 {
-											*t = 3
+											*tile = 3
 										}
 									}
 								}
@@ -146,7 +146,7 @@ func makeLevel(path string, tileset_path string, background_path string) (level 
 								if level.Tile_map[y+1][x] != 0 {
 									if x+1 < len(level.Tile_map[y]) {
 										if level.Tile_map[y][x+1] != 0 {
-											*t = 4
+											*tile = 4
 										}
 									}
 								}
@@ -163,7 +163,7 @@ func makeLevel(path string, tileset_path string, background_path string) (level 
 									if level.Tile_map[y+1][x] != 0 {
 										if x+1 < len(level.Tile_map[y]) {
 											if level.Tile_map[y][x+1] != 0 {
-												*t = 5
+												*tile = 5
 											}
 										}
 									}
@@ -181,7 +181,7 @@ func makeLevel(path string, tileset_path string, background_path string) (level 
 									if level.Tile_map[y+1][x] != 0 {
 										if x+1 < len(level.Tile_map[y]) {
 											if level.Tile_map[y][x+1] == 0 {
-												*t = 6
+												*tile = 6
 											}
 										}
 									}
@@ -199,7 +199,7 @@ func makeLevel(path string, tileset_path string, background_path string) (level 
 									if level.Tile_map[y+1][x] == 0 {
 										if x-1 > 0 {
 											if level.Tile_map[y][x+1] != 0 {
-												*t = 7
+												*tile = 7
 											}
 										}
 									}
@@ -217,7 +217,7 @@ func makeLevel(path string, tileset_path string, background_path string) (level 
 									if level.Tile_map[y+1][x] == 0 {
 										if x+1 < len(level.Tile_map) {
 											if level.Tile_map[y][x+1] != 0 {
-												*t = 8
+												*tile = 8
 											}
 										}
 									}
@@ -235,7 +235,7 @@ func makeLevel(path string, tileset_path string, background_path string) (level 
 									if level.Tile_map[y+1][x] == 0 {
 										if x+1 < len(level.Tile_map) {
 											if level.Tile_map[y][x+1] == 0 {
-												*t = 9
+												*tile = 9
 											}
 										}
 									}
@@ -254,7 +254,7 @@ func makeLevel(path string, tileset_path string, background_path string) (level 
 										if x-1 > 0 {
 											if x+1 < len(level.Tile_map[y]) {
 												if level.Tile_map[y][x+1] == 0 {
-													*t = 10
+													*tile = 10
 												}
 											}
 										}
@@ -273,7 +273,7 @@ func makeLevel(path string, tileset_path string, background_path string) (level 
 									if level.Tile_map[y+1][x] != 0 {
 										if x+1 < len(level.Tile_map) {
 											if level.Tile_map[y][x+1] == 0 {
-												*t = 11
+												*tile = 11
 											}
 										}
 									}
@@ -291,7 +291,7 @@ func makeLevel(path string, tileset_path string, background_path string) (level 
 									if level.Tile_map[y+1][x] == 0 {
 										if x-1 > 0 {
 											if level.Tile_map[y][x+1] == 0 {
-												*t = 12
+												*tile = 12
 											}
 										}
 									}
@@ -309,7 +309,7 @@ func makeLevel(path string, tileset_path string, background_path string) (level 
 									if level.Tile_map[y+1][x] == 0 {
 										if x-1 > 0 {
 											if level.Tile_map[y][x+1] != 0 {
-												*t = 13
+												*tile = 13
 											}
 										}
 									}
@@ -327,7 +327,7 @@ func makeLevel(path string, tileset_path string, background_path string) (level 
 									if level.Tile_map[y+1][x] == 0 {
 										if x-1 > 0 {
 											if level.Tile_map[y][x+1] != 0 {
-												*t = 14
+												*tile = 14
 											}
 										}
 									}
@@ -345,7 +345,7 @@ func makeLevel(path string, tileset_path string, background_path string) (level 
 									if level.Tile_map[y+1][x] == 0 {
 										if x-1 > 0 {
 											if level.Tile_map[y][x+1] == 0 {
-												*t = 15
+												*tile = 15
 											}
 										}
 									}
@@ -363,7 +363,7 @@ func makeLevel(path string, tileset_path string, background_path string) (level 
 									if level.Tile_map[y+1][x] == 0 {
 										if x-1 > 0 {
 											if level.Tile_map[y][x+1] == 0 {
-												*t = 16
+												*tile = 16
 											}
 										}
 									}
@@ -387,9 +387,9 @@ func makeLevel(path string, tileset_path string, background_path string) (level 
 		}
 	}
 
-	for ti := 0; ti < len(level.Tiles); ti++ {
-		t := &level.Tiles[ti]
-		level.HitBox = append(level.HitBox, utils.HitBox{X: t.Pos.X, Y: t.Pos.Y, W: 32, H: 32})
+	for tile_index := 0; tile_index < len(level.Tiles); tile_index++ {
+		tile := &level.Tiles[tile_index]
+		level.HitBox = append(level.HitBox, utils.HitBox{X: tile.Pos.X, Y: tile.Pos.Y, Width: 32, Height: 32})
 	}
 	level.Gnerated = true
 

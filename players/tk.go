@@ -59,9 +59,9 @@ func (player *Player) tkCar() {
 	}
 }
 
-func (p *Player) tkJump() {
-	p.Vel.Y = -7
-	p.NewProjectile(utils.Vec2{X: p.Pos.X - 32, Y: p.Pos.Y + 16}, utils.Vec2{X: 0, Y: -1}, 10, 5, 10, 10, textures.NewTexture("./art/projectiles/tk/tires.png", ""))
+func (player *Player) tkJump() {
+	player.Vel.Y = -7
+	player.NewProjectile(utils.Vec2{X: player.Pos.X - 32, Y: player.Pos.Y + 16}, utils.Vec2{X: 0, Y: -1}, 10, 5, 10, 10, textures.NewTexture("./art/projectiles/tk/tires.png", ""))
 }
 
 var tk_attacks = []Attack{

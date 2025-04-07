@@ -12,11 +12,11 @@ type Vec2 struct {
 }
 
 type HitBox struct {
-	X, Y, W, H float64
+	X, Y, Width, Height float64
 }
 
 func NewHitBox(x, y, w, h float64) HitBox {
-	return HitBox{X: x, Y: y, W: w, H: h}
+	return HitBox{X: x, Y: y, Width: w, Height: h}
 }
 
 var Domain_Background, _, _ = ebitenutil.NewImageFromFile("./art/domains/domain_backdrop.png")
@@ -44,16 +44,16 @@ func Deg2Rad(num float64) float64 {
 	return num * (3.14159 / 180)
 }
 
-func GetDist(p1, p2 Vec2) float64 {
-	offx := math.Abs(p1.X - p2.X)
-	offy := math.Abs(p1.Y - p2.Y)
+func GetDist(point_1, point_2 Vec2) float64 {
+	offx := math.Abs(point_1.X - point_2.X)
+	offy := math.Abs(point_1.Y - point_2.Y)
 
 	return math.Sqrt((offx * offx) + (offy * offy))
 }
 
-func GetAngle(p1, p2 Vec2) float64 {
-	offx := p1.X - p2.X
-	offy := p1.Y - p2.Y
+func GetAngle(point_1, point_2 Vec2) float64 {
+	offset_x := point_1.X - point_2.X
+	offset_y := point_1.Y - point_2.Y
 
-	return math.Atan2(offx, offy)
+	return math.Atan2(offset_x, offset_y)
 }
