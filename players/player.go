@@ -324,7 +324,7 @@ func (player *Player) Update(level_hitbox []utils.HitBox) {
 		if utils.Collide(utils.Vec2{X: player.Pos.X, Y: player.Pos.Y + player.Vel.Y + 2}, utils.Vec2{X: 32, Y: 62}, utils.Vec2{X: tile.X, Y: tile.Y}, utils.Vec2{X: 32, Y: 32}) {
 			player.Vel.Y = 0
 			if ebiten.IsKeyPressed(ebiten.KeyW) || ebiten.IsKeyPressed(ebiten.KeySpace) {
-				if utils.Collide(utils.Vec2{X: player.Pos.X, Y: player.Pos.Y + player.Vel.Y - 2}, utils.Vec2{X: 32, Y: 64}, utils.Vec2{X: tile.X, Y: tile.Y}, utils.Vec2{X: 32, Y: 32}) {
+				if utils.Collide(utils.Vec2{X: player.Pos.X, Y: player.Pos.Y + player.Vel.Y}, utils.Vec2{X: 32, Y: 64}, utils.Vec2{X: tile.X, Y: tile.Y}, utils.Vec2{X: 32, Y: 32}) {
 					player.Vel.Y = 0
 				} else {
 					player.Vel.Y = -5.1
