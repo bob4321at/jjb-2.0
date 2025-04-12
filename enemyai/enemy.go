@@ -132,5 +132,6 @@ func init() {
 		13: NewEnemy(13, 20, 5, utils.Vec2{}, textures.NewAnimatedTexture("./art/enemies/hornet.png", shaders.Enemy_Shader), hornetUpdate),
 		14: NewEnemy(14, 40, 5, utils.Vec2{}, textures.NewAnimatedTexture("./art/enemies/frog.png", shaders.Enemy_Shader), frogUpdate),
 		15: NewEnemy(15, 40, 10, utils.Vec2{}, textures.NewAnimatedTexture("./art/enemies/tree_guy.png", shaders.Enemy_Shader), TreeGuyUpdate),
+		16: NewEnemy(16, 400, 10, utils.Vec2{}, textures.NewAnimatedTexture("./art/enemies/amalgamation.png", shaders.Enemy_Shader), AmalgamationUpdate),
 	}
 }
