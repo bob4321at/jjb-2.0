@@ -24,7 +24,6 @@ func gojoBlueAi(entity *PlayerEntity, level_hitbox []utils.HitBox) {
 	for ei := 0; ei < len(enemyai.Enemies_In_World); ei++ {
 		enemy := enemyai.Enemies_In_World[ei]
 
-		// extra math is to convert mouse_cords to world cords
 		if utils.Collide(utils.Vec2{X: entity.Pos.X - 144, Y: entity.Pos.Y}, utils.Vec2{X: 144 * 3, Y: 144 * 3}, enemy.Pos, utils.Vec2{X: float64(enemy.Tex.GetTexture().Bounds().Dx()), Y: float64(enemy.Tex.GetTexture().Bounds().Dy())}) {
 
 			enemy.Can_Move = false
