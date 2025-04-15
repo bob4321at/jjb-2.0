@@ -14,11 +14,11 @@ type PlayerEntity struct {
 	Lifespan     float64
 	Img          textures.RenderableTexture
 	Dir          bool
-	Update       func(e *PlayerEntity, level_hitbox []utils.HitBox)
+	Update       func(entity *PlayerEntity, level_hitbox []utils.HitBox)
 	ID           int
 }
 
-func (p *Player) NewEntity(pos utils.Vec2, starting_vel utils.Vec2, cooldown float64, lifespan float64, img textures.RenderableTexture, Update func(e *PlayerEntity, level_hitbox []utils.HitBox)) (e *PlayerEntity) {
+func (player *Player) NewEntity(pos utils.Vec2, starting_vel utils.Vec2, cooldown float64, lifespan float64, img textures.RenderableTexture, Update func(entity *PlayerEntity, level_hitbox []utils.HitBox)) *PlayerEntity {
 	entity := PlayerEntity{}
 
 	entity.Img = img
@@ -34,11 +34,11 @@ func (p *Player) NewEntity(pos utils.Vec2, starting_vel utils.Vec2, cooldown flo
 
 	entity.Update = Update
 
-	p.Entities = append(p.Entities, entity)
+	player.Entities = append(player.Entities, entity)
 
-	return &p.Entities[len(p.Entities)-1]
+	return &player.Entities[len(player.Entities)-1]
 }
 
-func (e *PlayerEntity) SetID(num int) {
-	e.ID = num
+func (entity *PlayerEntity) SetID(number int) {
+	entity.ID = number
 }
