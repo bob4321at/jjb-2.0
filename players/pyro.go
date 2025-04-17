@@ -11,7 +11,7 @@ import (
 
 func (player *Player) pyroFirePiller() {
 	player.Vel.Y = -10
-	player.NewProjectile(utils.Vec2{X: player.Pos.X - 64, Y: player.Pos.Y - 256 + 64}, utils.Vec2{X: 0, Y: 0}, 1, 0, 10, 10, textures.NewAnimatedTexture("./art/projectiles/pyro/firetornado.png", ""))
+	player.NewProjectile(utils.Vec2{X: player.Pos.X - 64, Y: player.Pos.Y - 256 + 64}, utils.Vec2{X: 0, Y: 0}, 1, 0, 10, 4, textures.NewAnimatedTexture("./art/projectiles/pyro/firetornado.png", ""))
 }
 
 func (player *Player) pyroFireDrop() {
@@ -87,7 +87,7 @@ func (player *Player) pyroDomain(enemies []*enemyai.Enemy) {
 		}
 		check := int(math.Mod(utils.Game_Time, 20))
 		if check == 0 {
-			Player_Ref.NewEntity(utils.Vec2{X: 1350 + rand.Float64()*2000, Y: -4000 - (rand.Float64() * 300)}, utils.Vec2{X: 0, Y: 0}, 0, 50, textures.NewTexture("./art/entities/pyro/firedrop.png", ""), pyroFireDropAi)
+			Player_Ref.NewEntity(utils.Vec2{X: 1350 + rand.Float64()*2000, Y: -4000 - (rand.Float64() * 300)}, utils.Vec2{X: 0, Y: 0}, 0, 30, textures.NewTexture("./art/entities/pyro/firedrop.png", ""), pyroFireDropAi)
 		}
 	}
 
