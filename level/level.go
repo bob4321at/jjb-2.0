@@ -146,7 +146,10 @@ func (level *Level) Update(player *players.Player) {
 		level.Spawned = true
 	}
 	if level.Current_Wave >= len(level.Waves.Waves) && Current_Level_Index+1 < len(Levels) {
-		level.Beaten = true
+		go func() {
+			time.Sleep(time.Second * 2)
+			level.Beaten = true
+		}()
 	}
 }
 
