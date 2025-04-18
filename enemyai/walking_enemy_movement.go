@@ -6,10 +6,10 @@ func walkingEnemyMovement(enemy *Enemy, player_pos utils.Vec2, level_hitbox []ut
 	enemy.Vel.Y += 0.1
 
 	if player_pos.X > enemy.Pos.X {
-		enemy.Dir = true
+		enemy.Dir = false
 		enemy.Vel.X = 4
 	} else if player_pos.X < enemy.Pos.X {
-		enemy.Dir = false
+		enemy.Dir = true
 		enemy.Vel.X = -4
 	}
 
