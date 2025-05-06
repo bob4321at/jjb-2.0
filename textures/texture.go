@@ -3,13 +3,21 @@ package textures
 import (
 	"encoding/json"
 	"image"
-	"jjb/shaders"
 	"os"
 	"strings"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
+
+var Base_Shader = `//kage:unit pixels
+			package main
+
+			func Fragment(targetCoords vec4, srcPos vec2, _ vec4) vec4 {
+				col := imageSrc0At(srcPos.xy)
+				return vec4(col.x, col.y, col.z, col.w)
+			}
+`
 
 type RenderableTexture interface {
 	Draw(screen *ebiten.Image, op *ebiten.DrawImageOptions)
@@ -38,7 +46,7 @@ func NewTexture(img_path string, shader string) *Texture {
 	texture.Img = timg
 
 	if shader == "" {
-		shader = shaders.Base_Shader
+		shader = Base_Shader
 	}
 
 	texture.Shader, err = ebiten.NewShader([]byte(shader))
@@ -130,7 +138,7 @@ func NewAnimatedTexture(path string, shader string) *AnimatedTexture {
 	animated_texture.Animations = animations
 
 	if shader == "" {
-		shader = shaders.Base_Shader
+		shader = Base_Shader
 	}
 
 	animated_texture.Shader, err = ebiten.NewShader([]byte(shader))

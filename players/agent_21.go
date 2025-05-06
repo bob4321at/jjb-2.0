@@ -57,7 +57,6 @@ func agent_21MolotovAi(entity *PlayerEntity, level_hitbox []utils.HitBox) {
 	} else if entity.Vel.X < 0 {
 		entity.Vel.X += 1
 	}
-	entity.Vel.Y += 5
 	for level_hitbox_index := 0; level_hitbox_index < len(level_hitbox); level_hitbox_index++ {
 		hitbox := level_hitbox[level_hitbox_index]
 		if utils.Collide(utils.Vec2{X: entity.Pos.X, Y: entity.Pos.Y + (entity.Vel.Y / 10)}, utils.Vec2{X: float64(entity.Img.GetTexture().Bounds().Dx()), Y: float64(entity.Img.GetTexture().Bounds().Dy())}, utils.Vec2{X: hitbox.X, Y: hitbox.Y}, utils.Vec2{X: 32, Y: 32}) {
@@ -69,6 +68,7 @@ func agent_21MolotovAi(entity *PlayerEntity, level_hitbox []utils.HitBox) {
 			Player_Ref.NewProjectile(utils.Vec2{X: entity.Pos.X - 128, Y: entity.Pos.Y - 128}, utils.Vec2{X: 0, Y: 0}, 10, 0, 10, 10, textures.NewTexture("./art/projectiles/greg/explosion.png", ""))
 		}
 	}
+	entity.Vel.Y += 5
 
 	for enemy_index := 0; enemy_index < len(enemyai.Enemies_In_World); enemy_index++ {
 		enemy := enemyai.Enemies_In_World[enemy_index]

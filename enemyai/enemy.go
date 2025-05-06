@@ -35,20 +35,21 @@ func (enemy *Enemy) NewProjectile(pos, vel utils.Vec2, img textures.RenderableTe
 }
 
 type Enemy struct {
-	Id          int
-	Health      int
-	MaxHealth   int
-	Damage      int
-	Projectiles []EnemyProjectile
-	Alive       bool
-	Pos         utils.Vec2
-	Vel         utils.Vec2
-	Can_Move    bool
-	Tex         textures.RenderableTexture
-	Dir         bool
-	Update      func(e *Enemy, player_pos utils.Vec2, level_hitbox []utils.HitBox)
-	Coll_Shape  utils.HitBox
-	I_Frames    float64
+	Id            int
+	Health        int
+	MaxHealth     int
+	Damage        int
+	Projectiles   []EnemyProjectile
+	Alive         bool
+	Pos           utils.Vec2
+	Vel           utils.Vec2
+	Can_Move      bool
+	Tex           textures.RenderableTexture
+	Dir           bool
+	Update        func(e *Enemy, player_pos utils.Vec2, level_hitbox []utils.HitBox)
+	Coll_Shape    utils.HitBox
+	I_Frames      float64
+	Return_To_Pos utils.Vec2
 }
 
 func NewEnemy(id int, health int, damage int, pos utils.Vec2, img textures.RenderableTexture, update func(enemy *Enemy, player_pos utils.Vec2, level_hitbox []utils.HitBox)) (enemy Enemy) {
