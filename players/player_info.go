@@ -24,5 +24,6 @@ func InitPlayer(spawn_point utils.Vec2) {
 		"tk":             newPlayer(spawn_point, *textures.NewAnimatedTexture("./art/players/tk.png", shaders.Player_Shader), textures.NewTexture("./art/domains/simple_domain.png", ""), func(enemies []*enemyai.Enemy) { Player_Ref.simpleDomain(enemyai.Enemies_In_World) }, tk_attacks),
 		"pyro":           newPlayer(spawn_point, *textures.NewAnimatedTexture("./art/players/pyro.png", shaders.Player_Shader), textures.NewTexture("./art/domains/pyro_domain.png", ""), func(enemies []*enemyai.Enemy) { Player_Ref.pyroDomain(enemyai.Enemies_In_World) }, pyro_attacks),
 		"toothbrush_guy": newPlayer(spawn_point, *textures.NewAnimatedTexture("./art/players/toothbrush_guy.png", shaders.Player_Shader), textures.NewTexture("./art/domains/toothbrush_domain.png", ""), func(enemies []*enemyai.Enemy) { Player_Ref.toothbrushDomain(enemyai.Enemies_In_World) }, toothbrush_guy_attacks),
+		"birdman":        newPlayer(spawn_point, *textures.NewAnimatedTexture("./art/players/birdman.png", shaders.Player_Shader), textures.NewTexture("./art/domains/simple_domain.png", ""), func(enemies []*enemyai.Enemy) { Player_Ref.simpleDomain(enemyai.Enemies_In_World) }, birdman_attacks),
 	}
 }

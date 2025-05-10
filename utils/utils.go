@@ -44,6 +44,10 @@ func Deg2Rad(num float64) float64 {
 	return num * (3.14159 / 180)
 }
 
+func Rad2Deg(num float64) float64 {
+	return num * (180 / 3.14159)
+}
+
 func GetDist(point_1, point_2 Vec2) float64 {
 	offx := math.Abs(point_1.X - point_2.X)
 	offy := math.Abs(point_1.Y - point_2.Y)
