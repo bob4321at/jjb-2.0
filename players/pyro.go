@@ -18,6 +18,7 @@ func (player *Player) pyroFirePiller() {
 func (player *Player) pyroFireDrop() {
 	player.NewEntity(player.Pos, utils.Vec2{X: -(player.Pos.X + (player.Vel.X * 2) - utils.Mouse_X - camera.Cam.Offset.X + 640 + (float64(player.Img.GetTexture().Bounds().Dx()))), Y: -(player.Pos.Y + (player.Vel.Y * 2) - utils.Mouse_Y - camera.Cam.Offset.Y + 320 + (float64(player.Img.GetTexture().Bounds().Dy())))}, 0, 10, textures.NewTexture("./art/entities/pyro/firedrop.png", ""), pyroFireDropAi)
 }
+
 func pyroFireDropAi(entity *PlayerEntity, level_hitbox []utils.HitBox) {
 	entity.Lifespan -= 0.1
 

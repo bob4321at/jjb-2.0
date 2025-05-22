@@ -1,7 +1,6 @@
 package players
 
 import (
-	"fmt"
 	"jjb/camera"
 	"jjb/enemyai"
 	"jjb/utils"
@@ -17,7 +16,6 @@ func (player *Player) bobertoDamageBuff() {
 	start_time := utils.Game_Time
 
 	for start_time+300 >= utils.Game_Time {
-		fmt.Println("")
 	}
 
 	player.Damage_Multiplier /= 2

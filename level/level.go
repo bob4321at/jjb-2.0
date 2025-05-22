@@ -1,7 +1,6 @@
 package level
 
 import (
-	"fmt"
 	"jjb/camera"
 	"jjb/enemyai"
 	"jjb/players"
@@ -58,7 +57,6 @@ func (level *Level) GenCach() {
 			op.GeoM.Translate(tile.Pos.X, tile.Pos.Y)
 			level.Level_Cached_Image.DrawImage(level.Tileset[tile.Tile], &op)
 		}
-		fmt.Println("working")
 	}
 }
 

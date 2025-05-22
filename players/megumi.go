@@ -10,11 +10,6 @@ import (
 	"github.com/bob4321at/textures"
 )
 
-func (player *Player) megumiTp() {
-	player.Pos.X += utils.Mouse_X - (1280 / 2)
-	player.Pos.Y += utils.Mouse_Y - (720 / 2)
-}
-
 func (player *Player) megumiSnake() {
 	for i := 0; i < 35; i++ {
 		snake_balls := player.NewEntity(player.Pos, utils.Vec2{X: 0, Y: 0}, 0, 75, textures.NewTexture("./art/entities/megumi/snake_part.png", ""), player.megumiSnakeBallsAi)
@@ -26,8 +21,6 @@ func (player *Player) megumiSnake() {
 
 func (player *Player) megumiSnakeAi(entity *PlayerEntity, level_hitbox []utils.HitBox) {
 	snake_balls := []*PlayerEntity{}
-
-	entity.Lifespan -= 0.1
 
 	for entity_index := 0; entity_index < len(player.Entities); entity_index++ {
 		entity := &player.Entities[entity_index]
@@ -45,11 +38,25 @@ func (player *Player) megumiSnakeAi(entity *PlayerEntity, level_hitbox []utils.H
 			point.Vel.X = -math.Sin((utils.GetAngle(point.Pos, utils.Vec2{X: entity.Pos.X + 16, Y: entity.Pos.Y + 16})))
 			point.Vel.Y = -math.Cos((utils.GetAngle(point.Pos, utils.Vec2{X: entity.Pos.X + 16, Y: entity.Pos.Y + 16})))
 		}
+		if utils.GetDist(point.Pos, utils.Vec2{X: entity.Pos.X + 16, Y: entity.Pos.Y + 16}) > 20 {
+			point.Vel.X = -math.Sin((utils.GetAngle(point.Pos, utils.Vec2{X: entity.Pos.X + 16, Y: entity.Pos.Y + 16}))) * 2
+			point.Vel.Y = -math.Cos((utils.GetAngle(point.Pos, utils.Vec2{X: entity.Pos.X + 16, Y: entity.Pos.Y + 16}))) * 2
+		}
+		if utils.GetDist(point.Pos, utils.Vec2{X: entity.Pos.X + 16, Y: entity.Pos.Y + 16}) > 32 {
+			point.Pos.X = entity.Pos.X
+			point.Pos.Y = entity.Pos.Y
+		}
 
 		if len(snake_balls) > 1 {
 			for ball_index := 1; ball_index < len(snake_balls); ball_index++ {
 				point := snake_balls[ball_index]
-				if utils.GetDist(point.Pos, snake_balls[ball_index-1].Pos) > 10 {
+				if utils.GetDist(point.Pos, utils.Vec2{X: entity.Pos.X + 16, Y: entity.Pos.Y + 16}) > 64 {
+					point.Vel.X = -math.Sin((utils.GetAngle(point.Pos, snake_balls[ball_index-1].Pos))) * 2
+					point.Vel.Y = -math.Cos((utils.GetAngle(point.Pos, snake_balls[ball_index-1].Pos))) * 2
+				} else if utils.GetDist(point.Pos, utils.Vec2{X: entity.Pos.X + 16, Y: entity.Pos.Y + 16}) > 32 {
+					point.Vel.X = -math.Sin((utils.GetAngle(point.Pos, snake_balls[ball_index-1].Pos))) * 1.5
+					point.Vel.Y = -math.Cos((utils.GetAngle(point.Pos, snake_balls[ball_index-1].Pos))) * 1.5
+				} else if utils.GetDist(point.Pos, snake_balls[ball_index-1].Pos) > 10 {
 					point.Vel.X = -math.Sin((utils.GetAngle(point.Pos, snake_balls[ball_index-1].Pos)))
 					point.Vel.Y = -math.Cos((utils.GetAngle(point.Pos, snake_balls[ball_index-1].Pos)))
 				}
@@ -64,7 +71,8 @@ func (player *Player) megumiSnakeAi(entity *PlayerEntity, level_hitbox []utils.H
 			last_dist := utils.GetDist(entity.Pos, enemyai.Enemies_In_World[0].Pos)
 
 			for ei := 0; ei < len(enemyai.Enemies_In_World); ei++ {
-				if utils.GetDist(entity.Pos, enemyai.Enemies_In_World[ei].Pos) < last_dist {
+				dist := utils.GetDist(entity.Pos, enemyai.Enemies_In_World[ei].Pos)
+				if dist < last_dist && math.Abs(dist) > 64 {
 					closest_enemy = enemyai.Enemies_In_World[ei]
 				}
 			}
@@ -73,6 +81,8 @@ func (player *Player) megumiSnakeAi(entity *PlayerEntity, level_hitbox []utils.H
 
 			entity.Vel.X = math.Cos(entity.Rotation)
 			entity.Vel.Y = math.Sin(entity.Rotation)
+			entity.Pos.X += math.Cos(entity.Rotation)
+			entity.Pos.Y += math.Sin(entity.Rotation)
 			entity.Pos.X += math.Cos(entity.Rotation)
 			entity.Pos.Y += math.Sin(entity.Rotation)
 		} else {
@@ -88,7 +98,7 @@ func (player *Player) megumiSnakeAi(entity *PlayerEntity, level_hitbox []utils.H
 }
 
 func (player *Player) megumiSnakeBallsAi(entity *PlayerEntity, level_hitbox []utils.HitBox) {
-	entity.Lifespan -= 0.1
+	// entity.Lifespan -= 0.1
 	for ei := 0; ei < len(enemyai.Enemies_In_World); ei++ {
 		enemy := enemyai.Enemies_In_World[ei]
 		if utils.Collide(entity.Pos, utils.Vec2{X: float64(entity.Img.GetTexture().Bounds().Dx()), Y: float64(entity.Img.GetTexture().Bounds().Dy())}, enemy.Pos, utils.Vec2{X: float64(enemy.Tex.GetTexture().Bounds().Dx()), Y: float64(enemy.Tex.GetTexture().Bounds().Dy())}) {
@@ -100,7 +110,7 @@ func (player *Player) megumiSnakeBallsAi(entity *PlayerEntity, level_hitbox []ut
 					snake_balls = append(snake_balls, entitty)
 				}
 			}
-			snake_balls[len(snake_balls)-1].Lifespan = -1
+			snake_balls[0].Lifespan -= 1
 		}
 	}
 
