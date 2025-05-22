@@ -1,8 +1,9 @@
 package players
 
 import (
-	"jjb/textures"
 	"jjb/utils"
+
+	"github.com/bob4321at/textures"
 )
 
 type PlayerEntity struct {

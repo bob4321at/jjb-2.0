@@ -1,6 +1,7 @@
 package level
 
 import (
+	"fmt"
 	"jjb/camera"
 	"jjb/enemyai"
 	"jjb/players"
@@ -47,9 +48,9 @@ var Levels = []Level{}
 var Current_Level *Level
 var Current_Level_Index int
 
-var test = ebiten.NewImage(128*32, 128*32)
+var test *ebiten.Image
 
-func (level *Level) Draw(screen *ebiten.Image, cam *camera.Camera) {
+func (level *Level) GenCach() {
 	if level.Level_Cached_Image == nil {
 		level.Level_Cached_Image = ebiten.NewImage(128*32, 128*32)
 		for _, tile := range level.Tiles {
@@ -57,7 +58,12 @@ func (level *Level) Draw(screen *ebiten.Image, cam *camera.Camera) {
 			op.GeoM.Translate(tile.Pos.X, tile.Pos.Y)
 			level.Level_Cached_Image.DrawImage(level.Tileset[tile.Tile], &op)
 		}
+		fmt.Println("working")
 	}
+}
+
+func (level *Level) Draw(screen *ebiten.Image, cam *camera.Camera) {
+	level.GenCach()
 
 	op := ebiten.DrawImageOptions{}
 	level.Background.Draw(screen, cam)
@@ -106,6 +112,7 @@ func (level *Level) SpawnWave() {
 
 func (level *Level) Update(player *players.Player) {
 	player.DamageCheck()
+	players.Emergency_Level_Hitbox = level.HitBox
 
 	player.Update(level.HitBox)
 

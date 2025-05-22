@@ -2,8 +2,9 @@ package enemyai
 
 import (
 	"jjb/shaders"
-	"jjb/textures"
 	"jjb/utils"
+
+	"github.com/bob4321at/textures"
 )
 
 func purpleBalloonUpdate(enemy *Enemy, player_pos utils.Vec2, level_hitbox []utils.HitBox) {

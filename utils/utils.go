@@ -61,3 +61,18 @@ func GetAngle(point_1, point_2 Vec2) float64 {
 
 	return math.Atan2(offset_x, offset_y)
 }
+
+func Raycast(pos, dir Vec2, length int, hitboxes []HitBox) (Vec2, bool) {
+	for _, hitbox := range hitboxes {
+		for l := range length {
+			offx := dir.X * float64(l)
+			offy := dir.Y * float64(l)
+
+			if Collide(Vec2{pos.X + offx, pos.Y + offy}, Vec2{1, 1}, Vec2{hitbox.X, hitbox.Y}, Vec2{hitbox.Width, hitbox.Height}) {
+				return Vec2{pos.X + offx, pos.Y + offy}, true
+			}
+		}
+	}
+
+	return Vec2{0, 0}, false
+}

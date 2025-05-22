@@ -3,9 +3,9 @@ package enemyai
 import (
 	"jjb/camera"
 	"jjb/shaders"
-	"jjb/textures"
 	"jjb/utils"
 
+	"github.com/bob4321at/textures"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 

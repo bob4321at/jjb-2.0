@@ -20,7 +20,7 @@ var amount_of_inits = 0
 
 func Game_Scene_Setup() {
 	level.Levels = []level.Level{}
-	level.Levels = append(level.Levels, level.LoadLevel("./maps/level01/"))
+	level.Levels = append(level.Levels, level.LoadFirstLevel("./maps/level01/"))
 	level.Current_Level_Index = 0
 	level.Current_Level = &level.Levels[level.Current_Level_Index]
 	level.Current_Level.Spawned = false

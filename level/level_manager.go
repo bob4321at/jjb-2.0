@@ -3,9 +3,34 @@ package level
 import (
 	"encoding/json"
 	"os"
+	"time"
 )
 
 func LoadLevel(path string) Level {
+	level := makeLevel(path+"level.png", path+"tileset.png", path+"bg.png")
+
+	file, err := os.ReadFile(path + "waves.json")
+	if err != nil {
+		panic(err)
+	}
+
+	temp_data := Waves{}
+
+	if err := json.Unmarshal(file, &temp_data); err != nil {
+		panic(err)
+	}
+
+	level.Waves = temp_data
+	level.Current_Wave = 0
+	level.Spawn_Timer = 50
+	level.Origonal_Spawn_Timer = 50
+
+	time.Sleep(time.Second)
+
+	return level
+}
+
+func LoadFirstLevel(path string) Level {
 	level := makeLevel(path+"level.png", path+"tileset.png", path+"bg.png")
 
 	file, err := os.ReadFile(path + "waves.json")

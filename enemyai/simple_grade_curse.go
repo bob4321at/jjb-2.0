@@ -1,9 +1,10 @@
 package enemyai
 
 import (
-	"jjb/textures"
 	"jjb/utils"
 	"math"
+
+	"github.com/bob4321at/textures"
 )
 
 func simpleGradeCurseUpdate(enemy *Enemy, player_pos utils.Vec2, level_hitbox []utils.HitBox) {

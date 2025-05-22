@@ -2,8 +2,9 @@ package players
 
 import (
 	"jjb/camera"
-	"jjb/textures"
 	"jjb/utils"
+
+	"github.com/bob4321at/textures"
 )
 
 func (player *Player) hermesJump() {

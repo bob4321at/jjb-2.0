@@ -4,10 +4,11 @@ import (
 	"jjb/camera"
 	"jjb/enemyai"
 	"jjb/shaders"
-	"jjb/textures"
 	"jjb/utils"
 	"math"
 	"math/rand"
+
+	"github.com/bob4321at/textures"
 )
 
 func (player *Player) test_playerGlitchProjectile() {

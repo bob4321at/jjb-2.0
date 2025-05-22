@@ -2,14 +2,14 @@ package players
 
 import (
 	"jjb/enemyai"
-	"jjb/textures"
-	texture "jjb/textures"
 	"jjb/utils"
 	"math"
+
+	"github.com/bob4321at/textures"
 )
 
 func (player *Player) birdmanBirdSummon() {
-	player.NewEntity(player.Pos, utils.Vec2{X: 0, Y: -5}, 10, 1000, texture.NewAnimatedTexture("./art/entities/birdman/bird.png", ""), birdmanBirdSummonAi)
+	player.NewEntity(player.Pos, utils.Vec2{X: 0, Y: -5}, 10, 1000, textures.NewAnimatedTexture("./art/entities/birdman/bird.png", ""), birdmanBirdSummonAi)
 }
 
 func birdmanBirdSummonAi(entity *PlayerEntity, level_hitbox []utils.HitBox) {
@@ -89,7 +89,7 @@ func (player *Player) birdmanFlight() {
 
 func (player *Player) birdmanFallingBird() {
 	spawn_point := utils.Vec2{}
-	var texture texture.RenderableTexture
+	var texture textures.RenderableTexture
 
 	if ((utils.Mouse_X)-640)/1.5 > 0 {
 		spawn_point = utils.Vec2{X: player.Pos.X + 128*6/2, Y: player.Pos.Y - 72*10/2}

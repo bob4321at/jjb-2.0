@@ -4,11 +4,11 @@ import (
 	"jjb/camera"
 	"jjb/enemyai"
 	"jjb/shaders"
-	"jjb/textures"
 	"jjb/utils"
 	"math"
 	"math/rand"
 
+	"github.com/bob4321at/textures"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
@@ -53,6 +53,8 @@ type Attack struct {
 	Cooldown     float64
 	Max_Cooldown float64
 }
+
+var Emergency_Level_Hitbox []utils.HitBox
 
 var attack_keys = map[int]ebiten.Key{
 	0: ebiten.KeyE,
