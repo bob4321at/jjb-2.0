@@ -21,8 +21,6 @@ func (player *Player) timSnake() {
 func (player *Player) timSnakeAi(entity *PlayerEntity, level_hitbox []utils.HitBox) {
 	snake_balls := []*PlayerEntity{}
 
-	// entity.Lifespan -= 0.1
-
 	for entity_index := 0; entity_index < len(player.Entities); entity_index++ {
 		entity := &player.Entities[entity_index]
 		if entity.ID == 1 {
