@@ -25,7 +25,7 @@ func LoadLevel(path string) Level {
 	level.Spawn_Timer = 50
 	level.Origonal_Spawn_Timer = 50
 
-	time.Sleep(time.Second)
+	time.Sleep(time.Second / 2)
 
 	return level
 }

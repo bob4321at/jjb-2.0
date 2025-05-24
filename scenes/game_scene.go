@@ -44,22 +44,22 @@ func Game_Scene_Draw(display_img *ebiten.Image, screen *ebiten.Image) {
 func Game_Scene_Update() {
 	camera.Cam.Update()
 
-	if !ebiten.IsKeyPressed(ebiten.KeyTab) {
-		tab_key_hit = false
-	}
-	if ebiten.IsKeyPressed(ebiten.KeyTab) && !tab_key_hit {
-		tab_key_hit = true
-		level.Current_Level_Index += 1
-		if &level.Levels[level.Current_Level_Index] != level.Current_Level {
-			level.Current_Level = &level.Levels[level.Current_Level_Index]
-			players.Player_Ref = players.Players[selected_player]
-			players.InitPlayer(level.Current_Level.Player_Spawn)
-			players.Player_Ref = players.Players[selected_player]
-			players.Player_Ref.Attacks[0].Cooldown = 0
-			players.Player_Ref.Attacks[1].Cooldown = 0
-			players.Player_Ref.Attacks[2].Cooldown = 0
-		}
-	}
+	// if !ebiten.IsKeyPressed(ebiten.KeyTab) {
+	// 	tab_key_hit = false
+	// }
+	// if ebiten.IsKeyPressed(ebiten.KeyTab) && !tab_key_hit {
+	// 	tab_key_hit = true
+	// 	level.Current_Level_Index += 1
+	// 	if &level.Levels[level.Current_Level_Index] != level.Current_Level {
+	// 		level.Current_Level = &level.Levels[level.Current_Level_Index]
+	// 		players.Player_Ref = players.Players[selected_player]
+	// 		players.InitPlayer(level.Current_Level.Player_Spawn)
+	// 		players.Player_Ref = players.Players[selected_player]
+	// 		players.Player_Ref.Attacks[0].Cooldown = 0
+	// 		players.Player_Ref.Attacks[1].Cooldown = 0
+	// 		players.Player_Ref.Attacks[2].Cooldown = 0
+	// 	}
+	// }
 
 	if level.Current_Level.Beaten == true {
 		level.Current_Level_Index += 1

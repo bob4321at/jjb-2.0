@@ -68,8 +68,8 @@ func Raycast(pos, dir Vec2, length int, hitboxes []HitBox) (Vec2, bool) {
 			offx := dir.X * float64(l)
 			offy := dir.Y * float64(l)
 
-			if Collide(Vec2{pos.X + offx, pos.Y + offy}, Vec2{1, 1}, Vec2{hitbox.X, hitbox.Y}, Vec2{hitbox.Width, hitbox.Height}) {
-				return Vec2{pos.X + offx, pos.Y + offy}, true
+			if Collide(Vec2{float64(int(pos.X + offx)), float64(int(pos.Y + offy))}, Vec2{1, 1}, Vec2{hitbox.X, hitbox.Y}, Vec2{hitbox.Width, hitbox.Height}) {
+				return Vec2{float64(int(pos.X + offx)), float64(int(pos.Y + offy))}, true
 			}
 		}
 	}
